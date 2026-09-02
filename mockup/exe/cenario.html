@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cenário - Sistema de Gestão Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <aside class="sidebar">
+                <h2>Menu</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO (MÓDULO) -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html" class="active">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <h1>Gestão de Cenários de Teste</h1>
+            <p>Defina e gerencie como os comportamentos do sistema serão executados, associando mídia, evidências, configurações e parâmetros.</p>
+
+            <!-- Toolbar Principal -->
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="btn" onclick="abrirModalCenario('novo')">+ Novo Cenário</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
+                </div>
+
+                <div class="toolbar-group">
+                    <div class="form-group margin-none">
+                        <input type="text" id="searchInput" placeholder="Buscar cenário..." class="input-search">
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <select id="filterType">
+                            <option value="">Todos os Tipos</option>
+                            <option value="API">API</option>
+                            <option value="Web">Web</option>
+                            <option value="Desktop">Desktop</option>
+                            <option value="Mobile">Mobile</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Cenários -->
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                            </th>
+                            <th>ID</th>
+                            <th>Nome do Cenário</th>
+                            <th>Tipo</th>
+                            <th>Autenticação</th>
+                            <th>Mídia / Evidências</th>
+                            <th>Config. Execução</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cenarioTableBody">
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                            <td>#SC-001</td>
+                            <td><strong>Login e Checkout PIX</strong></td>
+                            <td><span class="badge-categoria">Web</span></td>
+                            <td>Admin ERP</td>
+                            <td>Vídeo, Network Log</td>
+                            <td>Headless / Chrome</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('1', 'Login e Checkout PIX')">Executar</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('1', 'Login e Checkout PIX')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '1')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('1')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                            <td>#SC-002</td>
+                            <td><strong>Consulta Saldo API Rest</strong></td>
+                            <td><span class="badge-categoria">API</span></td>
+                            <td>Bearer Token</td>
+                            <td>Arquivos JSON</td>
+                            <td>Timeout 5000ms</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('2', 'Consulta Saldo API Rest')">Executar</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('2', 'Consulta Saldo API Rest')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '2')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('2')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
+                            <td>#SC-003</td>
+                            <td><strong>Emissão de NF-e Desktop</strong></td>
+                            <td><span class="badge-categoria">Desktop</span></td>
+                            <td>Basic Auth</td>
+                            <td>Áudio, Tutorial PDF</td>
+                            <td>WinAppDriver / x64</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('3', 'Emissão de NF-e Desktop')">Executar</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('3', 'Emissão de NF-e Desktop')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '3')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('3')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td>#SC-004</td>
+                            <td><strong>Fluxo Biometria App</strong></td>
+                            <td><span class="badge-categoria">Mobile</span></td>
+                            <td>API Key</td>
+                            <td>Gravação Tela, Evidências</td>
+                            <td>Appium / Android 13</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('4', 'Fluxo Biometria App')">Executar</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('4', 'Fluxo Biometria App')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '4')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('4')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginação -->
+            <div class="pagination">
+                <span class="pagination-info">Exibindo 1-4 de 4 cenários</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Form (Novo / Editar Cenário) -->
+    <div class="modal" id="cenarioModal">
+        <div class="modal-content modal-lg">
+            <h2 id="modalTitle">Novo Cenário de Execução</h2>
+            <form onsubmit="salvarCenario(event)">
+                <input type="hidden" id="cenarioId">
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="cenarioNome">Nome do Cenário</label>
+                        <input type="text" id="cenarioNome" required placeholder="Ex: Validação de Checkout Web">
+                    </div>
+                    <div class="form-group">
+                        <label for="cenarioTipo">Tipo de Plataforma</label>
+                        <select id="cenarioTipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="API">API</option>
+                            <option value="Web">Web</option>
+                            <option value="Desktop">Desktop</option>
+                            <option value="Mobile">Mobile</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="cenarioAuth">Perfil de Autenticação</label>
+                        <select id="cenarioAuth">
+                            <option value="">Nenhuma / Pública</option>
+                            <option value="1">Acesso Admin ERP</option>
+                            <option value="2">Gateway REST API (Bearer)</option>
+                            <option value="3">Serviço Parceiro (API Key)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cenarioConfig">Configuração de Execução</label>
+                        <input type="text" id="cenarioConfig" placeholder="Ex: Headless=true; Timeout=5000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cenarioPassos">Passos da Execução</label>
+                    <textarea id="cenarioPassos" placeholder="1. Dado que o usuário acesse...&#10;2. Quando preencher o formulário...&#10;3. Então deve validar..."></textarea>
+                </div>
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="cenarioParametros">Parâmetros & Dados</label>
+                        <textarea id="cenarioParametros" placeholder="Ex: { 'payload': { 'id': 100 } }"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cenarioMidia">Mídias, Tutoriais & Gravação</label>
+                        <textarea id="cenarioMidia" placeholder="URLs de Vídeo, Áudio, Tutoriais ou Network Logs..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cenarioArquivos">Documentos e Evidências (Arquivos)</label>
+                    <input type="text" id="cenarioArquivos" placeholder="Anexos, imagens de evidência, relatórios em PDF...">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('cenarioModal')">Cancelar</button>
+                    <button type="submit" class="btn">Salvar Cenário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
+
+        function getSelecionados() {
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function abrirModalCenario(modo, id = '') {
+            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Novo Cenário de Execução' : 'Editar Cenário de Execução';
+            document.getElementById('cenarioId').value = id;
+            if (modo === 'novo') {
+                document.getElementById('cenarioNome').value = '';
+                document.getElementById('cenarioTipo').value = '';
+                document.getElementById('cenarioAuth').value = '';
+                document.getElementById('cenarioConfig').value = '';
+                document.getElementById('cenarioPassos').value = '';
+                document.getElementById('cenarioParametros').value = '';
+                document.getElementById('cenarioMidia').value = '';
+                document.getElementById('cenarioArquivos').value = '';
+            }
+            document.getElementById('cenarioModal').style.display = 'flex';
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function salvarCenario(e) {
+            e.preventDefault();
+            const id = document.getElementById('cenarioId').value;
+            const nome = document.getElementById('cenarioNome').value;
+            if (id) {
+                alert(`Cenário "${nome}" atualizado com sucesso!`);
+            } else {
+                alert(`Cenário "${nome}" registrado com sucesso!`);
+            }
+            fecharModal('cenarioModal');
+        }
+
+        function executarCenario(id, nome) {
+            alert(`Iniciando execução do Cenário #${id} - "${nome}"...\n\nProcessando passos, capturando evidências e logs de Network.`);
+        }
+
+        function duplicarCenario(id, nome) {
+            alert(`Cenário "#${id} - ${nome}" duplicado com sucesso! Cópia criada.`);
+        }
+
+        function excluirCenario(id) {
+            if (confirm(`Deseja mover o cenário #${id} para a lixeira?`)) {
+                alert(`Cenário #${id} enviado para a lixeira.`);
+            }
+        }
+
+        function excluirSelecionados() {
+            const ids = getSelecionados();
+            if (ids.length === 0) {
+                alert('Nenhum cenário selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${ids.length} cenários selecionados para a lixeira?`)) {
+                alert(`Cenários [${ids.join(', ')}] movidos para a lixeira.`);
+            }
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

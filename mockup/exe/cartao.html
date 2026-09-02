@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão - Sistema de Gestão Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <aside class="sidebar">
+                <h2>Menu</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO (MÓDULO) -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">5. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html" class="active">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <h1>Cartões de Insucesso (Unidades de Trabalho)</h1>
+            <p>Gerencie falhas e vulnerabilidades oriundas dos módulos de Observabilidade e Segurança, e sincronize-as diretamente como itens de trabalho (work items, cards, issues) em sistemas externos.</p>
+
+            <!-- Barra de Ferramentas, Filtros e Ações em Massa -->
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="btn" onclick="abrirModalNovoCartao()">+ Novo Cartão</button>
+                    <button class="btn btn-auth" onclick="enviarSelecionadosParaIntegracao()">Enviar para Integração</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados('cartaoTableBody')">Excluir Selecionados</button>
+                </div>
+                <div class="toolbar-group">
+                    <div class="form-group margin-none">
+                        <input type="text" id="inputBusca" placeholder="Buscar por ID, Grupo ou Cenário..." class="input-search" onkeyup="filtrarTabela()">
+                    </div>
+                    <div class="form-group margin-none">
+                        <select id="selectOrigem" onchange="filtrarTabela()">
+                            <option value="">Todas as Origens</option>
+                            <option value="Observabilidade">Observabilidade</option>
+                            <option value="Segurança">Segurança</option>
+                        </select>
+                    </div>
+                    <div class="form-group margin-none">
+                        <select id="selectStatusEnvio" onchange="filtrarTabela()">
+                            <option value="">Todos os Status de Envio</option>
+                            <option value="Enviado">Enviado com Sucesso</option>
+                            <option value="Pendente">Pendente de Envio</option>
+                            <option value="Erro">Erro no Envio</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Cartões Cadastrados -->
+            <div class="table-responsive">
+                <table class="data-table" id="tabelaCartoes">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" onclick="toggleSelectAll(this, 'cartaoTableBody')">
+                            </th>
+                            <th>ID do Cartão</th>
+                            <th>Origem / Tipo</th>
+                            <th>Grupo & Cenário</th>
+                            <th>Esperado vs Recebido</th>
+                            <th>Evidências</th>
+                            <th>Status Envio / ID Externo</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartaoTableBody">
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="CARD #001245"></td>
+                            <td><strong>CARD #001245</strong></td>
+                            <td><span class="badge-categoria">Observabilidade</span></td>
+                            <td>E-commerce<br><small class="text-accent">Cadastro de Cliente</small></td>
+                            <td>
+                                <span class="text-accent">Esp: HTTP 201</span><br>
+                                <strong class="text-danger">Rec: HTTP 500</strong>
+                            </td>
+                            <td>
+                                <span class="badge-mech">Screenshot</span>
+                                <span class="badge-mech">Network</span>
+                                <span class="badge-mech">Logs</span>
+                            </td>
+                            <td>
+                                <span class="status-success-bold">● Enviado</span><br>
+                                <small class="text-muted">Azure DevOps #9821</small>
+                            </td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalEnvio('CARD #001245')">Enviar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="editarCartao('CARD #001245')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('CARD #001245')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="CARD #001246"></td>
+                            <td><strong>CARD #001246</strong></td>
+                            <td><span class="badge-categoria badge-seguranca">Segurança</span></td>
+                            <td>API de Autenticação<br><small class="text-accent">Injeção SQL em Login</small></td>
+                            <td>
+                                <span class="text-accent">Esp: Retorno 401</span><br>
+                                <strong class="text-danger">Rec: DB Query Error 500</strong>
+                            </td>
+                            <td>
+                                <span class="badge-mech">Payload SQL</span>
+                                <span class="badge-mech">Response</span>
+                            </td>
+                            <td>
+                                <span class="status-warning-bold">○ Pendente</span><br>
+                                <small class="text-muted">Não integrado</small>
+                            </td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalEnvio('CARD #001246')">Enviar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="editarCartao('CARD #001246')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('CARD #001246')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="CARD #001247"></td>
+                            <td><strong>CARD #001247</strong></td>
+                            <td><span class="badge-categoria">Observabilidade</span></td>
+                            <td>Portal de Pagamentos<br><small class="text-accent">Timeout na Gateway</small></td>
+                            <td>
+                                <span class="text-accent">Esp: Resposta &lt; 2000ms</span><br>
+                                <strong class="text-danger">Rec: Timeout (15000ms)</strong>
+                            </td>
+                            <td>
+                                <span class="badge-mech">Network</span>
+                                <span class="badge-mech">Logs</span>
+                            </td>
+                            <td>
+                                <span class="status-danger-bold">✖ Erro Envio</span><br>
+                                <small class="text-danger">Tentativa 2 (HTTP 401)</small>
+                            </td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalEnvio('CARD #001247')">Reenviar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="editarCartao('CARD #001247')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('CARD #001247')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginação -->
+            <div class="pagination">
+                <span class="pagination-info">Exibindo 3 cartões de insucesso.</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Cadastro / Edição de Cartão -->
+    <div id="modalCartao" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitulo" class="modal-title">Novo Cartão de Insucesso</h2>
+            <form onsubmit="salvarCartao(event)">
+                <input type="hidden" id="cartaoId">
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="origemCartao">Origem do Insucesso *</label>
+                        <select id="origemCartao" required>
+                            <option value="Observabilidade">Observabilidade</option>
+                            <option value="Segurança">Segurança</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grupoCartao">Grupo *</label>
+                        <input type="text" id="grupoCartao" required placeholder="Ex: E-commerce">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cenarioCartao">Cenário de Teste *</label>
+                    <input type="text" id="cenarioCartao" required placeholder="Ex: Cadastro de Cliente">
+                </div>
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="esperadoCartao">Resultado Esperado</label>
+                        <input type="text" id="esperadoCartao" placeholder="Ex: HTTP 201 Created">
+                    </div>
+                    <div class="form-group">
+                        <label for="recebidoCartao">Resultado Recebido</label>
+                        <input type="text" id="recebidoCartao" placeholder="Ex: HTTP 500 Internal Error">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Evidências Anexadas</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label"><input type="checkbox" checked> Screenshot</label>
+                        <label class="checkbox-label"><input type="checkbox" checked> Network Log</label>
+                        <label class="checkbox-label"><input type="checkbox" checked> Response Payload</label>
+                        <label class="checkbox-label"><input type="checkbox" checked> Execution Logs</label>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalCartao()">Cancelar</button>
+                    <button type="submit" class="btn">Salvar Cartão</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Envio para Integração Externa -->
+    <div id="modalEnvio" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Enviar Cartão para Sistema Externo</h2>
+            <form onsubmit="executarEnvioIntegracao(event)">
+                <input type="hidden" id="envioCartaoId">
+
+                <div class="form-group">
+                    <label for="selectIntegracaoDestino">Selecione a Integração Cadastrada *</label>
+                    <select id="selectIntegracaoDestino" required>
+                        <option value="INT-101">Azure DevOps - Board QA (Azure DevOps)</option>
+                        <option value="INT-102">Notificações Teams - General (Microsoft Teams)</option>
+                        <option value="INT-103">Webhook Corporativo de Execução (API REST)</option>
+                    </select>
+                </div>
+
+                <!-- Histórico e Registro do Envio -->
+                <div class="card card-log-info">
+                    <h3 class="log-title">Dados do Registro de Envio</h3>
+                    <p class="log-item"><strong>Cartão:</strong> <span id="lblEnvioCartaoId"></span></p>
+                    <p class="log-item"><strong>Usuário Solicitante:</strong> admin@empresa.com.br</p>
+                    <p class="log-item margin-none"><strong>Tentativa Atual:</strong> #1 (Disparo sob demanda)</p>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalEnvio()">Cancelar</button>
+                    <button type="submit" class="btn btn-auth">Disparar Integração</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        function toggleSelectAll(master, targetId) {
+            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox`);
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
+
+        function abrirModalNovoCartao() {
+            document.getElementById('modalTitulo').innerText = 'Novo Cartão de Insucesso';
+            document.getElementById('cartaoId').value = '';
+            document.getElementById('origemCartao').value = 'Observabilidade';
+            document.getElementById('grupoCartao').value = '';
+            document.getElementById('cenarioCartao').value = '';
+            document.getElementById('esperadoCartao').value = '';
+            document.getElementById('recebidoCartao').value = '';
+            document.getElementById('modalCartao').style.display = 'flex';
+        }
+
+        function fecharModalCartao() {
+            document.getElementById('modalCartao').style.display = 'none';
+        }
+
+        function salvarCartao(e) {
+            e.preventDefault();
+            const id = document.getElementById('cartaoId').value;
+            if (id) {
+                alert(`Cartão ${id} atualizado com sucesso!`);
+            } else {
+                alert('Novo Cartão de insucesso registrado com sucesso!');
+            }
+            fecharModalCartao();
+        }
+
+        function editarCartao(id) {
+            document.getElementById('modalTitulo').innerText = `Editar ${id}`;
+            document.getElementById('cartaoId').value = id;
+            document.getElementById('origemCartao').value = 'Observabilidade';
+            document.getElementById('grupoCartao').value = 'E-commerce';
+            document.getElementById('cenarioCartao').value = 'Cadastro de Cliente';
+            document.getElementById('esperadoCartao').value = 'HTTP 201';
+            document.getElementById('recebidoCartao').value = 'HTTP 500';
+            document.getElementById('modalCartao').style.display = 'flex';
+        }
+
+        function abrirModalEnvio(id) {
+            document.getElementById('envioCartaoId').value = id;
+            document.getElementById('lblEnvioCartaoId').innerText = id;
+            document.getElementById('modalEnvio').style.display = 'flex';
+        }
+
+        function fecharModalEnvio() {
+            document.getElementById('modalEnvio').style.display = 'none';
+        }
+
+        function executarEnvioIntegracao(e) {
+            e.preventDefault();
+            const idCartao = document.getElementById('envioCartaoId').value;
+            const idIntegracao = document.getElementById('selectIntegracaoDestino').value;
+            alert(`Envio processado com sucesso!\n\n- Cartão: ${idCartao}\n- Integração: ${idIntegracao}\n- Data: ${new Date().toLocaleString()}\n- Status: Sucesso (HTTP 201 Created)\n- Identificador Externo Gerado: AZ-#${Math.floor(1000 + Math.random() * 9000)}`);
+            fecharModalEnvio();
+        }
+
+        function enviarSelecionadosParaIntegracao() {
+            const checkboxes = document.querySelectorAll('#cartaoTableBody .item-checkbox:checked');
+            const ids = Array.from(checkboxes).map(cb => cb.value);
+            if (ids.length === 0) {
+                alert('Selecione ao menos um cartão para enviar à integração.');
+                return;
+            }
+            if (confirm(`Deseja disparar o envio em lote de ${ids.length} cartão(ões) para a integração padrão do sistema?`)) {
+                alert(`Integração executada com sucesso para os cartões: [${ids.join(', ')}].`);
+            }
+        }
+
+        function excluirItem(id) {
+            if (confirm(`Deseja mover o ${id} para a lixeira?`)) {
+                alert(`${id} movido para a lixeira com sucesso.`);
+            }
+        }
+
+        function excluirSelecionados(targetId) {
+            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox:checked`);
+            const ids = Array.from(checkboxes).map(cb => cb.value);
+            if (ids.length === 0) {
+                alert('Nenhum cartão selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${ids.length} cartões selecionados para a lixeira?`)) {
+                alert(`Cartões [${ids.join(', ')}] movidos para a lixeira.`);
+            }
+        }
+
+        function filtrarTabela() {
+            const busca = document.getElementById('inputBusca').value.toLowerCase();
+            const origem = document.getElementById('selectOrigem').value.toLowerCase();
+            const status = document.getElementById('selectStatusEnvio').value.toLowerCase();
+            const linhas = document.querySelectorAll('#cartaoTableBody tr');
+
+            linhas.forEach(linha => {
+                const texto = linha.innerText.toLowerCase();
+                const correspondeBusca = texto.includes(busca);
+                const correspondeOrigem = !origem || texto.includes(origem);
+                const correspondeStatus = !status || texto.includes(status);
+
+                if (correspondeBusca && correspondeOrigem && correspondeStatus) {
+                    linha.style.display = '';
+                } else {
+                    linha.style.display = 'none';
+                }
+            });
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

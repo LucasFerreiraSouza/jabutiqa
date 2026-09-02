@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel SaaS - Jabuti QA Platform</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div class="saas-container">
+        <!-- Sidebar de Navegação SaaS -->
+        <aside class="saas-sidebar">
+            <div class="brand">
+                <h2>Menu</h2>
+
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+
+                <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
+            </div>
+            <ul class="saas-nav">
+                <li><a href="painel.html" class="active">Painel Geral</a></li>
+                <li><a href="loja.html">Planos & Assinatura</a></li>
+                <li><a href="gestao.html">Gestão de Usuários</a></li>
+                <li><a href="download.html">Downloads (.EXE)</a></li>
+                <li><a href="suporte.html">Suporte & FAQ</a></li>
+<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+        </aside>
+
+        <!-- Área Principal -->
+        <main class="saas-main">
+            <div class="header-bar">
+                <div>
+                    <h1 style="margin: 0; color: #004d40;">Painel de Controle</h1>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Visão geral dos direitos comerciais, consumo e licenças do sistema.</p>
+                </div>
+                <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
+            </div>
+
+            <!-- Métricas de Status Comercial -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Assinatura Vigente</h3>
+                    <div class="metric-value" id="valPlano">Plano Pro</div>
+                    <span class="metric-status status-active" id="valStatusAssinatura">Ativa (Renova em 25 dias)</span>
+                </div>
+
+                <div class="metric-card" style="border-top-color: #00acc1;">
+                    <h3>Saldo de Créditos</h3>
+                    <div class="metric-value" id="valSaldoMinutos">1.250 min</div>
+                    <span style="font-size: 0.8rem; color: #666;">Tarifa: R$ 0,10/min</span>
+                </div>
+
+                <div class="metric-card" style="border-top-color: #26a69a;">
+                    <h3>Licenças .EXE Ativas</h3>
+                    <div class="metric-value">2 / 5</div>
+                    <span style="font-size: 0.8rem; color: #666;">Dispositivos Autorizados</span>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Coluna Principal -->
+                <div>
+                    <!-- Resumo de Consumo Recente -->
+                    <div class="panel-card">
+                        <h3>Histórico Recente de Consumo (Minutos)</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid #eee;">
+                                    <th style="padding: 10px 0;">Data</th>
+                                    <th>Operação Executada</th>
+                                    <th>Tempo Total</th>
+                                    <th>Créditos Deduzidos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #f0f0f0;">
+                                    <td style="padding: 10px 0;">Hoje, 14:32</td>
+                                    <td>Suíte de Testes Integração - Lab 01</td>
+                                    <td>12 msgs / 18 min</td>
+                                    <td>18 créditos</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #f0f0f0;">
+                                    <td style="padding: 10px 0;">Ontem, 09:15</td>
+                                    <td>Validação de Observabilidade</td>
+                                    <td>45 min</td>
+                                    <td>45 créditos</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPT DE INICIALIZAÇÃO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDadosSessao();
+        });
+
+        function carregarDadosSessao() {
+            const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
+            const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+
+            if (sessaoAtiva !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('displayUsuarioBadge').innerText = email;
+            document.getElementById('displayOrgSidebar').innerText = org;
+        }
+
+        function copiarToken() {
+            const copyText = document.getElementById("tokenLicencaInput");
+            if (copyText) {
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                navigator.clipboard.writeText(copyText.value);
+                alert("Token da licença copiado para a área de transferência!");
+            }
+        }
+
+        function encerrarSessaoSaaS(e) {
+            e.preventDefault();
+            localStorage.removeItem('saas_sessao_ativa');
+            localStorage.removeItem('saas_usuario_email');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

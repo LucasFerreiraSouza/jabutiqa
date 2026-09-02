@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suporte & FAQ - Menu</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div class="saas-container">
+        <!-- Sidebar de Navegação SaaS -->
+        <aside class="saas-sidebar">
+            <div class="brand">
+                <h2>Menu</h2>
+
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+
+                <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
+            </div>
+            <ul class="saas-nav">
+                <li><a href="painel.html">Painel Geral</a></li>
+                <li><a href="loja.html">Planos & Assinatura</a></li>
+                <li><a href="gestao.html">Gestão de Usuários</a></li>
+                <li><a href="download.html">Downloads (.EXE)</a></li>
+                <li><a href="suporte.html" class="active">Suporte & FAQ</a></li>
+<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+        </aside>
+
+        <!-- Área Principal -->
+        <main class="saas-main">
+            <div class="header-bar">
+                <div>
+                    <h1 style="margin: 0; color: #004d40;">Suporte & Central de Ajuda</h1>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Encontre respostas rápidas para dúvidas frequentes ou abra um chamado técnico.</p>
+                </div>
+                <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
+            </div>
+
+            <!-- Abrir Chamado -->
+            <div class="panel-card" style="margin-bottom: 20px;">
+                <h3>Abrir Chamado Técnico</h3>
+                <form onsubmit="enviarTicket(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; color: #555; margin-bottom: 4px;">Assunto</label>
+                        <input type="text" required placeholder="Ex: Problema de sincronização no cliente .EXE" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; color: #555; margin-bottom: 4px;">Descrição detalhada</label>
+                        <textarea rows="4" required placeholder="Descreva os passos para reproduzir o problema..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-action">Enviar Ticket</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Perguntas Frequentes (FAQ) -->
+            <div class="panel-card">
+                <h3>Perguntas Frequentes (FAQ)</h3>
+                <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 15px;">
+                    <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <summary style="font-weight: bold; cursor: pointer; color: #004d40;">Como vinculo o aplicativo .EXE com minha conta do SaaS?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555;">Acesse a página de <strong>Downloads</strong>, copie a Chave de Licenciamento da sua organização e informe-a na tela inicial de Autenticação do aplicativo local.</p>
+                    </details>
+
+                    <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <summary style="font-weight: bold; cursor: pointer; color: #004d40;">Como é feita a contagem de créditos (minutos)?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555;">Os créditos são descontados com base no tempo total em que as suítes de testes ou execuções de mensageria permanecem em execução no cliente `.EXE`.</p>
+                    </details>
+
+                    <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <summary style="font-weight: bold; cursor: pointer; color: #004d40;">O que acontece se minhas licenças .EXE esgotarem?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555;">Uma terceira tentativa de login em um novo dispositivo será recusada até que você revogue uma licença antiga na página de <strong>Gestão de Usuários</strong> ou faça um upgrade de plano.</p>
+                    </details>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPT DE INICIALIZAÇÃO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDadosSessao();
+        });
+
+        function carregarDadosSessao() {
+            const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
+            const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+
+            if (sessaoAtiva !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('displayUsuarioBadge').innerText = email;
+            document.getElementById('displayOrgSidebar').innerText = org;
+        }
+
+        function enviarTicket(e) {
+            e.preventDefault();
+            alert("Ticket de suporte enviado com sucesso! Nossa equipe responderá em até 24 horas úteis.");
+            e.target.reset();
+        }
+
+        function encerrarSessaoSaaS(e) {
+            e.preventDefault();
+            localStorage.removeItem('saas_sessao_ativa');
+            localStorage.removeItem('saas_usuario_email');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

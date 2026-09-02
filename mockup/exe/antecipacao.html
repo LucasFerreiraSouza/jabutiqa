@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antecipação - Sistema de Gestão Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>Menu</h2>
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html" class="active">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <h1>Antecipação de Requisitos</h1>
+            <p>Análise prévia de ambiguidade, conflitos e lacunas em User Stories antes do desenvolvimento e testes.</p>
+
+            <div class="toolbar" style="margin-top: 20px;">
+                <div class="toolbar-group" style="width: 100%; justify-content: space-between;">
+                    <button class="btn" onclick="copiarPromptCompleto()">Copiar Prompt com Card Anexado</button>
+                    <button class="btn btn-secondary" onclick="limparCard()">Limpar Card</button>
+                </div>
+            </div>
+
+            <div class="form-group margin-top-15">
+                <label for="userStoryCard"><strong>Cole aqui o Card / User Story do Azure DevOps ou Jira:</strong></label>
+                <textarea id="userStoryCard" style="height: 150px; width: 100%; padding: 12px; font-family: monospace;" placeholder="Exemplo: Como administrador do sistema, quero cadastrar um novo usuário..."></textarea>
+            </div>
+
+            <div class="form-group margin-top-20">
+                <label><strong>Prompt Base da Análise (Pré-pronto):</strong></label>
+                <textarea id="basePromptText" readonly style="height: 250px; width: 100%; padding: 12px; background-color: #FAF4E2#FAF4E2; color: #333; font-family: monospace;"># PROMPT — ANÁLISE DE AMBIGUIDADES, CONFLITOS E LACUNAS EM USER STORY
+
+
+Atue simultaneamente como:
+
+* Analista de Requisitos Sênior;
+* QA Sênior;
+* Engenheiro de Software Sênior;
+* Especialista em testes funcionais;
+* Especialista em segurança de aplicações;
+* Especialista em API e contratos;
+* Especialista em Shift Left Testing.
+
+Vou fornecer abaixo uma User Story / requisito funcional.
+
+Sua função **NÃO é simplesmente reescrever ou melhorar o requisito**.
+
+Sua função é realizar uma **análise crítica de qualidade do requisito**, identificando tudo que possa gerar interpretações diferentes, implementação incorreta, testes incompletos, bugs ou conflitos entre Produto, Desenvolvimento e QA.
+
+---
+
+# OBJETIVO DA ANÁLISE
+
+Analise o requisito procurando:
+
+1. Ambiguidades;
+2. Informações ausentes;
+3. Regras de negócio não definidas;
+4. Comportamentos não especificados;
+5. Conflitos entre requisitos;
+6. Contradições;
+7. Critérios de aceitação incompletos;
+8. Cenários positivos ausentes;
+9. Cenários negativos ausentes;
+10. Casos extremos e limites;
+11. Regras de validação indefinidas;
+12. Regras de permissão indefinidas;
+13. Regras de segurança ausentes;
+14. Regras de concorrência;
+15. Idempotência e duplicidade;
+16. Tratamento de erros;
+17. Comportamento da interface;
+18. Comportamento da API;
+19. Persistência dos dados;
+20. Regras de auditoria;
+21. Regras de mensagens exibidas ao usuário;
+22. Dependências externas;
+23. Regras de estado;
+24. Regras de transição;
+25. Dados obrigatórios e opcionais;
+26. Limites mínimos e máximos;
+27. Formatos permitidos;
+28. Internacionalização/localização;
+29. Datas, horários e timezone;
+30. Performance;
+31. Observabilidade;
+32. Recuperação de falhas;
+33. Impactos em outros módulos;
+34. Regras de exclusão/alteração;
+35. Regras de consistência;
+36. Possíveis vulnerabilidades;
+37. Cenários que poderiam passar despercebidos pelo QA.
+
+---
+
+# REGRA PRINCIPAL
+
+**NÃO ASSUMA COMPORTAMENTOS QUE NÃO ESTÃO ESPECIFICADOS.**
+
+Se uma informação não estiver definida, marque explicitamente como:
+
+> ⚠️ NÃO ESPECIFICADO
+
+Não invente uma regra para preencher a lacuna.
+
+Quando houver uma interpretação provável, apresente-a apenas como hipótese e deixe claro que precisa de confirmação.
+
+---
+
+# CLASSIFICAÇÃO
+
+Classifique cada problema encontrado como:
+
+### 🔴 CRÍTICO
+
+Pode causar:
+
+* implementação incorreta;
+* comportamento incompatível;
+* falha de segurança;
+* perda/corrupção de dados;
+* violação de regra de negócio;
+* impossibilidade de testar corretamente.
+
+### 🟠 ALTO
+
+Pode causar:
+
+* bugs relevantes;
+* divergência entre sistemas;
+* comportamento inconsistente;
+* retrabalho significativo.
+
+### 🟡 MÉDIO
+
+Pode gerar:
+
+* dúvidas de implementação;
+* testes incompletos;
+* comportamento inconsistente em casos específicos.
+
+### 🟢 BAIXO
+
+Problema menor de clareza, documentação ou padronização.
+
+---
+
+# FORMATO DA RESPOSTA
+
+## 1. RESUMO EXECUTIVO
+
+Informe:
+
+* Nota do requisito de 0 a 10;
+* Quantidade de problemas encontrados;
+* Quantidade por severidade;
+* Se o requisito está pronto para desenvolvimento;
+* Se está pronto para QA;
+* Principal risco encontrado.
+
+Use:
+
+```text
+Nota: X/10
+Pronto para desenvolvimento: SIM/NÃO
+Pronto para QA: SIM/NÃO
+Risco principal: ...
+```
+
+---
+
+# 2. AMBIGUIDADES
+
+Crie uma tabela:
+
+| ID | Trecho | Problema | Por que é ambíguo | Impacto | Severidade |
+| -- | ------ | -------- | ----------------- | ------- | ---------- |
+
+Para cada ambiguidade, explique exatamente o que pode ser interpretado de mais de uma maneira.
+
+---
+
+# 3. INFORMAÇÕES AUSENTES
+
+Identifique tudo que deveria estar definido para que Dev e QA consigam implementar/testar sem precisar adivinhar.
+
+| ID | Informação ausente | Por que é necessária | Severidade |
+| -- | ------------------ | -------------------- | ---------- |
+
+---
+
+# 4. CONFLITOS E CONTRADIÇÕES
+
+Procure conflitos:
+
+* dentro do próprio requisito;
+* entre descrição e critérios de aceitação;
+* entre critérios de aceitação;
+* entre comportamento esperado e regras de negócio.
+
+| ID | Regra A | Regra B | Conflito | Severidade |
+| -- | ------- | ------- | -------- | ---------- |
+
+Se não houver conflitos, informe explicitamente:
+
+> Nenhum conflito identificado.
+
+---
+
+# 5. REGRAS DE NEGÓCIO NÃO DEFINIDAS
+
+Liste perguntas que precisam ser respondidas pelo Product Owner/Analista.
+
+Exemplos:
+
+* O e-mail é único globalmente?
+* E-mail diferencia maiúsculas/minúsculas?
+* O usuário pode ser criado sem senha?
+* O usuário começa ativo ou inativo?
+* O administrador pode criar outro administrador?
+* Existe limite de usuários?
+* O usuário recebe e-mail?
+* O que acontece se o envio do e-mail falhar?
+
+Não responda essas perguntas por conta própria.
+
+---
+
+# 6. VALIDAÇÕES AUSENTES
+
+Analise todos os campos.
+
+Para cada campo, procure:
+
+* obrigatório/opcional;
+* tamanho mínimo;
+* tamanho máximo;
+* formato;
+* caracteres permitidos;
+* caracteres proibidos;
+* espaços;
+* acentos;
+* Unicode;
+* valores duplicados;
+* normalização;
+* case sensitivity;
+* valores nulos;
+* valores vazios.
+
+Use:
+
+| Campo | Regra existente | Regra ausente | Pergunta necessária |
+| ----- | --------------- | ------------- | ------------------- |
+
+---
+
+# 7. MATRIZ DE CENÁRIOS DE TESTE
+
+Crie uma matriz abrangente.
+
+Inclua obrigatoriamente:
+
+### Happy Path
+
+* fluxo válido principal.
+
+### Negative Testing
+
+* dados inválidos;
+* campos vazios;
+* campos ausentes;
+* formato inválido;
+* valores inexistentes.
+
+### Boundary Testing
+
+* mínimo;
+* máximo;
+* abaixo do mínimo;
+* acima do máximo.
+
+### Security Testing
+
+* autenticação;
+* autorização;
+* privilege escalation;
+* injection;
+* XSS;
+* abuso de endpoint;
+* enumeração;
+* exposição de dados.
+
+### Concurrency
+
+* dois usuários realizando a mesma operação simultaneamente;
+* duplo clique;
+* múltiplas requisições;
+* retry.
+
+### Failure
+
+* API indisponível;
+* timeout;
+* banco indisponível;
+* erro parcial;
+* perda de conexão.
+
+### Recovery
+
+* retry;
+* refresh;
+* reprocessamento;
+* recuperação após falha.
+
+Use:
+
+| ID | Cenário | Pré-condição | Ação | Resultado esperado | Prioridade |
+| -- | ------- | ------------ | ---- | ------------------ | ---------- |
+
+---
+
+# 8. API / CONTRATO
+
+Se o requisito envolver API, identifique o que está faltando:
+
+* método HTTP;
+* endpoint;
+* autenticação;
+* autorização;
+* headers;
+* request;
+* response;
+* HTTP status;
+* schema;
+* campos obrigatórios;
+* campos opcionais;
+* erros;
+* códigos de erro;
+* idempotência;
+* paginação;
+* rate limit;
+* timeout.
+
+Se não houver informação suficiente, marque:
+
+> ⚠️ CONTRATO DA API NÃO ESPECIFICADO.
+
+NÃO invente endpoints ou códigos HTTP como se fossem requisitos existentes.
+
+---
+
+# 9. UI / UX
+
+Analise:
+
+* estados da tela;
+* loading;
+* sucesso;
+* erro;
+* campos inválidos;
+* mensagens;
+* botão habilitado/desabilitado;
+* duplo clique;
+* cancelamento;
+* confirmação;
+* refresh;
+* perda de dados;
+* acessibilidade.
+
+Liste o que precisa ser definido.
+
+---
+
+# 10. SEGURANÇA
+
+Faça uma análise específica de segurança.
+
+Considere, quando aplicável:
+
+* autenticação;
+* autorização;
+* RBAC;
+* privilégio mínimo;
+* enumeração de usuários;
+* exposição de informações;
+* senha;
+* armazenamento de senha;
+* logs;
+* dados sensíveis;
+* injection;
+* XSS;
+* CSRF;
+* rate limiting;
+* brute force;
+* auditoria.
+
+Classifique cada risco.
+
+---
+
+# 11. OBSERVABILIDADE
+
+Identifique se deveria existir definição para:
+
+* logs;
+* eventos;
+* auditoria;
+* métricas;
+* rastreamento;
+* correlation ID;
+* erros;
+* alertas.
+
+Exemplo:
+
+> Quem criou o usuário?
+> Quando?
+> De onde?
+> Qual resultado?
+> Qual erro ocorreu?
+
+---
+
+# 12. CONCORRÊNCIA E IDEMPOTÊNCIA
+
+Verifique especificamente:
+
+* duas criações simultâneas;
+* mesma requisição enviada duas vezes;
+* refresh;
+* retry automático;
+* timeout seguido de retry;
+* duplo clique;
+* múltiplas abas.
+
+Pergunte:
+
+> Existe garantia de que a mesma operação não criará duas entidades?
+
+Se não estiver definido:
+
+> ⚠️ IDEMPOTÊNCIA NÃO ESPECIFICADA.
+
+---
+
+# 13. PERSISTÊNCIA E ESTADO
+
+Analise:
+
+* quando os dados são persistidos;
+* transação;
+* rollback;
+* estado inicial;
+* estado final;
+* consistência;
+* cache;
+* atualização da interface;
+* comportamento após refresh.
+
+---
+
+# 14. IMPACTO EM OUTROS MÓDULOS
+
+Identifique possíveis impactos em:
+
+* autenticação;
+* autorização;
+* banco de dados;
+* notificações;
+* relatórios;
+* auditoria;
+* integrações;
+* e-mails;
+* dashboards;
+* APIs;
+* outros usuários.
+
+---
+
+# 15. PERGUNTAS PARA O PRODUCT OWNER
+
+Crie uma lista final contendo **somente perguntas que precisam de decisão humana**.
+
+Exemplo:
+
+```text
+PO01 — O e-mail deve ser único globalmente?
+PO02 — O e-mail deve ser case-insensitive?
+PO03 — Qual o tamanho mínimo da senha?
+PO04 — Qual o tamanho máximo da senha?
+PO05 — O usuário nasce ativo?
+PO06 — O administrador pode criar outro administrador?
+```
+
+Priorize primeiro as perguntas que bloqueiam desenvolvimento.
+
+---
+
+# 16. DEFINITION OF READY
+
+Avalie se o requisito atende uma Definition of Ready mínima.
+
+Checklist:
+
+* [ ] Objetivo claro
+* [ ] Regra de negócio clara
+* [ ] Critérios de aceitação testáveis
+* [ ] Campos definidos
+* [ ] Validações definidas
+* [ ] Permissões definidas
+* [ ] Erros definidos
+* [ ] Segurança considerada
+* [ ] Cenários negativos definidos
+* [ ] Limites definidos
+* [ ] Dependências conhecidas
+* [ ] API definida quando aplicável
+* [ ] Estados definidos
+* [ ] Concorrência considerada
+* [ ] Observabilidade definida quando necessária
+
+Marque cada item como:
+
+✅ OK
+⚠️ Parcial
+✕ Ausente
+
+---
+
+# 17. ANÁLISE DE SHIFT LEFT
+
+Explique:
+
+1. Quais problemas poderiam ser descobertos antes do desenvolvimento?
+2. Quais problemas deveriam ser resolvidos no requisito?
+3. Quais deveriam ser resolvidos durante o desenvolvimento?
+4. Quais deveriam virar testes automatizados?
+5. Quais deveriam virar testes de integração?
+6. Quais deveriam ser cobertos pelo QA?
+7. Quais deveriam ser monitorados em produção?
+
+Monte:
+
+| Problema | Momento ideal para descobrir | Responsável |
+| -------- | ---------------------------- | ----------- |
+
+---
+
+# 18. VEREDITO FINAL
+
+Finalize obrigatoriamente com:
+
+```text
+VEREDITO:
+
+🟢 Pronto
+🟡 Pronto com ressalvas
+🔴 Não pronto
+```
+
+Explique objetivamente o motivo.
+
+Se estiver 🟡 ou 🔴, informe exatamente quais pontos precisam ser resolvidos antes do desenvolvimento.
+
+---
+
+# REQUISITO PARA ANÁLISE
+
+[COLE AQUI A USER STORY / CARD DO AZURE DEVOPS]
+
+</textarea>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        function copiarPromptCompleto() {
+            const cardContent = document.getElementById('userStoryCard').value.trim();
+            
+            if (!cardContent) {
+                alert('Por favor, cole o conteúdo do Card / User Story antes de copiar.');
+                return;
+            }
+
+            const basePrompt = document.getElementById('basePromptText').value;
+            const promptFinal = basePrompt + '\n' + cardContent;
+
+            navigator.clipboard.writeText(promptFinal).then(() => {
+                alert('Prompt completo copiado com sucesso! Agora é só colar na IA.');
+            }).catch(err => {
+                alert('Erro ao copiar o prompt: ' + err);
+            });
+        }
+
+        function limparCard() {
+            document.getElementById('userStoryCard').value = '';
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

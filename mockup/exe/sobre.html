@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Sistema de Gestão</title>
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+<body>
+    <aside class="sidebar">
+                <h2>Menu</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html" class="active">Sobre</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO (MÓDULO) -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6'. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <!-- Função 1: Consulta (Somente Leitura) -->
+        <section class="card">
+            <h1>Sobre o Sistema</h1>
+            <p>Consulta detalhada das especificações técnicas, versão, licença e informações institucionais.</p>
+            
+            <h2>Informações Técnicas e de Licenciamento (Consulta)</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Nome do Produto</label>
+                    <span>Enterprise Management Suite (EMS)</span>
+                </div>
+                <div class="info-item">
+                    <label>Versão do .EXE</label>
+                    <span>v4.12.8-stable</span>
+                </div>
+                <div class="info-item">
+                    <label>Versão do Núcleo</label>
+                    <span>Core v2.5.1</span>
+                </div>
+                <div class="info-item">
+                    <label>Versão do Formato de Dados</label>
+                    <span>Schema v3.0</span>
+                </div>
+                <div class="info-item">
+                    <label>Status da Licença</label>
+                    <span style="color: #16a34a; font-weight: bold;">Ativa (SaaS Controlado)</span>
+                </div>
+                <div class="info-item">
+                    <label>Organização Atual</label>
+                    <span>Global Health & Diagnostics Corp.</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 8px;">Tecnologias e Componentes Relevantes</h3>
+                <p style="margin-bottom: 12px; font-size: 0.95rem;">Engine baseada em Node.js / C++ Core, interface web moderna responsiva, banco de dados relacional criptografado e integração nativa com nuvem.</p>
+                
+                <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 8px;">Links de Suporte e Ajuda</h3>
+                <p style="margin-bottom: 12px; font-size: 0.95rem;">
+                    <a href="#" style="color: #0ea5e9; text-decoration: none; margin-right: 15px;">Central de Ajuda & Documentação</a>
+                    <a href="#" style="color: #0ea5e9; text-decoration: none; margin-right: 15px;">Abrir Chamado de Suporte</a>
+                    <a href="#" style="color: #0ea5e9; text-decoration: none;">Política de Privacidade e Termos Legais</a>
+                </p>
+
+                <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 8px;">Informações Institucionais e Legais</h3>
+                <p style="font-size: 0.9rem; color: #64748b;">Todos os direitos reservados. Este software é licenciado sob acordos corporativos restritos. A reprodução não autorizada ou distribuição não licenciada é estritamente proibida por lei.</p>
+            </div>
+        </section>
+
+        <!-- Função 2: Atualização de Informações Editáveis -->
+        <section class="card">
+            <h2>Atualização de Configurações Locais</h2>
+            <p>Modifique abaixo somente os campos permitidos para customização local da sua instituição.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Informações locais atualizadas com sucesso!');">
+                <div class="form-group">
+                    <label for="labName">Nome / Apelido da Unidade</label>
+                    <input type="text" id="labName" value="Unidade Central de Operações - Unidade Norte">
+                </div>
+
+                <div class="form-group">
+                    <label for="localInst">Informações Institucionais Locais</label>
+                    <textarea id="localInst">Unidade certificada ISO 9001 com foco em atendimento integrado e agilidade nos processos corporativos.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="pref">Preferências de Apresentação Permitidas</label>
+                    <select id="pref">
+                        <option value="light">Tema Claro Padrão</option>
+                        <option value="dark">Tema Escuro</option>
+                        <option value="compact">Modo Compacto de Alta Densidade</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Salvar Alterações</button>
+            </form>
+
+            <div class="alert-box">
+                <strong>Atenção:</strong> Por motivos de segurança e conformidade, os seguintes itens <u>não podem</u> ser alterados pelo usuário e são gerenciados automaticamente pelo sistema ou pelo SaaS:
+                <ul>
+                    <li>Versão real do software e integridade do executável (.EXE)</li>
+                    <li>Identificadores técnicos protegidos e chaves de hardware</li>
+                    <li>Informações de licença controladas remotamente pelo SaaS</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarSessao();
+        });
+
+        function verificarSessao() {
+            const sessaoAtiva = localStorage.getItem('Jabuti QA_sessao_ativa');
+            if (sessaoAtiva !== 'true') {
+                window.location.href = 'login.html';
+            }
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

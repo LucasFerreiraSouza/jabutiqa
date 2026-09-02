@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticação - Sistema de Gestão Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <aside class="sidebar">
+                <h2>Menu</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO (MÓDULO) -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html" class="active">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <h1>Central de Autenticação</h1>
+            <p>Gerencie e valide as formas de acesso e credenciais utilizadas nos testes de integração dos sistemas.</p>
+
+            <!-- Toolbar principal -->
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="btn" onclick="abrirModalForm('novo')">+ Nova Credencial</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
+                </div>
+
+                <div class="toolbar-group">
+                    <div class="form-group margin-none">
+                        <input type="text" id="searchInput" placeholder="Buscar perfil de acesso..." class="input-search">
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <select id="filterMech">
+                            <option value="">Todos os Mecanismos</option>
+                            <option value="Usuário / Senha">Usuário / Senha</option>
+                            <option value="Bearer Token">Bearer Token</option>
+                            <option value="API Key">API Key</option>
+                            <option value="Basic Auth">Basic Auth</option>
+                            <option value="Headers">Headers Customizados</option>
+                            <option value="Cookies">Cookies</option>
+                            <option value="Sessão">Sessão / Variáveis</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Autenticação -->
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                            </th>
+                            <th>ID</th>
+                            <th>Nome do Perfil</th>
+                            <th>Mecanismo</th>
+                            <th>Identificador / Chave</th>
+                            <th>Status da Sessão</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="authTableBody">
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                            <td>#001</td>
+                            <td><strong>Acesso Admin ERP</strong></td>
+                            <td><span class="badge-mech">Usuário / Senha</span></td>
+                            <td>admin_prod</td>
+                            <td><span class="status-success">Autenticado</span></td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-auth" onclick="autenticar('1', 'Acesso Admin ERP')">Autenticar</button>
+                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('1', 'Acesso Admin ERP')">Duplicar</button>
+                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '1', 'Acesso Admin ERP', 'Usuário / Senha', 'admin_prod')">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('1')">Excluir</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                            <td>#002</td>
+                            <td><strong>Gateway REST API</strong></td>
+                            <td><span class="badge-mech">Bearer Token</span></td>
+                            <td>eyJhbGciOiJIUzI1Ni...</td>
+                            <td><span class="status-danger">Expirado</span></td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-auth" onclick="autenticar('2', 'Gateway REST API')">Autenticar</button>
+                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('2', 'Gateway REST API')">Duplicar</button>
+                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '2', 'Gateway REST API', 'Bearer Token', 'eyJhbGci...')">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('2')">Excluir</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
+                            <td>#003</td>
+                            <td><strong>Serviço Parceiro</strong></td>
+                            <td><span class="badge-mech">API Key</span></td>
+                            <td>X-API-Key: k8s_sec_9948</td>
+                            <td><span class="status-success">Ativo</span></td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-auth" onclick="autenticar('3', 'Serviço Parceiro')">Autenticar</button>
+                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('3', 'Serviço Parceiro')">Duplicar</button>
+                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '3', 'Serviço Parceiro', 'API Key', 'X-API-Key: k8s_sec_9948')">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('3')">Excluir</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td>#004</td>
+                            <td><strong>Sessão Web Cookies</strong></td>
+                            <td><span class="badge-mech">Cookies</span></td>
+                            <td>PHPSESSID=a8f9c1...</td>
+                            <td><span class="status-warning">Pendente</span></td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-auth" onclick="autenticar('4', 'Sessão Web Cookies')">Autenticar</button>
+                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('4', 'Sessão Web Cookies')">Duplicar</button>
+                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '4', 'Sessão Web Cookies', 'Cookies', 'PHPSESSID=a8f9c1...')">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('4')">Excluir</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginação -->
+            <div class="pagination">
+                <span class="pagination-info">Exibindo 1-4 de 4 configurações</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Form (Novo / Editar Perfil de Autenticação) -->
+    <div class="modal" id="formModal">
+        <div class="modal-content">
+            <h2 id="modalFormTitle" class="modal-title">Nova Credencial</h2>
+            <form onsubmit="salvarPerfil(event)">
+                <input type="hidden" id="authId">
+                
+                <div class="form-group">
+                    <label for="authName">Nome do Perfil de Autenticação</label>
+                    <input type="text" id="authName" required placeholder="Ex: Acesso Ambiente Homologação">
+                </div>
+
+                <div class="form-group">
+                    <label for="authMechanism">Mecanismo de Autenticação</label>
+                    <select id="authMechanism" required onchange="ajustarCamposDinamicos(this.value)">
+                        <option value="">Selecione...</option>
+                        <option value="Usuário / Senha">Usuário / Senha</option>
+                        <option value="Bearer Token">Bearer Token</option>
+                        <option value="API Key">API Key</option>
+                        <option value="Basic Auth">Basic Auth</option>
+                        <option value="Headers">Headers Customizados</option>
+                        <option value="Cookies">Cookies</option>
+                        <option value="Sessão">Sessão / Variáveis</option>
+                        <option value="Outro">Outros Mecanismos Configuráveis</option>
+                    </select>
+                </div>
+
+                <!-- Campos Dinâmicos Baseados no Mecanismo Selecionado -->
+                <div class="dynamic-fields" id="dynamicContainer">
+                    <p class="dynamic-help-text">Selecione um mecanismo acima para visualizar os parâmetros de configuração específicos.</p>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('formModal')">Cancelar</button>
+                    <button type="submit" class="btn">Salvar Credencial</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
+
+        function getSelecionados() {
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function ajustarCamposDinamicos(mech) {
+            const container = document.getElementById('dynamicContainer');
+            if (!mech) {
+                container.innerHTML = '<p class="dynamic-help-text">Selecione um mecanismo para carregar o formulário.</p>';
+                return;
+            }
+
+            let html = '';
+            if (mech === 'Usuário / Senha' || mech === 'Basic Auth') {
+                html = `
+                    <div class="form-group">
+                        <label>Usuário / Username</label>
+                        <input type="text" placeholder="Informe o usuário..." required>
+                    </div>
+                    <div class="form-group margin-none">
+                        <label>Senha / Password</label>
+                        <input type="password" placeholder="Informe a senha..." required>
+                    </div>`;
+            } else if (mech === 'Bearer Token') {
+                html = `
+                    <div class="form-group margin-none">
+                        <label>Bearer Token Value</label>
+                        <textarea placeholder="Cole o token JWT/Bearer aqui..." required></textarea>
+                    </div>`;
+            } else if (mech === 'API Key') {
+                html = `
+                    <div class="form-group">
+                        <label>Nome do Header/Parâmetro (Key)</label>
+                        <input type="text" placeholder="Ex: X-API-Key" required>
+                    </div>
+                    <div class="form-group margin-none">
+                        <label>Valor da Chave (Value)</label>
+                        <input type="text" placeholder="Ex: secret_12345" required>
+                    </div>`;
+            } else if (mech === 'Headers' || mech === 'Cookies' || mech === 'Sessão' || mech === 'Outro') {
+                html = `
+                    <div class="form-group margin-none">
+                        <label>Parâmetros / Variáveis de Sessão (JSON ou Key-Value)</label>
+                        <textarea placeholder='Ex: {"Header-Custom": "Valor", "Cookie_Session": "abc123xyz"}' required></textarea>
+                    </div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function abrirModalForm(modo, id = '', nome = '', mech = '', val = '') {
+            document.getElementById('modalFormTitle').innerText = modo === 'novo' ? 'Nova Credencial' : 'Editar Credencial';
+            document.getElementById('authId').value = id;
+            document.getElementById('authName').value = nome;
+            document.getElementById('authMechanism').value = mech;
+            ajustarCamposDinamicos(mech);
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function salvarPerfil(e) {
+            e.preventDefault();
+            const id = document.getElementById('authId').value;
+            const nome = document.getElementById('authName').value;
+            if (id) {
+                alert(`Perfil de Autenticação "${nome}" atualizado com sucesso!`);
+            } else {
+                alert(`Perfil de Autenticação "${nome}" criado com sucesso!`);
+            }
+            fecharModal('formModal');
+        }
+
+        function autenticar(id, nome) {
+            alert(`Executando processo de autenticação para "${nome}" (#${id})...\n\nResultado: Autenticado com Sucesso! Token/Sessão atualizados.`);
+        }
+
+        function duplicarPerfil(id, nome) {
+            alert(`Perfil "#${id} - ${nome}" duplicado com sucesso! Cópia criada como "${nome} (Cópia)".`);
+        }
+
+        function excluirPerfil(id) {
+            if (confirm(`Deseja mover o perfil de autenticação #${id} para a lixeira?`)) {
+                alert(`Perfil #${id} movido para a lixeira.`);
+            }
+        }
+
+        function excluirSelecionados() {
+            const ids = getSelecionados();
+            if (ids.length === 0) {
+                alert('Nenhum perfil de autenticação selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${ids.length} perfis selecionados para a lixeira?`)) {
+                alert(`Perfis [${ids.join(', ')}] movidos para a lixeira.`);
+            }
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso - Portal SaaS Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            
+            <div class="login-brand">
+                <span class="badge-exe">SaaS Cloud Platform</span>
+                <h1>Jabuti QA</h1>
+                        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+                <p>Gestão Comercial, Licenciamento e Consumo</p>
+            </div>
+
+            <!-- Abas de Navegação (Login / Criar Conta) -->
+            <div class="support-tabs">
+                <button class="tab-btn active" onclick="alternarAba('login')">Entrar</button>
+                <button class="tab-btn" onclick="alternarAba('cadastro')">Criar Conta</button>
+            </div>
+
+            <!-- FORMULÁRIO DE LOGIN -->
+            <div id="tabLogin" class="tab-content">
+                <form onsubmit="realizarLoginSaaS(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">E-mail Profissional *</label>
+                        <input type="email" id="loginEmail" required placeholder="seuemail@empresa.com.br" autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginSenha">Senha *</label>
+                        <input type="password" id="loginSenha" required placeholder="••••••••••••">
+                    </div>
+
+                    <div class="form-options">
+                        <label style="cursor: pointer;">
+                            <input type="checkbox" id="chkLembrarSaaS"> Lembrar de mim
+                        </label>
+                        <a href="#" onclick="abrirModalEsqueceuSenha(event)" style="color: #A2CE5B; font-weight: 600; text-decoration: none;">Esqueceu a senha?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-login-submit" id="btnEntrarSaaS">Acessar Painel SaaS</button>
+                </form>
+            </div>
+
+            <!-- FORMULÁRIO DE CADASTRO (CONTA + ORGANIZAÇÃO) -->
+            <div id="tabCadastro" class="tab-content" style="display: none;">
+                <form onsubmit="cadastrarContaOrganizacao(event)">
+                    <div class="form-group">
+                        <label for="cadNome">Nome Completo *</label>
+                        <input type="text" id="cadNome" required placeholder="João Silva">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cadEmail">E-mail Corporativo *</label>
+                        <input type="email" id="cadEmail" required placeholder="joao@suaempresa.com.br">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cadOrganizacao">Nome da Organização / Empresa *</label>
+                        <input type="text" id="cadOrganizacao" required placeholder="Sua Empresa Ltda">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cadSenha">Senha de Acesso *</label>
+                        <input type="password" id="cadSenha" required minlength="8" placeholder="Mínimo 8 caracteres">
+                    </div>
+
+                    <div class="form-options" style="margin-bottom: 20px;">
+                        <label style="cursor: pointer;">
+                            <input type="checkbox" required>
+                            Li e aceito os <a href="#" style="color: #A2CE5B;">Termos de Uso</a> e <a href="#" style="color: #A2CE5B;">Política de Privacidade</a>.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-login-submit" id="btnCadastrarSaaS">Criar Conta e Organização</button>
+                </form>
+            </div>
+
+            <!-- Alertas da Interface -->
+            <div id="saasAlerta" class="alert-box" style="display: none;"></div>
+
+            <div class="login-footer">
+                Menu v2.4.0 • Ambiente Seguro SSL Encrypted
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ESQUECEU A SENHA -->
+    <div id="modalEsqueceuSenha" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-top: 0; color: #A2CE5B;">Redefinir Senha</h3>
+            <p style="font-size: 0.85rem; color: #A2CE5B; margin-bottom: 15px;">Digite seu e-mail cadastrado para receber o link de redefinição.</p>
+            
+            <form onsubmit="enviarRedefinicaoSenha(event)">
+                <div class="form-group">
+                    <label for="recuperarEmail">E-mail Cadastrado</label>
+                    <input type="email" id="recuperarEmail" required placeholder="seuemail@empresa.com.br">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalEsqueceuSenha()">Cancelar</button>
+                    <button type="submit" class="btn">Enviar Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE NAVEGAÇÃO E AUTENTICAÇÃO SAAS -->
+    <script>
+        // Alternar entre abas Entrar e Criar Conta
+        function alternarAba(aba) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const tabLogin = document.getElementById('tabLogin');
+            const tabCadastro = document.getElementById('tabCadastro');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            if (aba === 'login') {
+                tabs[0].classList.add('active');
+                tabLogin.style.display = 'block';
+                tabCadastro.style.display = 'none';
+            } else {
+                tabs[1].classList.add('active');
+                tabLogin.style.display = 'none';
+                tabCadastro.style.display = 'block';
+            }
+            ocultarAlerta();
+        }
+
+        // Modais
+        function abrirModalEsqueceuSenha(e) {
+            e.preventDefault();
+            document.getElementById('modalEsqueceuSenha').style.display = 'flex';
+        }
+
+        function fecharModalEsqueceuSenha() {
+            document.getElementById('modalEsqueceuSenha').style.display = 'none';
+        }
+
+        // Autenticação SaaS
+        function realizarLoginSaaS(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const senha = document.getElementById('loginSenha').value;
+            const btn = document.getElementById('btnEntrarSaaS');
+
+            btn.disabled = true;
+            btn.innerText = 'Autenticando...';
+
+            setTimeout(() => {
+                if (email && senha) {
+                    localStorage.setItem('saas_usuario_email', email);
+                    localStorage.setItem('saas_sessao_ativa', 'true');
+                    
+                    // Redireciona para a página principal do SaaS
+                    window.location.href = 'painel.html';
+                } else {
+                    exibirAlerta('E-mail ou senha inválidos.', 'erro');
+                    btn.disabled = false;
+                    btn.innerText = 'Acessar Painel SaaS';
+                }
+            }, 1000);
+        }
+
+        // Cadastro de Conta + Organização
+        function cadastrarContaOrganizacao(e) {
+            e.preventDefault();
+            const nome = document.getElementById('cadNome').value.trim();
+            const email = document.getElementById('cadEmail').value.trim();
+            const org = document.getElementById('cadOrganizacao').value.trim();
+            const btn = document.getElementById('btnCadastrarSaaS');
+
+            btn.disabled = true;
+            btn.innerText = 'Criando Conta & Organização...';
+
+            setTimeout(() => {
+                localStorage.setItem('saas_usuario_nome', nome);
+                localStorage.setItem('saas_usuario_email', email);
+                localStorage.setItem('saas_organizacao_nome', org);
+                localStorage.setItem('saas_sessao_ativa', 'true');
+                
+                // Redireciona para a loja do SaaS
+                window.location.href = 'loja.html';
+            }, 1200);
+        }
+
+        // Envio de senha
+        function enviarRedefinicaoSenha(e) {
+            e.preventDefault();
+            const email = document.getElementById('recuperarEmail').value;
+            alert(`Link de recuperação enviado com sucesso para: ${email}`);
+            fecharModalEsqueceuSenha();
+        }
+
+        // Auxiliares
+        function exibirAlerta(msg, tipo) {
+            const alerta = document.getElementById('saasAlerta');
+            alerta.style.display = 'block';
+            alerta.innerText = msg;
+            if (tipo === 'erro') {
+                alerta.style.background = 'linear-gradient(180deg, rgba(255, 235, 238, 0.9) 0%, rgba(255, 205, 210, 0.8) 100%)';
+                alerta.style.color = '#c62828';
+            } else {
+                alerta.style.background = 'linear-gradient(180deg, rgba(232, 245, 233, 0.9) 0%, rgba(200, 230, 201, 0.8) 100%)';
+                alerta.style.color = '#2e7d32';
+            }
+        }
+
+        function ocultarAlerta() {
+            document.getElementById('saasAlerta').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

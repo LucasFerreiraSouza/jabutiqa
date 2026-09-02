@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lixeira - Sistema de Gestão Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <aside class="sidebar">
+                <h2>Menu</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="lixeira.html" class="active">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <h1>Lixeira do Sistema</h1>
+            <p>Gerenciamento de entidades excluídas logicamente. Aqui você pode visualizar, restaurar ou excluir permanentemente os registros.</p>
+
+            <!-- Barra de Ferramentas: Busca, Filtros, Ordenação e Ações em Massa -->
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <div class="form-group margin-none">
+                        <input type="text" id="searchInput" placeholder="Buscar por entidade ou ID..." class="min-width-220">
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <select id="filterType">
+                            <option value="">Todos os Tipos</option>
+                            <option value="Usuario">Usuários</option>
+                            <option value="Grupo">Grupos</option>
+                            <option value="Cenario">Cenários</option>
+                            <option value="Agendamento">Agendamentos</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <select id="sortBy">
+                            <option value="date_desc">Exclusão: Mais Recente</option>
+                            <option value="date_asc">Exclusão: Mais Antigo</option>
+                            <option value="name_asc">Nome (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Ações em Massa -->
+                <div class="toolbar-group">
+                    <button class="btn btn-sm" onclick="restaurarSelecionados()">Restaurar Selecionados</button>
+                    <button class="btn btn-sm btn-danger" onclick="excluirSelecionados()">Apagar Selecionados</button>
+                </div>
+            </div>
+
+            <!-- Tabela de Dados com Seleção Individual e em Massa -->
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                            </th>
+                            <th>ID</th>
+                            <th>Tipo de Entidade</th>
+                            <th>Identificador / Nome</th>
+                            <th>Data de Exclusão</th>
+                            <th>Excluído por</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trashTableBody">
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="101"></td>
+                            <td>#101</td>
+                            <td>Usuário</td>
+                            <td>Carlos Eduardo (carlos@lab.com)</td>
+                            <td>28/08/2026 14:20</td>
+                            <td>Admin SaaS</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('101', 'Usuário', 'Carlos Eduardo', '28/08/2026 14:20', 'Admin SaaS')">Visualizar</button>
+                                    <button class="btn btn-sm" onclick="restaurarItem('101')">Restaurar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('101')">Apagar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="102"></td>
+                            <td>#102</td>
+                            <td>Cenário</td>
+                            <td>Simulação Financeira Q3 2026</td>
+                            <td>25/08/2026 09:15</td>
+                            <td>Gestor Financeiro</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('102', 'Cenário', 'Simulação Financeira Q3 2026', '25/08/2026 09:15', 'Gestor Financeiro')">Visualizar</button>
+                                    <button class="btn btn-sm" onclick="restaurarItem('102')">Restaurar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('102')">Apagar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="103"></td>
+                            <td>#103</td>
+                            <td>Agendamento</td>
+                            <td>Sincronização Noturna de Dados</td>
+                            <td>20/08/2026 18:00</td>
+                            <td>Sistema (Auto)</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('103', 'Agendamento', 'Sincronização Noturna', '20/08/2026 18:00', 'Sistema (Auto)')">Visualizar</button>
+                                    <button class="btn btn-sm" onclick="restaurarItem('103')">Restaurar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('103')">Apagar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginação -->
+            <div class="pagination">
+                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-3 de 3 registros</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para Visualização de Detalhes -->
+    <div class="modal" id="viewModal">
+        <div class="modal-content">
+            <h2 class="modal-header-title text-teal-dark border-bottom-teal">Detalhes do Registro Excluído</h2>
+            <div class="info-grid grid-1-col gap-10">
+                <div class="info-item"><label>ID</label><span id="modalId">-</span></div>
+                <div class="info-item"><label>Tipo de Entidade</label><span id="modalType">-</span></div>
+                <div class="info-item"><label>Nome / Identificador</label><span id="modalName">-</span></div>
+                <div class="info-item"><label>Data da Exclusão Lógica</label><span id="modalDate">-</span></div>
+                <div class="info-item"><label>Responsável pela Exclusão</label><span id="modalUser">-</span></div>
+            </div>
+            <div class="text-right margin-top-15">
+                <button class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Interatividade da Lixeira -->
+    <script>
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
+
+        function getSelecionados() {
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function restaurarItem(id) {
+            if(confirm(`Deseja restaurar a entidade ID #${id}?`)) {
+                alert(`Entidade #${id} restaurada com sucesso!`);
+            }
+        }
+
+        function restaurarSelecionados() {
+            const ids = getSelecionados();
+            if(ids.length === 0) {
+                alert('Nenhum item selecionado para restauração.');
+                return;
+            }
+            if(confirm(`Deseja restaurar os ${ids.length} itens selecionados?`)) {
+                alert(`Itens [${ids.join(', ')}] restaurados com sucesso!`);
+            }
+        }
+
+        function excluirItem(id) {
+            if(confirm(`ATENÇÃO: Deseja apagar PERMANENTEMENTE a entidade ID #${id}? Esta ação não pode ser desfeita.`)) {
+                alert(`Entidade #${id} removida permanentemente do banco de dados.`);
+            }
+        }
+
+        function excluirSelecionados() {
+            const ids = getSelecionados();
+            if(ids.length === 0) {
+                alert('Nenhum item selecionado para exclusão.');
+                return;
+            }
+            if(confirm(`ATENÇÃO: Deseja apagar PERMANENTEMENTE os ${ids.length} itens selecionados? Esta ação é irreversível.`)) {
+                alert(`Itens [${ids.join(', ')}] excluídos permanentemente.`);
+            }
+        }
+
+        function visualizarItem(id, tipo, nome, data, usuario) {
+            document.getElementById('modalId').innerText = '#' + id;
+            document.getElementById('modalType').innerText = tipo;
+            document.getElementById('modalName').innerText = nome;
+            document.getElementById('modalDate').innerText = data;
+            document.getElementById('modalUser').innerText = usuario;
+            document.getElementById('viewModal').style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('viewModal').style.display = 'none';
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

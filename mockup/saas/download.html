@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads (.EXE) - Menu</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div class="saas-container">
+        <!-- Sidebar de Navegação SaaS -->
+        <aside class="saas-sidebar">
+            <div class="brand">
+                <h2>Menu</h2>
+
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+
+                <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
+            </div>
+            <ul class="saas-nav">
+                <li><a href="painel.html">Painel Geral</a></li>
+                <li><a href="loja.html">Planos & Assinatura</a></li>
+                <li><a href="gestao.html">Gestão de Usuários</a></li>
+                <li><a href="download.html" class="active">Downloads (.EXE)</a></li>
+                <li><a href="suporte.html">Suporte & FAQ</a></li>
+<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+        </aside>
+
+        <!-- Área Principal -->
+        <main class="saas-main">
+            <div class="header-bar">
+                <div>
+                    <h1 style="margin: 0; color: #004d40;">Central de Downloads</h1>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Baixe o aplicativo cliente Jabuti QA Executável e obtenha suas credenciais de vinculação.</p>
+                </div>
+                <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
+            </div>
+
+            <!-- Card de Instalação Principal -->
+            <div class="panel-card" style="margin-bottom: 20px;">
+                <h3>Jabuti QA Client para Windows (64-bit)</h3>
+                <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">Instalador oficial contendo todas as ferramentas de observabilidade, execução de cenários e envio de mensagens para testes de carga e integração.</p>
+                
+                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <button class="btn-action" style="padding: 12px 24px; font-size: 1rem;" onclick="simularDownload()">⬇ Baixar Jabuti QA_v2.4.1_Setup.exe</button>
+                    <span style="font-size: 0.85rem; color: #666;">Versão 2.4.1 • Lançada em Fev/2026 • Windows 10/11</span>
+                </div>
+            </div>
+
+            <!-- Instalação e Chave de Licença -->
+            <div class="panel-card" style="margin-bottom: 20px;">
+                <h3>Chave de Licenciamento da Organização</h3>
+                <p style="font-size: 0.9rem; color: #555;">Copie a chave abaixo e cole na tela de <strong>Autenticação</strong> (`autenticacao.html`) após abrir o aplicativo `.EXE` instalado em sua máquina local.</p>
+
+                <div style="display: flex; gap: 10px; margin-top: 15px; max-width: 600px;">
+                    <input type="text" id="tokenLicencaInput" value="JABUTI-ORG-88F9-2026-SECURE-KEY-X9" readonly style="flex: 1; padding: 10px; font-family: monospace; border: 1px solid #ccc; background: #FAF4E2; border-radius: 4px;">
+                    <button class="btn-action btn-secondary" onclick="copiarToken()">Copiar Chave</button>
+                </div>
+            </div>
+
+            <!-- Requisitos do Sistema -->
+            <div class="panel-card">
+                <h3>Requisitos Mínimos do Sistema</h3>
+                <ul style="font-size: 0.9rem; color: #555; line-height: 1.8; padding-left: 20px; margin: 10px 0 0;">
+                    <li><strong>Sistema Operacional:</strong> Windows 10 ou Windows 11 (64-bit)</li>
+                    <li><strong>Memória RAM:</strong> Mínimo de 4 GB (8 GB recomendado)</li>
+                    <li><strong>Rede:</strong> Acesso à internet via HTTPS (porta 443) para validação de créditos e sincronização.</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPT DE INICIALIZAÇÃO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDadosSessao();
+        });
+
+        function carregarDadosSessao() {
+            const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
+            const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+
+            if (sessaoAtiva !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('displayUsuarioBadge').innerText = email;
+            document.getElementById('displayOrgSidebar').innerText = org;
+        }
+
+        function copiarToken() {
+            const copyText = document.getElementById("tokenLicencaInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            alert("Chave de licenciamento copiada com sucesso!");
+        }
+
+        function simularDownload() {
+            alert("Iniciando o download do executável Jabuti QA_v2.4.1_Setup.exe...");
+        }
+
+        function encerrarSessaoSaaS(e) {
+            e.preventDefault();
+            localStorage.removeItem('saas_sessao_ativa');
+            localStorage.removeItem('saas_usuario_email');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

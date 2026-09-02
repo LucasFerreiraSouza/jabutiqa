@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Usuários e Dispositivos - Menu</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div class="saas-container">
+        <!-- Sidebar de Navegação SaaS -->
+        <aside class="saas-sidebar">
+            <div class="brand">
+                <h2>Menu</h2>
+
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+
+                <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
+            </div>
+            <ul class="saas-nav">
+                <li><a href="painel.html">Painel Geral</a></li>
+                <li><a href="loja.html">Planos & Assinatura</a></li>
+                <li><a href="gestao.html" class="active">Gestão de Usuários</a></li>
+                <li><a href="download.html">Downloads (.EXE)</a></li>
+                <li><a href="suporte.html">Suporte & FAQ</a></li>
+<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+        </aside>
+
+        <!-- Área Principal -->
+        <main class="saas-main">
+            <div class="header-bar">
+                <div>
+                    <h1 style="margin: 0; color: #004d40;">Gestão de Usuários e Licenças</h1>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Gerencie quem pode acessar a organização e os computadores autorizados a rodar o cliente .EXE.</p>
+                </div>
+                <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
+            </div>
+
+            <!-- Formulário Convite de Usuário -->
+            <div class="panel-card invite-card">
+                <h3>Convidar Novo Usuário</h3>
+                <form class="invite-form" onsubmit="adicionarUsuario(event)">
+                    <input type="email" id="novoEmail" placeholder="email@empresa.com.br" required class="invite-input">
+                    <select id="novoPerfil" class="invite-select">
+                        <option value="Operador">Operador (Usa .EXE)</option>
+                        <option value="Administrador">Administrador</option>
+                    </select>
+                    <button type="submit" class="btn-action">Enviar Convite</button>
+                </form>
+            </div>
+            <!-- Tabela de Usuários -->
+            <div class="panel-card" style="margin-bottom: 20px;">
+                <h3>Usuários Cadastrados</h3>
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; margin-top: 10px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #eee;">
+                            <th style="padding: 10px 0;">E-mail</th>
+                            <th>Perfil</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaUsuarios">
+                        <tr style="border-bottom: 1px solid #f0f0f0;">
+                            <td style="padding: 10px 0;">lucas@qajabuti.com.br</td>
+                            <td>Administrador</td>
+                            <td><span class="metric-status status-active">Ativo</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #f0f0f0;">
+                            <td style="padding: 10px 0;">qa.lab01@empresa.com.br</td>
+                            <td>Operador</td>
+                            <td><span class="metric-status status-active">Ativo</span></td>
+                            <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Remover</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tabela de Dispositivos .EXE Autorizados -->
+            <div class="panel-card">
+                <h3>Dispositivos .EXE Autorizados (2 de 5 em uso)</h3>
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; margin-top: 10px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #eee;">
+                            <th style="padding: 10px 0;">Nome da Máquina</th>
+                            <th>ID da Licença / Token</th>
+                            <th>Último Acesso</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #f0f0f0;">
+                            <td style="padding: 10px 0;">DESKTOP-QA-LAB01</td>
+                            <code>LIC-88F9-2026-QA</code>
+                            <td>Hoje, 14:32</td>
+                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Revogar</button></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #f0f0f0;">
+                            <td style="padding: 10px 0;">DEV-MACHINE-LUCAS</td>
+                            <code>LIC-11B3-2026-QA</code>
+                            <td>Ontem, 09:15</td>
+                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Revogar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPT DE INICIALIZAÇÃO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDadosSessao();
+        });
+
+        function carregarDadosSessao() {
+            const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
+            const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+
+            if (sessaoAtiva !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('displayUsuarioBadge').innerText = email;
+            document.getElementById('displayOrgSidebar').innerText = org;
+        }
+
+        function adicionarUsuario(e) {
+            e.preventDefault();
+            const email = document.getElementById('novoEmail').value;
+            const perfil = document.getElementById('novoPerfil').value;
+
+            const tbody = document.getElementById('tabelaUsuarios');
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid #f0f0f0';
+            tr.innerHTML = `
+                <td style="padding: 10px 0;">${email}</td>
+                <td>${perfil}</td>
+                <td><span class="metric-status status-active">Pendente</span></td>
+                <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Remover</button></td>
+            `;
+            tbody.appendChild(tr);
+            document.getElementById('novoEmail').value = '';
+            alert('Convite enviado com sucesso!');
+        }
+
+        function removerLinha(btn) {
+            if (confirm('Deseja realmente remover este acesso?')) {
+                btn.closest('tr').remove();
+            }
+        }
+
+        function revogarLicenca(btn) {
+            if (confirm('Revogar esta licença desconectará o aplicativo .EXE da máquina. Continuar?')) {
+                btn.closest('tr').remove();
+            }
+        }
+
+        function encerrarSessaoSaaS(e) {
+            e.preventDefault();
+            localStorage.removeItem('saas_sessao_ativa');
+            localStorage.removeItem('saas_usuario_email');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

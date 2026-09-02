@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganho - Sistema de Gestão Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <aside class="sidebar">
+                <h2>Menu</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html" class="active">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <h1>Métrica de Ganho e ROI</h1>
+            <p>Mede o impacto econômico e operacional através dos minutos de QA manual evitados, acompanhamento do ROI e consumo do modelo comercial pré-pago.</p>
+
+            <!-- Resumo do Saldo e Indicadores Principais -->
+            <div class="info-grid margin-bottom-20">
+                <div class="card card-metric-success">
+                    <h3>Minutos Evitados Acumulados</h3>
+                    <p class="metric-value text-success">12.450 min</p>
+                    <span class="metric-subtext">Eq. Manual: 13.000 min | Auto: 550 min</span>
+                </div>
+                <div class="card card-metric-primary">
+                    <h3>Economia Operacional Líquida</h3>
+                    <p class="metric-value text-primary">R$ 14.800,00</p>
+                    <span class="metric-subtext">Economia Bruta - Custos de Implantação</span>
+                </div>
+                <div class="card card-metric-warning">
+                    <h3>Saldo Pré-Pago Disponível</h3>
+                    <p class="metric-value text-warning">R$ 420,00</p>
+                    <span class="metric-subtext">Tarifa SaaS: R$ 0,10 / min evitado (4.200 min rest.)</span>
+                </div>
+            </div>
+
+            <!-- Alternador de Visões do Módulo -->
+            <div class="toolbar margin-bottom-20">
+                <div class="toolbar-group">
+                    <button class="btn btn-primary-tab" id="btnTabResultados" onclick="trocarAba('resultados')">Resultados & Retorno</button>
+                    <button class="btn btn-secondary" id="btnTabConsumo" onclick="trocarAba('consumo')">Extrato de Consumo (Pré-Pago)</button>
+                    <button class="btn btn-secondary" id="btnTabParametros" onclick="trocarAba('parametros')">Parâmetros & Custos</button>
+                </div>
+                <div class="toolbar-group">
+                    <button class="btn btn-auth" onclick="recalcularGanhos()">Recalcular Métricas</button>
+                </div>
+            </div>
+
+            <!-- ABA 1: RESULTADOS E RETORNO -->
+            <div id="secaoResultados">
+                <div class="toolbar">
+                    <div class="toolbar-group">
+                        <div class="form-group margin-none">
+                            <input type="text" placeholder="Filtrar por Grupo, Cenário..." class="input-search">
+                        </div>
+                        <div class="form-group margin-none">
+                            <select id="filterPeriodo">
+                                <option value="30">Últimos 30 dias</option>
+                                <option value="90">Últimos 90 dias</option>
+                                <option value="365">Ano Atual</option>
+                                <option value="todos">Todo o Período</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Grupo / Aplicação</th>
+                                <th>Execuções</th>
+                                <th>Cenários</th>
+                                <th>Tempo Auto (MS Total)</th>
+                                <th>Min. Manuais Eq.</th>
+                                <th>Minutos Evitados</th>
+                                <th>Economia Gerada</th>
+                                <th>Retorno Est. (ROI)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Módulo Financeiro & Checkout</strong></td>
+                                <td>450</td>
+                                <td>12</td>
+                                <td>18.000.000 ms (300 min)</td>
+                                <td>4.500 min</td>
+                                <td><strong class="text-success">4.200 min</strong></td>
+                                <td>R$ 6.300,00</td>
+                                <td><span class="text-success text-bold">+ 310%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>API de Autenticação e Usuários</strong></td>
+                                <td>820</td>
+                                <td>8</td>
+                                <td>9.000.000 ms (150 min)</td>
+                                <td>4.100 min</td>
+                                <td><strong class="text-success">3.950 min</strong></td>
+                                <td>R$ 5.925,00</td>
+                                <td><span class="text-success text-bold">+ 280%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Portal do Cliente (Web)</strong></td>
+                                <td>210</td>
+                                <td>15</td>
+                                <td>6.000.000 ms (100 min)</td>
+                                <td>4.400 min</td>
+                                <td><strong class="text-success">4.300 min</strong></td>
+                                <td>R$ 6.450,00</td>
+                                <td><span class="text-warning text-bold">Parâmetros pendentes</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ABA 2: EXTRATO DE CONSUMO (PRÉ-PAGO / IDEMPOTENTE) -->
+            <div id="secaoConsumo" class="display-none">
+                <div class="toolbar">
+                    <div class="toolbar-group">
+                        <button class="btn btn-danger" onclick="excluirSelecionados('consumoTableBody')">Excluir Selecionados</button>
+                    </div>
+                    <div class="toolbar-group">
+                        <div class="form-group margin-none">
+                            <input type="text" placeholder="Buscar por ID Execução ou Comparação..." class="input-search-wide">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="th-checkbox">
+                                    <input type="checkbox" onclick="toggleSelectAll(this, 'consumoTableBody')">
+                                </th>
+                                <th>Data / Hora</th>
+                                <th>ID Exec. / Comparação</th>
+                                <th>MS Esp. + MS Rec. = MS Total</th>
+                                <th>Min. Contabilizados</th>
+                                <th>Tarifa</th>
+                                <th>Valor Consumido</th>
+                                <th>Saldo Ant. &rarr; Post.</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consumoTableBody">
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                                <td>24/10/2026 14:30</td>
+                                <td>#EXEC-8801 / #CMP-101</td>
+                                <td>10.000 + 50.000 = 60.000 ms</td>
+                                <td>10 min evitados</td>
+                                <td>R$ 0,10</td>
+                                <td><strong class="text-danger">R$ 1,00</strong></td>
+                                <td>R$ 421,00 &rarr; R$ 420,00</td>
+                                <td class="text-center">
+                                    <div class="action-buttons-group">
+                                        <button class="btn btn-sm btn-auth" onclick="verDetalhesConsumo('8801')">Inspecionar</button>
+                                        <button class="btn btn-sm btn-danger" onclick="excluirItem('8801', 'Registro de Consumo')">Excluir</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                                <td>24/10/2026 14:15</td>
+                                <td>#EXEC-8800 / #CMP-100</td>
+                                <td>5.000 + 25.000 = 30.000 ms</td>
+                                <td>15 min evitados</td>
+                                <td>R$ 0,10</td>
+                                <td><strong class="text-danger">R$ 1,50</strong></td>
+                                <td>R$ 422,50 &rarr; R$ 421,00</td>
+                                <td class="text-center">
+                                    <div class="action-buttons-group">
+                                        <button class="btn btn-sm btn-auth" onclick="verDetalhesConsumo('8800')">Inspecionar</button>
+                                        <button class="btn btn-sm btn-danger" onclick="excluirItem('8800', 'Registro de Consumo')">Excluir</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ABA 3: CONFIGURAÇÃO DE PARÂMETROS E CUSTOS DE IMPLEMENTAÇÃO -->
+            <div id="secaoParametros" class="display-none">
+                <form onsubmit="salvarParametros(event)">
+                    <div class="card card-bordered margin-bottom-20">
+                        <h3>1. Regra de Determinação de Tempo Manual Equivalente e Comercial</h3>
+                        <div class="info-grid">
+                            <div class="form-group">
+                                <label for="metodoTempoManual">Método de Minutos Manuais Equivalentes</label>
+                                <select id="metodoTempoManual" onchange="alternarMetodo(this.value)">
+                                    <option value="A">Método A — Configurado (Qtd. Testes × T_teste)</option>
+                                    <option value="B">Método B — Histórico / Calibrado pelo Cliente</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tTeste">Tempo Manual por Teste (T_teste em minutos)</label>
+                                <input type="number" id="tTeste" value="10" required placeholder="Ex: 10 min por caso de teste">
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="form-group">
+                                <label for="cMin">Custo do QA por Minuto (C_min)</label>
+                                <input type="text" id="cMin" value="R$ 1,50" required placeholder="Ex: R$ 1.50/min">
+                            </div>
+                            <div class="form-group">
+                                <label for="tarifaSaaS">Tarifa Comercial SaaS (R$ por Minuto Evitado)</label>
+                                <input type="text" id="tarifaSaaS" value="R$ 0,10" required readonly class="input-readonly">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-bordered margin-bottom-20">
+                        <h3>2. Custos de Implementação do Laboratório</h3>
+                        <div class="info-grid">
+                            <div class="form-group">
+                                <label for="tDes">Desenvolvimento (T_des min | C_des R$/min)</label>
+                                <div class="flex-gap-10">
+                                    <input type="number" placeholder="Minutos (T_des)" value="1200">
+                                    <input type="text" placeholder="Custo/min (C_des)" value="R$ 2,00">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tConfig">Configuração Inicial (T_config min | C_config R$/min)</label>
+                                <div class="flex-gap-10">
+                                    <input type="number" placeholder="Minutos (T_config)" value="300">
+                                    <input type="text" placeholder="Custo/min (C_config)" value="R$ 1,50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="form-group">
+                                <label for="tInfra">Infraestrutura (T_infra min | C_infra R$/min)</label>
+                                <div class="flex-gap-10">
+                                    <input type="number" placeholder="Minutos (T_infra)" value="600">
+                                    <input type="text" placeholder="Custo/min (C_infra)" value="R$ 0,50">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="custoTotalInicial">Custo Total Inicial Calculado</label>
+                                <input type="text" id="custoTotalInicial" value="R$ 3.150,00" readonly class="input-readonly-highlight">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn">Salvar e Atualizar Parâmetros</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Paginação -->
+            <div class="pagination margin-top-20">
+                <span class="pagination-info text-primary-dark">Consumo faturável verificado e calibrado.</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts de Interatividade e Regras do Módulo Ganho -->
+    <script>
+        function trocarAba(aba) {
+            const secRes = document.getElementById('secaoResultados');
+            const secCon = document.getElementById('secaoConsumo');
+            const secPar = document.getElementById('secaoParametros');
+
+            const btnRes = document.getElementById('btnTabResultados');
+            const btnCon = document.getElementById('btnTabConsumo');
+            const btnPar = document.getElementById('btnTabParametros');
+
+            secRes.style.display = 'none';
+            secCon.style.display = 'none';
+            secPar.style.display = 'none';
+
+            btnRes.classList.add('btn-secondary');
+            btnRes.classList.remove('btn-primary-tab');
+            btnCon.classList.add('btn-secondary');
+            btnCon.classList.remove('btn-primary-tab');
+            btnPar.classList.add('btn-secondary');
+            btnPar.classList.remove('btn-primary-tab');
+
+            if (aba === 'resultados') {
+                secRes.style.display = 'block';
+                btnRes.classList.add('btn-primary-tab');
+                btnRes.classList.remove('btn-secondary');
+            } else if (aba === 'consumo') {
+                secCon.style.display = 'block';
+                btnCon.classList.add('btn-primary-tab');
+                btnCon.classList.remove('btn-secondary');
+            } else if (aba === 'parametros') {
+                secPar.style.display = 'block';
+                btnPar.classList.add('btn-primary-tab');
+                btnPar.classList.remove('btn-secondary');
+            }
+        }
+
+        function toggleSelectAll(master, targetId) {
+            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox`);
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
+
+        function alternarMetodo(metodo) {
+            if (metodo === 'B') {
+                alert('Atenção: Método B selecionado. O sistema utilizará os parâmetros de calibração histórica do cliente.\n\nRegra Jabuti QA: A equivalência direta "tempo automatizado = tempo manual" NUNCA é aplicada automaticamente.');
+            }
+        }
+
+        function salvarParametros(e) {
+            e.preventDefault();
+            alert('Parâmetros de ganho, custos de infraestrutura e tarifas salvas com sucesso!\n\nAs métricas do painel foram recalculadas.');
+        }
+
+        function recalcularGanhos() {
+            alert('Recalculando minutos evitados, economia acumulada e ROI com base nas configurações ativas...');
+        }
+
+        function verDetalhesConsumo(idExec) {
+            alert(`Detalhamento Idempotente do Consumo #${idExec}:\n\n- MS Esperado + MS Recebido = MS Total\n- Minutos Contabilizados\n- Tarifa R$ 0,10/min\n- Verificação Anti-Duplicidade: OK (Chave de Consumo Única)`);
+        }
+
+        function excluirItem(id, tipo) {
+            if (confirm(`Deseja mover o ${tipo} #${id} para a lixeira?`)) {
+                alert(`${tipo} #${id} movido para a lixeira.`);
+            }
+        }
+
+        function excluirSelecionados(targetId) {
+            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox:checked`);
+            const ids = Array.from(checkboxes).map(cb => cb.value);
+            if (ids.length === 0) {
+                alert('Nenhum item selecionado nesta tabela.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${ids.length} itens selecionados para a lixeira?`)) {
+                alert(`Itens [${ids.join(', ')}] movidos para a lixeira.`);
+            }
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

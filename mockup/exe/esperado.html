@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esperado - Sistema de Gestão Jabuti QA</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <aside class="sidebar">
+                <h2>Menu</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <!-- Categoria: SISTEMA -->
+            <li class="nav-category">SISTEMA</li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <!-- Categoria: NÚCLEO (MÓDULO) -->
+            <li class="nav-category">NÚCLEO</li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html" class="active">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+
+            <!-- Categoria: MÉTRICA -->
+            <li class="nav-category">MÉTRICA</li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <!-- Categoria: EXTENSÃO -->
+            <li class="nav-category">EXTENSÃO</li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+
+            <!-- Sair / Encerrar Sessão -->
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <h1>Mapeamento de Resultados Esperados</h1>
+            <p>Cadastre os critérios de aceite, oráculos de teste e regras de validação considerados corretos para a comparação das execuções.</p>
+
+            <!-- Toolbar Principal -->
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="btn" onclick="abrirModalEsperado('novo')">+ Novo Esperado</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
+                </div>
+
+                <div class="toolbar-group">
+                    <div class="form-group margin-none">
+                        <input type="text" id="searchInput" placeholder="Buscar padrão esperado..." class="input-search">
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <select id="filterType">
+                            <option value="">Todas as Estruturas</option>
+                            <option value="HTTP / API">HTTP / API</option>
+                            <option value="DOM / UI">DOM / UI</option>
+                            <option value="Visual / Screenshot">Visual / Screenshot</option>
+                            <option value="Arquivos / Downloads">Arquivos / Downloads</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Resultados Esperados -->
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                            </th>
+                            <th>ID</th>
+                            <th>Nome do Oráculo / Regra</th>
+                            <th>Tipo de Resposta</th>
+                            <th>Validações Principais</th>
+                            <th>Tolerância Ajustada</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="esperadoTableBody">
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                            <td>#EXP-001</td>
+                            <td><strong>Payload Resposta Login</strong></td>
+                            <td><span class="badge-categoria">HTTP / API</span></td>
+                            <td>Status 200, JSON, Headers, Body</td>
+                            <td>Estrita (0% variação)</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('1', 'Payload Resposta Login')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '1')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirEsperado('1')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                            <td>#EXP-002</td>
+                            <td><strong>Layout Dashboard Financeiro</strong></td>
+                            <td><span class="badge-categoria">Visual / Screenshot</span></td>
+                            <td>Screenshot, Imagem, Vídeo</td>
+                            <td>Layout 95% similaridade</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('2', 'Layout Dashboard Financeiro')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '2')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirEsperado('2')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
+                            <td>#EXP-003</td>
+                            <td><strong>Relatório Mensal de Vendas</strong></td>
+                            <td><span class="badge-categoria">Arquivos / Downloads</span></td>
+                            <td>PDF, XLSX, CSV, XML</td>
+                            <td>Ignorar Timestamps em cabeçalhos</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('3', 'Relatório Mensal de Vendas')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '3')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirEsperado('3')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td>#EXP-004</td>
+                            <td><strong>Elementos da Tela de Checkout</strong></td>
+                            <td><span class="badge-categoria">DOM / UI</span></td>
+                            <td>DOM, Texto, Campos, Regiões</td>
+                            <td>Aceita novos atributos HTML5</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('4', 'Elementos da Tela de Checkout')">Duplicar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '4')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirEsperado('4')">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginação -->
+            <div class="pagination">
+                <span class="pagination-info">Exibindo 1-4 de 4 oráculos cadastrados</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Form (Novo / Editar Esperado) -->
+    <div class="modal" id="esperadoModal">
+        <div class="modal-content modal-lg">
+            <h2 id="modalTitle">Cadastrar Resultado Esperado</h2>
+            <form onsubmit="salvarEsperado(event)">
+                <input type="hidden" id="esperadoId">
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="esperadoNome">Nome do Padrão Esperado</label>
+                        <input type="text" id="esperadoNome" required placeholder="Ex: Resposta Validação de Pedido">
+                    </div>
+                    <div class="form-group">
+                        <label for="esperadoTipo">Categoria de Análise</label>
+                        <select id="esperadoTipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="HTTP / API">HTTP / API / Protocolos</option>
+                            <option value="DOM / UI">Elementos DOM / Texto UI</option>
+                            <option value="Visual / Screenshot">Visual / Mídia / Screenshot</option>
+                            <option value="Arquivos / Downloads">Documentos e Arquivos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="esperadoHttpUrl">Validação HTTP / URL / Headers</label>
+                        <input type="text" id="esperadoHttpUrl" placeholder="Ex: Status 200 | Content-Type: application/json">
+                    </div>
+                    <div class="form-group">
+                        <label for="esperadoTolerancia">Configuração de Tolerância</label>
+                        <input type="text" id="esperadoTolerancia" placeholder="Ex: Variação < 5% em imagens | Ignorar campos dinâmicos">
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="esperadoBodyJson">Estrutura de Body (JSON, XML ou Texto)</label>
+                        <textarea id="esperadoBodyJson" placeholder='Ex: { "status": "sucesso", "codigo": 200 }'></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="esperadoDomCampos">Seletores DOM, Campos e Regiões Espelhadas</label>
+                        <textarea id="esperadoDomCampos" placeholder="Ex: #btn-pagamento, .alerta-sucesso, div.container-regional"></textarea>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="esperadoMidia">Mídias de Referência (Imagem, Screenshot, Vídeo, Áudio)</label>
+                        <input type="text" id="esperadoMidia" placeholder="Caminho/URL de imagem base ou mídia oráculo...">
+                    </div>
+                    <div class="form-group">
+                        <label for="esperadoArquivos">Documentos Esperados (PDF, CSV, XLSX, XML, Downloads)</label>
+                        <input type="text" id="esperadoArquivos" placeholder="Anexar modelo de arquivo ou esquema de validação...">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('esperadoModal')">Cancelar</button>
+                    <button type="submit" class="btn">Salvar Esperado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
+
+        function getSelecionados() {
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function abrirModalEsperado(modo, id = '') {
+            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Cadastrar Resultado Esperado' : 'Editar Padrão Esperado';
+            document.getElementById('esperadoId').value = id;
+            if (modo === 'novo') {
+                document.getElementById('esperadoNome').value = '';
+                document.getElementById('esperadoTipo').value = '';
+                document.getElementById('esperadoHttpUrl').value = '';
+                document.getElementById('esperadoTolerancia').value = '';
+                document.getElementById('esperadoBodyJson').value = '';
+                document.getElementById('esperadoDomCampos').value = '';
+                document.getElementById('esperadoMidia').value = '';
+                document.getElementById('esperadoArquivos').value = '';
+            }
+            document.getElementById('esperadoModal').style.display = 'flex';
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function salvarEsperado(e) {
+            e.preventDefault();
+            const id = document.getElementById('esperadoId').value;
+            const nome = document.getElementById('esperadoNome').value;
+            if (id) {
+                alert(`Estrutura esperada "${nome}" atualizada com sucesso!`);
+            } else {
+                alert(`Estrutura esperada "${nome}" cadastrada com sucesso!`);
+            }
+            fecharModal('esperadoModal');
+        }
+
+        function duplicarEsperado(id, nome) {
+            alert(`Padrão esperado "#${id} - ${nome}" duplicado com sucesso! Cópia criada.`);
+        }
+
+        function excluirEsperado(id) {
+            if (confirm(`Deseja mover a regra esperada #${id} para a lixeira?`)) {
+                alert(`Regra #${id} enviada para a lixeira.`);
+            }
+        }
+
+        function excluirSelecionados() {
+            const ids = getSelecionados();
+            if (ids.length === 0) {
+                alert('Nenhum item selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${ids.length} itens selecionados para a lixeira?`)) {
+                alert(`Itens [${ids.join(', ')}] movidos para a lixeira.`);
+            }
+        }
+        
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('Jabuti QA_sessao_ativa');
+            localStorage.removeItem('Jabuti QA_usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
