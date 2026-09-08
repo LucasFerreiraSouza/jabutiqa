@@ -26,7 +26,7 @@
     /* Text Colors */
     --text-primary: #000000;       /* Preto Grafite */
     --text-secondary: #1a1a1a;     /* Cinza Técnico */
-    --text-muted: #f1f1f1;         /* Cinza Suave */
+    --text-muted: #000000;         /* Cinza Suave */
     
     /* Status Colors (QA Semantics) */
     --status-pass-bg: #ecfdf5;
