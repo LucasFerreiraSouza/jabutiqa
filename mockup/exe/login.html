@@ -4,29 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acesso - Sistema de Gestão Jabuti QA (.exe)</title>
-    <link rel="stylesheet" href="../../style.css">
+    <title>Acesso Sistema de Gestão Jabuti QA (.exe)</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
 
-    <!-- PAINEL PRINCIPAL (Visível apenas após Autenticação) -->
+    <!-- PAINEL PRINCIPAL (Visível apenas após Autenticação Local) -->
     <div id="painelConteudo" style="display: none;">
         <aside class="sidebar">
-            <h2>Menu</h2>
+            <h2>MENU</h2>
 
-            <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
             <div class="banner-painel">
                 <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
             </div>
             <ul class="nav-links">
-                <!-- Categoria: SISTEMA -->
                 <li class="nav-category">SISTEMA</li>
-                <li><a href="index.html" class="active">Início</a></li>
-                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="sobre.html" class="active">Sobre</a></li>
                 <li><a href="lixeira.html">Lixeira</a></li>
 
-                <!-- Categoria: NÚCLEO -->
                 <li class="nav-category">NÚCLEO</li>
                 <li><a href="antecipacao.html">0. Antecipação</a></li>
                 <li><a href="grupo.html">1. Grupo</a></li>
@@ -37,87 +33,33 @@
                 <li><a href="comparacao.html">6. Comparação</a></li>
                 <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-                <!-- Categoria: MÉTRICA -->
                 <li class="nav-category">MÉTRICA</li>
                 <li><a href="observabilidade.html">Observabilidade</a></li>
                 <li><a href="seguranca.html">Segurança</a></li>
                 <li><a href="ganho.html">Ganho</a></li>
 
-                <!-- Categoria: EXTENSÃO -->
                 <li class="nav-category">EXTENSÃO</li>
                 <li><a href="integracao.html">Integração</a></li>
                 <li><a href="cartao.html">Cartão</a></li>
                 <li><a href="agendamento.html">Agendamento</a></li>
 
-                <!-- Sair / Encerrar Sessão -->
                 <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                     <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
                 </li>
             </ul>
         </aside>
-
-        <main class="main-content">
-            <!-- Boas-vindas -->
-            <section class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h1>Início</h1>
-                    <span id="usuarioLogadoBadge" style="font-size: 0.85rem; color: #00796b; font-weight: bold;"></span>
-                </div>
-                <p>Bem-vindo ao painel principal do sistema Jabuti QA.</p>
-
-                <!-- Ações do Banco de Dados Local (Exibidos apenas ao Logar) -->
-                <div class="db-actions-container"
-                    style="justify-content: flex-start; max-width: 320px; margin-top: 15px;">
-                    <button type="button" class="btn-db" onclick="exportarDB()">
-                        Exportar DB
-                    </button>
-                    <button type="button" class="btn-db" onclick="document.getElementById('inputImportarDB').click()">
-                        Importar DB
-                    </button>
-                    <input type="file" id="inputImportarDB" accept=".json,.sqlite,.db" style="display: none;"
-                        onchange="importarDB(event)">
-                </div>
-            </section>
-
-            <!-- Painel de Novidades do Jabuti QA (Exibido apenas ao Logar) -->
-            <section class="card updates-card" style="max-width: 100%;">
-                <h3>Novidades do Jabuti QA</h3>
-
-                <div class="update-item" style="margin-top: 15px;">
-                    <span class="version-tag">v2.4.0</span>
-                    <h4>Módulo Executável Independente</h4>
-                    <p>Suporte completo para execução offline via cliente desktop (.exe) com autenticação local.</p>
-                </div>
-
-                <div class="update-item">
-                    <span class="version-tag">v2.3.2</span>
-                    <h4>Gestão de Banco de Dados</h4>
-                    <p>Agora é possível exportar e importar backups do banco local diretamente no painel autenticado.
-                    </p>
-                </div>
-
-                <div class="update-item">
-                    <span class="version-tag">v2.2.0</span>
-                    <h4>Observabilidade e Comparação</h4>
-                    <p>Melhorias de desempenho nas métricas de cenários esperados vs. recebidos.</p>
-                </div>
-            </section>
-        </main>
     </div>
 
-    <!-- TELA DE LOGIN (Limpa, exibindo apenas o formulário de entrada) -->
+    <!-- TELA DE LOGIN -->
     <div id="telaLogin" class="login-wrapper">
         <div class="login-card card">
             <div class="login-brand">
                 <span class="badge-exe">Desktop Client (.exe)</span>
                 <h1>Jabuti QA</h1>
-                <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
                 <div class="banner-painel">
                     <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
                 </div>
-                <p>Sistema Integrado de Gestão e Automação QA</p>
-                
+                <p>SISTEMA Integrado de Gestão e Automação QA</p>
             </div>
 
             <form onsubmit="autenticarExe(event)">
@@ -138,15 +80,13 @@
 
                 <div class="form-options">
                     <label style="cursor: pointer;">
-                        <input type="checkbox" id="chkLembrar" style="accent-color: #00acc1;">
+                        <input type="checkbox" id="chkLembrar">
                         Lembrar credenciais
                     </label>
-                    <a href="#" onclick="solicitarRedefinicao(event)"
-                        style="color: #A2CE5B; font-weight: 600; text-decoration: none;">Esqueceu a senha?</a>
+                    <a href="#" onclick="solicitarRedefinicao(event)" style="color: #ffffff; font-weight: 600; text-decoration: none;">Esqueceu a senha?</a>
                 </div>
 
-                <button type="submit" class="btn btn-auth btn-login-submit" id="btnEntrar">Conectar ao
-                    Jabuti QA</button>
+                <button type="submit" class="btn btn-auth btn-login-submit" id="btnEntrar">Conectar ao Jabuti QA</button>
             </form>
 
             <div id="msgAlerta" class="alert-box" style="display: none; margin-top: 15px; text-align: left;"></div>
@@ -156,17 +96,15 @@
                 <small>Versão .EXE 2.4.0 • Licença Corporativa Ativa</small>
             </div>
 
-            <!-- Link para o módulo SaaS -->
             <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(0, 0, 0, 0.08);">
-                <a href="../saas/login.html"
-                    style="color: #A2CE5B; font-weight: 600; text-decoration: none; font-size: 0.9rem;">
+                <a href="../saas/login.html" style="color: #ffffff; font-weight: 600; text-decoration: none; font-size: 0.9rem;">
                     Acessar Portal Web (SaaS)
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Script de Controle de Sessão, DB e Login -->
+    <!-- Script de Controle de Sessão e Redirecionamento -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             verificarSessao();
@@ -176,15 +114,9 @@
             const sessaoAtiva = localStorage.getItem('Jabuti QA_sessao_ativa');
             const usuario = localStorage.getItem('Jabuti QA_usuario');
 
+            // Se o usuário já estiver logado nesta página, envia direto para sobre.html
             if (sessaoAtiva === 'true' && usuario) {
-                document.getElementById('telaLogin').style.display = 'none';
-                document.getElementById('painelConteudo').style.display = 'flex';
-                document.getElementById('usuarioLogadoBadge').innerText = 'Usuário: ' + usuario;
-                document.title = 'Início - Sistema de Gestão';
-            } else {
-                document.getElementById('telaLogin').style.display = 'flex';
-                document.getElementById('painelConteudo').style.display = 'none';
-                document.title = 'Acesso - Sistema de Gestão Jabuti QA (.exe)';
+                window.location.href = 'sobre.html';
             }
         }
 
@@ -202,13 +134,13 @@
             setTimeout(() => {
                 if (usuario && senha) {
                     btn.innerText = 'Acesso Concedido!';
-                    btn.style.background = 'linear-gradient(180deg, #81c784 0%, #388e3c 100%)';
 
                     localStorage.setItem('Jabuti QA_usuario', usuario);
                     localStorage.setItem('Jabuti QA_sessao_ativa', 'true');
 
+                    // Redireciona para sobre.html após 600ms
                     setTimeout(() => {
-                        verificarSessao();
+                        window.location.href = 'sobre.html';
                     }, 600);
                 } else {
                     btn.disabled = false;
@@ -219,43 +151,11 @@
             }, 1000);
         }
 
-        /* Funções para Exportar e Importar DB */
-        function exportarDB() {
-            const dadosSistema = {
-                usuario: localStorage.getItem('Jabuti QA_usuario') || 'Guest',
-                configuracoes: "Jabuti QA_v2.4.0",
-                dataExportacao: new Date().toISOString()
-            };
-
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dadosSistema, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `Jabuti QA_backup_${Date.now()}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function importarDB(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    try {
-                        alert(`Banco de dados "${file.name}" importado e restaurado com sucesso!`);
-                    } catch (err) {
-                        alert("Erro ao ler o arquivo de banco de dados.");
-                    }
-                };
-                reader.readAsText(file);
-            }
-        }
-
         function encerrarSessao(e) {
             e.preventDefault();
             localStorage.removeItem('Jabuti QA_sessao_ativa');
             localStorage.removeItem('Jabuti QA_usuario');
-            verificarSessao();
+            location.reload();
         }
 
         function solicitarRedefinicao(e) {

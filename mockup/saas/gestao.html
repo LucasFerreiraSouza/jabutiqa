@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Usuários e Dispositivos - Menu</title>
+    <title>Gestão de Usuários e Dispositivos - <h2>MENU</h2></title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -12,9 +12,9 @@
         <!-- Sidebar de Navegação SaaS -->
         <aside class="saas-sidebar">
             <div class="brand">
-                <h2>Menu</h2>
+                <h2><h2>MENU</h2></h2>
 
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
@@ -34,7 +34,7 @@
         <main class="saas-main">
             <div class="header-bar">
                 <div>
-                    <h1 style="margin: 0; color: #004d40;">Gestão de Usuários e Licenças</h1>
+                    <h1 style="margin: 0; color: #000000;">Gestão de Usuários e Licenças</h1>
                     <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Gerencie quem pode acessar a organização e os computadores autorizados a rodar o cliente .EXE.</p>
                 </div>
                 <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
@@ -75,7 +75,7 @@
                             <td style="padding: 10px 0;">qa.lab01@empresa.com.br</td>
                             <td>Operador</td>
                             <td><span class="metric-status status-active">Ativo</span></td>
-                            <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Remover</button></td>
+                            <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Remover</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -98,13 +98,13 @@
                             <td style="padding: 10px 0;">DESKTOP-QA-LAB01</td>
                             <code>LIC-88F9-2026-QA</code>
                             <td>Hoje, 14:32</td>
-                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Revogar</button></td>
+                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Revogar</button></td>
                         </tr>
                         <tr style="border-bottom: 1px solid #f0f0f0;">
                             <td style="padding: 10px 0;">DEV-MACHINE-LUCAS</td>
                             <code>LIC-11B3-2026-QA</code>
                             <td>Ontem, 09:15</td>
-                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Revogar</button></td>
+                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Revogar</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -144,7 +144,7 @@
                 <td style="padding: 10px 0;">${email}</td>
                 <td>${perfil}</td>
                 <td><span class="metric-status status-active">Pendente</span></td>
-                <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #d32f2f; cursor: pointer;">Remover</button></td>
+                <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Remover</button></td>
             `;
             tbody.appendChild(tr);
             document.getElementById('novoEmail').value = '';

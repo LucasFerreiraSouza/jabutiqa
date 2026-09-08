@@ -3,43 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre - Sistema de Gestão</title>
+    <title>Sobre - Sistema de Gestão Jabuti QA</title>
     <link rel="stylesheet" href="../style.css">
-
 </head>
 <body>
     <aside class="sidebar">
-                <h2>Menu</h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
             <!-- Categoria: SISTEMA -->
-            <li class="nav-category">SISTEMA</li>
+            <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html" class="active">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
             <!-- Categoria: NÚCLEO (MÓDULO) -->
-            <li class="nav-category">NÚCLEO</li>
+            <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
             <li><a href="autenticacao.html">2. Autenticação</a></li>
             <li><a href="cenario.html">3. Cenário</a></li>
             <li><a href="esperado.html">4. Esperado</a></li>
             <li><a href="recebido.html">5. Recebido</a></li>
-            <li><a href="comparacao.html">6'. Comparação</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
             <!-- Categoria: MÉTRICA -->
-            <li class="nav-category">MÉTRICA</li>
+            <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
             <!-- Categoria: EXTENSÃO -->
-            <li class="nav-category">EXTENSÃO</li>
+            <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
@@ -52,6 +49,7 @@
     </aside>
 
     <main class="main-content">
+        
         <!-- Função 1: Consulta (Somente Leitura) -->
         <section class="card">
             <h1>Sobre o Sistema</h1>
@@ -61,11 +59,11 @@
             <div class="info-grid">
                 <div class="info-item">
                     <label>Nome do Produto</label>
-                    <span>Enterprise Management Suite (EMS)</span>
+                    <span>Jabuti QA Management Suite</span>
                 </div>
                 <div class="info-item">
                     <label>Versão do .EXE</label>
-                    <span>v4.12.8-stable</span>
+                    <span>v2.4.0-stable</span>
                 </div>
                 <div class="info-item">
                     <label>Versão do Núcleo</label>
@@ -77,7 +75,7 @@
                 </div>
                 <div class="info-item">
                     <label>Status da Licença</label>
-                    <span style="color: #16a34a; font-weight: bold;">Ativa (SaaS Controlado)</span>
+                    <span style="font-weight: bold;">Ativa (SaaS Controlado)</span>
                 </div>
                 <div class="info-item">
                     <label>Organização Atual</label>
@@ -86,18 +84,37 @@
             </div>
 
             <div style="margin-top: 20px;">
-                <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 8px;">Tecnologias e Componentes Relevantes</h3>
+                <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Tecnologias e Componentes Relevantes</h3>
                 <p style="margin-bottom: 12px; font-size: 0.95rem;">Engine baseada em Node.js / C++ Core, interface web moderna responsiva, banco de dados relacional criptografado e integração nativa com nuvem.</p>
                 
                 <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 8px;">Links de Suporte e Ajuda</h3>
                 <p style="margin-bottom: 12px; font-size: 0.95rem;">
-                    <a href="#" style="color: #0ea5e9; text-decoration: none; margin-right: 15px;">Central de Ajuda & Documentação</a>
-                    <a href="#" style="color: #0ea5e9; text-decoration: none; margin-right: 15px;">Abrir Chamado de Suporte</a>
-                    <a href="#" style="color: #0ea5e9; text-decoration: none;">Política de Privacidade e Termos Legais</a>
+                    <a href="#" style="text-decoration: none; margin-right: 15px;">Central de Ajuda & Documentação</a>
+                    <a href="#" style="text-decoration: none; margin-right: 15px;">Abrir Chamado de Suporte</a>
+                    <a href="#" style="text-decoration: none;">Política de Privacidade e Termos Legais</a>
                 </p>
 
-                <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 8px;">Informações Institucionais e Legais</h3>
-                <p style="font-size: 0.9rem; color: #64748b;">Todos os direitos reservados. Este software é licenciado sob acordos corporativos restritos. A reprodução não autorizada ou distribuição não licenciada é estritamente proibida por lei.</p>
+                <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Informações Institucionais e Legais</h3>
+                <p style="font-size: 0.9rem;">Todos os direitos reservados. Este software é licenciado sob acordos corporativos restritos. A reprodução não autorizada ou distribuição não licenciada é estritamente proibida por lei.</p>
+            </div>
+        </section>
+
+        <!-- SEÇÃO ADICIONADA: Gestão do Banco de Dados (Importar / Exportar) -->
+        <section class="card">
+            <h2>Gestão do Banco de Dados (Backup & Restauração)</h2>
+            <p>Faça a exportação dos dados locais em formato JSON ou restaure um backup pré-existente.</p>
+            
+            <div style="display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
+                <!-- Botão de Exportação -->
+                <button type="button" class="btn" onclick="exportarDB()">
+                    Exportar Backup
+                </button>
+
+                <!-- Botão e Input de Importação -->
+                <label class="btn" style="cursor: pointer; display: inline-block;">
+                    Importar Banco de Dados
+                    <input type="file" id="inputImportarDB" accept=".json" onchange="importarDB(event)" style="display: none;">
+                </label>
             </div>
         </section>
 
@@ -129,7 +146,7 @@
                 <button type="submit" class="btn">Salvar Alterações</button>
             </form>
 
-            <div class="alert-box">
+            <div class="alert-box" style="margin-top: 20px;">
                 <strong>Atenção:</strong> Por motivos de segurança e conformidade, os seguintes itens <u>não podem</u> ser alterados pelo usuário e são gerenciados automaticamente pelo sistema ou pelo SaaS:
                 <ul>
                     <li>Versão real do software e integridade do executável (.EXE)</li>
@@ -157,6 +174,39 @@
             localStorage.removeItem('Jabuti QA_sessao_ativa');
             localStorage.removeItem('Jabuti QA_usuario');
             window.location.href = 'login.html';
+        }
+
+        /* Funções para Exportar e Importar DB */
+        function exportarDB() {
+            const dadosSistema = {
+                usuario: localStorage.getItem('Jabuti QA_usuario') || 'Guest',
+                configuracoes: "Jabuti QA_v2.4.0",
+                dataExportacao: new Date().toISOString()
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dadosSistema, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `JabutiQA_backup_${Date.now()}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importarDB(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    try {
+                        const dados = JSON.parse(e.target.result);
+                        alert(`Banco de dados "${file.name}" carregado com sucesso!`);
+                    } catch (err) {
+                        alert("Erro ao ler o arquivo JSON de banco de dados.");
+                    }
+                };
+                reader.readAsText(file);
+            }
         }
     </script>
 </body>

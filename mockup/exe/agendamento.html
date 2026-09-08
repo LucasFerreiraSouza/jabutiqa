@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendamento - Sistema de Gestão Jabuti QA</title>
+    <title>Agendamento Sistema de Gestão Jabuti QA</title>
     <link rel="stylesheet" href="../style.css">
     
 </head>
 <body>
     <aside class="sidebar">
-                <h2>Menu</h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+        <h2>MENU</h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: SISTEMA -->
-            <li class="nav-category">SISTEMA</li>
-            <li><a href="sobre.html">Sobre</a></li>
+            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <li class="nav-category"><h2>SISTEMA</h2></li>
+            <li><a href="sobre.html">Sobre</a></li> 
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: NÚCLEO (MÓDULO) -->
-            <li class="nav-category">NÚCLEO</li>
+            <!-- Categoria: <h2>NÚCLEO</h2> (MÓDULO) -->
+            <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
             <li><a href="autenticacao.html">2. Autenticação</a></li>
@@ -32,14 +32,14 @@
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
 
-            <!-- Categoria: MÉTRICA -->
-            <li class="nav-category">MÉTRICA</li>
+            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: EXTENSÃO -->
-            <li class="nav-category">EXTENSÃO</li>
+            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html" class="active">Agendamento</a></li>
@@ -107,25 +107,25 @@
                             <td style="text-align: center;"><input type="checkbox" class="item-checkbox" value="AGE-201"></td>
                             <td>
                                 <strong>Regressão Diária E-commerce</strong><br>
-                                <small style="color: #00796b;">Grupo: E-commerce (5 cenários)</small>
+                                <small >Grupo: E-commerce (5 cenários)</small>
                             </td>
                             <td>
                                 <span class="badge-categoria">Diário às 02:00</span><br>
-                                <small style="color: #333;">Ambiente: <strong>HML</strong> | Conc: 3</small>
+                                <small>Ambiente: <strong>HML</strong> | Conc: 3</small>
                             </td>
                             <td>
                                 <span style="font-size: 0.85rem;">Pixels: <strong>5px</strong></span><br>
                                 <span style="font-size: 0.85rem;">Tempo: <strong>300ms</strong></span>
                             </td>
                             <td>
-                                <span style="color: #2e7d32; font-size: 0.85rem;">✔ Vasculhar Segurança</span><br>
-                                <span style="color: #00796b; font-size: 0.85rem;">✔ Cartão Auto (Deduplicado)</span>
+                                <span  #8CC63F; font-size: 0.85rem;">✔ Vasculhar Segurança</span><br>
+                                <span  #8CC63F; font-size: 0.85rem;">✔ Cartão Auto (Deduplicado)</span>
                             </td>
                             <td>
-                                <small style="color: #555;">Últ: 30/08/2026 02:00</small><br>
-                                <small style="color: #00796b; font-weight: bold;">Próx: 31/08/2026 02:00</small>
+                                <small  #555;">Últ: 30/08/2026 02:00</small><br>
+                                <small  #8CC63F; font-weight: bold;">Próx: 31/08/2026 02:00</small>
                             </td>
-                            <td><span style="color: #2e7d32; font-weight: bold;">● Ativo</span></td>
+                            <td><span  #8CC63F; font-weight: bold;">● Ativo</span></td>
                             <td style="text-align: center;">
                                 <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
                                     <button class="btn btn-sm btn-auth" onclick="executarAgora('AGE-201', 'Regressão Diária E-commerce')">Executar Agora</button>
@@ -139,25 +139,25 @@
                             <td style="text-align: center;"><input type="checkbox" class="item-checkbox" value="AGE-202"></td>
                             <td>
                                 <strong>Sanity Check de Login & API</strong><br>
-                                <small style="color: #00796b;">Grupo: Autenticação (2 cenários)</small>
+                                <small >Grupo: Autenticação (2 cenários)</small>
                             </td>
                             <td>
                                 <span class="badge-categoria">A cada 1 hora</span><br>
-                                <small style="color: #333;">Ambiente: <strong>PRD</strong> | Conc: 1</small>
+                                <small  #333;">Ambiente: <strong>PRD</strong> | Conc: 1</small>
                             </td>
                             <td>
                                 <span style="font-size: 0.85rem;">Pixels: <strong>0px</strong></span><br>
                                 <span style="font-size: 0.85rem;">Tempo: <strong>150ms</strong></span>
                             </td>
                             <td>
-                                <span style="color: #c62828; font-size: 0.85rem;">✖ Sem Segurança</span><br>
-                                <span style="color: #00796b; font-size: 0.85rem;">✔ Cartão Auto</span>
+                                <span  #c62828; font-size: 0.85rem;">✖ Sem Segurança</span><br>
+                                <span  #8CC63F; font-size: 0.85rem;">✔ Cartão Auto</span>
                             </td>
                             <td>
-                                <small style="color: #555;">Últ: 30/08/2026 18:00</small><br>
-                                <small style="color: #00796b; font-weight: bold;">Próx: 30/08/2026 19:00</small>
+                                <small  #555;">Últ: 30/08/2026 18:00</small><br>
+                                <small  #8CC63F; font-weight: bold;">Próx: 30/08/2026 19:00</small>
                             </td>
-                            <td><span style="color: #2e7d32; font-weight: bold;">● Ativo</span></td>
+                            <td><span  #8CC63F; font-weight: bold;">● Ativo</span></td>
                             <td style="text-align: center;">
                                 <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
                                     <button class="btn btn-sm btn-auth" onclick="executarAgora('AGE-202', 'Sanity Check de Login & API')">Executar Agora</button>
@@ -171,25 +171,25 @@
                             <td style="text-align: center;"><input type="checkbox" class="item-checkbox" value="AGE-203"></td>
                             <td>
                                 <strong>Varredura Semanal de Vulnerabilidades</strong><br>
-                                <small style="color: #00796b;">Grupo: Módulo de Pagamentos (8 cenários)</small>
+                                <small >Grupo: Módulo de Pagamentos (8 cenários)</small>
                             </td>
                             <td>
-                                <span class="badge-categoria" style="background: #e1f5fe; color: #0277bd;">Domingo às 23:00</span><br>
-                                <small style="color: #333;">Ambiente: <strong>DEV</strong> | Conc: 5</small>
+                                <span class="badge-categoria">Domingo às 23:00</span><br>
+                                <small  #333;">Ambiente: <strong>DEV</strong> | Conc: 5</small>
                             </td>
                             <td>
                                 <span style="font-size: 0.85rem;">Pixels: <strong>10px</strong></span><br>
                                 <span style="font-size: 0.85rem;">Tempo: <strong>500ms</strong></span>
                             </td>
                             <td>
-                                <span style="color: #2e7d32; font-size: 0.85rem;">✔ Vasculhar Segurança</span><br>
-                                <span style="color: #c62828; font-size: 0.85rem;">✖ Cartão Manual</span>
+                                <span  #8CC63F; font-size: 0.85rem;">✔ Vasculhar Segurança</span><br>
+                                <span  #c62828; font-size: 0.85rem;">✖ Cartão Manual</span>
                             </td>
                             <td>
-                                <small style="color: #555;">Últ: 23/08/2026 23:00</small><br>
-                                <small style="color: #00796b; font-weight: bold;">Próx: 30/08/2026 23:00</small>
+                                <small  #555;">Últ: 23/08/2026 23:00</small><br>
+                                <small  #8CC63F; font-weight: bold;">Próx: 30/08/2026 23:00</small>
                             </td>
-                            <td><span style="color: #c62828; font-weight: bold;">○ Inativo</span></td>
+                            <td><span  #c62828; font-weight: bold;">○ Inativo</span></td>
                             <td style="text-align: center;">
                                 <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
                                     <button class="btn btn-sm btn-auth" onclick="executarAgora('AGE-203', 'Varredura Semanal')">Executar Agora</button>
@@ -205,7 +205,7 @@
 
             <!-- Paginação -->
             <div class="pagination">
-                <span style="font-size: 0.9rem; color: #004d40;">Exibindo 3 agendamentos programados.</span>
+                <span style="font-size: 0.9rem; ">Exibindo 3 agendamentos programados.</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -292,7 +292,7 @@
                         </label>
                         <label style="font-weight: normal; cursor: pointer; margin-left: 22px;">
                             <input type="checkbox" id="chkDeduplicar" checked>
-                            <small style="color: #004d40;">Habilitar política de deduplicação (impede cartões repetidos para a mesma ocorrência)</small>
+                            <small  #000000;">Habilitar política de deduplicação (impede cartões repetidos para a mesma ocorrência)</small>
                         </label>
                     </div>
                 </div>

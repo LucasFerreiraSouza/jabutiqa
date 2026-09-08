@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartão - Sistema de Gestão Jabuti QA</title>
+    <title>Cartão Sistema de Gestão Jabuti QA</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <aside class="sidebar">
-                <h2>Menu</h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+                <h2><h2>MENU</h2></h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: SISTEMA -->
-            <li class="nav-category">SISTEMA</li>
+            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: NÚCLEO (MÓDULO) -->
-            <li class="nav-category">NÚCLEO</li>
+            <!-- Categoria: <h2>NÚCLEO</h2> (MÓDULO) -->
+            <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
             <li><a href="autenticacao.html">2. Autenticação</a></li>
@@ -30,14 +30,14 @@
             <li><a href="comparacao.html">5. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-            <!-- Categoria: MÉTRICA -->
-            <li class="nav-category">MÉTRICA</li>
+            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: EXTENSÃO -->
-            <li class="nav-category">EXTENSÃO</li>
+            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html" class="active">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
@@ -52,7 +52,7 @@
     <main class="main-content">
         <section class="card">
             <h1>Cartões de Insucesso (Unidades de Trabalho)</h1>
-            <p>Gerencie falhas e vulnerabilidades oriundas dos módulos de Observabilidade e Segurança, e sincronize-as diretamente como itens de trabalho (work items, cards, issues) em sistemas externos.</p>
+            <p>Gerencie falhas e vulnerabilidades oriundas dos módulos de Observabilidade e Segurança, e sincronize-as diretamente como itens de trabalho (work items, cards, issues) em <h2>SISTEMA</h2>s externos.</p>
 
             <!-- Barra de Ferramentas, Filtros e Ações em Massa -->
             <div class="toolbar">
@@ -251,7 +251,7 @@
     <!-- Modal de Envio para Integração Externa -->
     <div id="modalEnvio" class="modal">
         <div class="modal-content">
-            <h2 class="modal-title">Enviar Cartão para Sistema Externo</h2>
+            <h2 class="modal-title">Enviar Cartão para <h2>SISTEMA</h2> Externo</h2>
             <form onsubmit="executarEnvioIntegracao(event)">
                 <input type="hidden" id="envioCartaoId">
 
@@ -349,7 +349,7 @@
                 alert('Selecione ao menos um cartão para enviar à integração.');
                 return;
             }
-            if (confirm(`Deseja disparar o envio em lote de ${ids.length} cartão(ões) para a integração padrão do sistema?`)) {
+            if (confirm(`Deseja disparar o envio em lote de ${ids.length} cartão(ões) para a integração padrão do <h2>SISTEMA</h2>?`)) {
                 alert(`Integração executada com sucesso para os cartões: [${ids.join(', ')}].`);
             }
         }

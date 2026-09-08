@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grupo - Sistema de Gestão Jabuti QA</title>
+    <title>Grupo Sistema de Gestão Jabuti QA</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <aside class="sidebar">
-                <h2>Menu</h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+                <h2><h2>MENU</h2></h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: SISTEMA -->
-            <li class="nav-category">SISTEMA</li>
+            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: NÚCLEO -->
-            <li class="nav-category">NÚCLEO</li>
+            <!-- Categoria: <h2>NÚCLEO</h2> -->
+            <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html" class="active">1. Grupo</a></li>
             <li><a href="autenticacao.html">2. Autenticação</a></li>
@@ -30,14 +30,14 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-            <!-- Categoria: MÉTRICA -->
-            <li class="nav-category">MÉTRICA</li>
+            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: EXTENSÃO -->
-            <li class="nav-category">EXTENSÃO</li>
+            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
@@ -52,7 +52,7 @@
     <main class="main-content">
         <section class="card">
             <h1>Gestão de Grupos</h1>
-            <p>Organize e categorize seus produtos, sistemas, aplicações, projetos, ambientes e domínios da instituição.</p>
+            <p>Organize e categorize seus produtos, sitemas, aplicações, projetos, ambientes e domínios da instituição.</p>
 
             <!-- Barra de Ferramentas: Ações Principais e Filtros -->
             <div class="toolbar">
@@ -70,7 +70,7 @@
                         <select id="filterOrg">
                             <option value="">Todas as Organizações</option>
                             <option value="Produto">Produto</option>
-                            <option value="Sistema">Sistema</option>
+                            <option value="<h2>SISTEMA</h2>"><h2>SISTEMA</h2></option>
                             <option value="Aplicação">Aplicação</option>
                             <option value="Projeto">Projeto</option>
                             <option value="Ambiente">Ambiente</option>
@@ -106,8 +106,8 @@
                             <td>Interface web principal do sistema.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('1', 'Portal Web Corporativo', 'Aplicação', 'Web', 'Interface web principal do sistema.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '1', 'Portal Web Corporativo', 'Aplicação', 'Web', 'Interface web principal do sistema.')">Editar</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('1', 'Portal Web Corporativo', 'Aplicação', 'Web', 'Interface web principal do <h2>SISTEMA</h2>.')">Abrir</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '1', 'Portal Web Corporativo', 'Aplicação', 'Web', 'Interface web principal do <h2>SISTEMA</h2>.')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirGrupo('1')">Excluir</button>
                                 </div>
                             </td>
@@ -116,13 +116,13 @@
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
                             <td>#002</td>
                             <td><strong>Gateway de Integração</strong></td>
-                            <td><span class="badge-categoria">Sistema</span></td>
+                            <td><span class="badge-categoria">SISTEMA</span></td>
                             <td>API</td>
                             <td>Serviços e endpoints REST para integração.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('2', 'Gateway de Integração', 'Sistema', 'API', 'Serviços e endpoints REST para integração.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '2', 'Gateway de Integração', 'Sistema', 'API', 'Serviços e endpoints REST para integração.')">Editar</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('2', 'Gateway de Integração', '<h2>SISTEMA</h2>', 'API', 'Serviços e endpoints REST para integração.')">Abrir</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '2', 'Gateway de Integração', '<h2>SISTEMA</h2>', 'API', 'Serviços e endpoints REST para integração.')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirGrupo('2')">Excluir</button>
                                 </div>
                             </td>
@@ -211,14 +211,14 @@
                 <input type="hidden" id="groupId">
                 <div class="form-group">
                     <label for="groupName">Nome do Grupo</label>
-                    <input type="text" id="groupName" required placeholder="Ex: Sistema Financeiro">
+                    <input type="text" id="groupName" required placeholder="Ex: <h2>SISTEMA</h2> Financeiro">
                 </div>
                 <div class="form-group">
                     <label for="groupOrg">Organização (O que organiza?)</label>
                     <select id="groupOrg" required>
                         <option value="">Selecione...</option>
                         <option value="Produto">Produto</option>
-                        <option value="Sistema">Sistema</option>
+                        <option value="<h2>SISTEMA</h2>"><h2>SISTEMA</h2></option>
                         <option value="Aplicação">Aplicação</option>
                         <option value="Projeto">Projeto</option>
                         <option value="Ambiente">Ambiente</option>

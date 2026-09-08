@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ganho - Sistema de Gestão Jabuti QA</title>
+    <title>Ganho Sistema de Gestão Jabuti QA</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <aside class="sidebar">
-                <h2>Menu</h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do menu) -->
+                <h2><h2>MENU</h2></h2>
+        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: SISTEMA -->
-            <li class="nav-category">SISTEMA</li>
+            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: NÚCLEO -->
-            <li class="nav-category">NÚCLEO</li>
+            <!-- Categoria: <h2>NÚCLEO</h2> -->
+            <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
             <li><a href="autenticacao.html">2. Autenticação</a></li>
@@ -30,14 +30,14 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-            <!-- Categoria: MÉTRICA -->
-            <li class="nav-category">MÉTRICA</li>
+            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html" class="active">Ganho</a></li>
 
-            <!-- Categoria: EXTENSÃO -->
-            <li class="nav-category">EXTENSÃO</li>
+            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
@@ -51,7 +51,7 @@
 
     <main class="main-content">
         <section class="card">
-            <h1>Métrica de Ganho e ROI</h1>
+            <h1><h2>MÉTRICA</h2> de Ganho e ROI</h1>
             <p>Mede o impacto econômico e operacional através dos minutos de QA manual evitados, acompanhamento do ROI e consumo do modelo comercial pré-pago.</p>
 
             <!-- Resumo do Saldo e Indicadores Principais -->
@@ -81,7 +81,7 @@
                     <button class="btn btn-secondary" id="btnTabParametros" onclick="trocarAba('parametros')">Parâmetros & Custos</button>
                 </div>
                 <div class="toolbar-group">
-                    <button class="btn btn-auth" onclick="recalcularGanhos()">Recalcular Métricas</button>
+                    <button class="btn btn-auth" onclick="recalcularGanhos()">Recalcular <h2>MÉTRICA</h2>s</button>
                 </div>
             </div>
 
@@ -348,13 +348,13 @@
 
         function alternarMetodo(metodo) {
             if (metodo === 'B') {
-                alert('Atenção: Método B selecionado. O sistema utilizará os parâmetros de calibração histórica do cliente.\n\nRegra Jabuti QA: A equivalência direta "tempo automatizado = tempo manual" NUNCA é aplicada automaticamente.');
+                alert('Atenção: Método B selecionado. O <h2>SISTEMA</h2> utilizará os parâmetros de calibração histórica do cliente.\n\nRegra Jabuti QA: A equivalência direta "tempo automatizado = tempo manual" NUNCA é aplicada automaticamente.');
             }
         }
 
         function salvarParametros(e) {
             e.preventDefault();
-            alert('Parâmetros de ganho, custos de infraestrutura e tarifas salvas com sucesso!\n\nAs métricas do painel foram recalculadas.');
+            alert('Parâmetros de ganho, custos de infraestrutura e tarifas salvas com sucesso!\n\nAs <h2>MÉTRICA</h2>s do painel foram recalculadas.');
         }
 
         function recalcularGanhos() {
