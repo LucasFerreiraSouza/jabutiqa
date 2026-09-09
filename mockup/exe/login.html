@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acesso Sistema de Gestão Jabuti QA (.exe)</title>
+    <title>Acesso Sistema de Gestão MENU (.exe)</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 
@@ -55,11 +55,11 @@
         <div class="login-card card">
             <div class="login-brand">
                 <span class="badge-exe">Desktop Client (.exe)</span>
-                <h1>Jabuti QA</h1>
+                <h1>LOGIN</h1>
                 <div class="banner-painel">
                     <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
                 </div>
-                <p>SISTEMA Integrado de Gestão e Automação QA</p>
+                <p>Sistema Integrado de Gestão e Automação QA</p>
             </div>
 
             <form onsubmit="autenticarExe(event)">
@@ -86,7 +86,7 @@
                     <a href="#" onclick="solicitarRedefinicao(event)" style="color: #ffffff; font-weight: 600; text-decoration: none;">Esqueceu a senha?</a>
                 </div>
 
-                <button type="submit" class="btn btn-auth btn-login-submit" id="btnEntrar">Conectar ao Jabuti QA</button>
+                <button type="submit" class="btn btn-auth btn-login-submit" id="btnEntrar">Conectar ao MENU</button>
             </form>
 
             <div id="msgAlerta" class="alert-box" style="display: none; margin-top: 15px; text-align: left;"></div>
@@ -111,8 +111,8 @@
         });
 
         function verificarSessao() {
-            const sessaoAtiva = localStorage.getItem('Jabuti QA_sessao_ativa');
-            const usuario = localStorage.getItem('Jabuti QA_usuario');
+            const sessaoAtiva = localStorage.getItem('MENU_sessao_ativa');
+            const usuario = localStorage.getItem('MENU_usuario');
 
             // Se o usuário já estiver logado nesta página, envia direto para sobre.html
             if (sessaoAtiva === 'true' && usuario) {
@@ -135,8 +135,8 @@
                 if (usuario && senha) {
                     btn.innerText = 'Acesso Concedido!';
 
-                    localStorage.setItem('Jabuti QA_usuario', usuario);
-                    localStorage.setItem('Jabuti QA_sessao_ativa', 'true');
+                    localStorage.setItem('MENU_usuario', usuario);
+                    localStorage.setItem('MENU_sessao_ativa', 'true');
 
                     // Redireciona para sobre.html após 600ms
                     setTimeout(() => {
@@ -144,7 +144,7 @@
                     }, 600);
                 } else {
                     btn.disabled = false;
-                    btn.innerText = 'Conectar ao Jabuti QA';
+                    btn.innerText = 'Conectar ao MENU';
                     alerta.style.display = 'block';
                     alerta.innerHTML = '<strong>Erro de Autenticação:</strong> Usuário ou senha inválidos.';
                 }
@@ -153,8 +153,8 @@
 
         function encerrarSessao(e) {
             e.preventDefault();
-            localStorage.removeItem('Jabuti QA_sessao_ativa');
-            localStorage.removeItem('Jabuti QA_usuario');
+            localStorage.removeItem('MENU_sessao_ativa');
+            localStorage.removeItem('MENU_usuario');
             location.reload();
         }
 

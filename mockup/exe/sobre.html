@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre - Sistema de Gestão Jabuti QA</title>
+    <title>Sobre - Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -59,7 +59,7 @@
             <div class="info-grid">
                 <div class="info-item">
                     <label>Nome do Produto</label>
-                    <span>Jabuti QA Management Suite</span>
+                    <span>MENU Management Suite</span>
                 </div>
                 <div class="info-item">
                     <label>Versão do .EXE</label>
@@ -163,7 +163,7 @@
         });
 
         function verificarSessao() {
-            const sessaoAtiva = localStorage.getItem('Jabuti QA_sessao_ativa');
+            const sessaoAtiva = localStorage.getItem('MENU_sessao_ativa');
             if (sessaoAtiva !== 'true') {
                 window.location.href = 'login.html';
             }
@@ -171,16 +171,16 @@
 
         function encerrarSessao(e) {
             e.preventDefault();
-            localStorage.removeItem('Jabuti QA_sessao_ativa');
-            localStorage.removeItem('Jabuti QA_usuario');
+            localStorage.removeItem('MENU_sessao_ativa');
+            localStorage.removeItem('MENU_usuario');
             window.location.href = 'login.html';
         }
 
         /* Funções para Exportar e Importar DB */
         function exportarDB() {
             const dadosSistema = {
-                usuario: localStorage.getItem('Jabuti QA_usuario') || 'Guest',
-                configuracoes: "Jabuti QA_v2.4.0",
+                usuario: localStorage.getItem('MENU_usuario') || 'Guest',
+                configuracoes: "MENU_v2.4.0",
                 dataExportacao: new Date().toISOString()
             };
 

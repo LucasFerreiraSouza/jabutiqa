@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lixeira Sistema de Gestão Jabuti QA</title>
+    <title>Lixeira Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
+        <h2>MENU</h2>
         <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
@@ -52,7 +52,7 @@
 
     <main class="main-content">
         <section class="card">
-            <h1>Lixeira do <h2>SISTEMA</h2></h1>
+            <h1>Lixeira do Sistema</h1>
             <p>Gerenciamento de entidades excluídas logicamente. Aqui você pode visualizar, restaurar ou excluir permanentemente os registros.</p>
 
             <!-- Barra de Ferramentas: Busca, Filtros, Ordenação e Ações em Massa -->
@@ -141,7 +141,7 @@
                             <td>Agendamento</td>
                             <td>Sincronização Noturna de Dados</td>
                             <td>20/08/2026 18:00</td>
-                            <td><h2>SISTEMA</h2> (Auto)</td>
+                            <td>Auto Sistema</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
                                     <button class="btn btn-sm btn-secondary" onclick="visualizarItem('103', 'Agendamento', 'Sincronização Noturna', '20/08/2026 18:00', '<h2>SISTEMA</h2> (Auto)')">Visualizar</button>
@@ -244,8 +244,8 @@
 
         function encerrarSessao(e) {
             e.preventDefault();
-            localStorage.removeItem('Jabuti QA_sessao_ativa');
-            localStorage.removeItem('Jabuti QA_usuario');
+            localStorage.removeItem('MENU_sessao_ativa');
+            localStorage.removeItem('MENU_usuario');
             window.location.href = 'login.html';
         }
     </script>
