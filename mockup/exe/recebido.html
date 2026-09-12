@@ -5,21 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recebido Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Alinhamento horizontal dos botões de ação na tabela */
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+
+        /* Estilos para o spinner de carregamento no botão */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Container de visualização de imagem em modo leitura */
+        .preview-canvas-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #222;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .preview-canvas-wrapper img {
+            max-width: 100%;
+            max-height: 320px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Caixa do Documento Recebido para Download no Modal */
+        .document-download-box {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .document-download-box h4 {
+            font-size: 13px;
+            margin-bottom: 2px;
+            color: #1e293b;
+        }
+
+        .document-download-box button {
+            align-self: flex-start;
+            white-space: normal;
+            word-break: break-word;
+            text-align: left;
+        }
+
+        /* Estilização da lista de seleção de cenários no Modal */
+        .scenario-select-box {
+            max-height: 280px;
+            overflow-y: auto;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+
+        .scenario-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .scenario-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .scenario-item:hover {
+            background-color: #f1f3f5;
+        }
+
+        .scenario-item input[type="checkbox"] {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .scenario-info {
+            flex: 1;
+        }
+
+        .scenario-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .scenario-desc {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+
+        .badge-tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-api { background-color: #e3f2fd; color: #0d47a1; }
+        .badge-web { background-color: #e8f5e9; color: #1b5e20; }
+        .badge-mobile { background-color: #f3e5f5; color: #4a148c; }
+        .badge-desktop { background-color: #fff3e0; color: #e65100; }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
+        <!-- Banner/Logo -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <!-- Categoria: SISTEMA -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> -->
+            <!-- Categoria: NÚCLEO -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,13 +167,13 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <!-- Categoria: MÉTRICA -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <!-- Categoria: EXTENSÃO -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
@@ -51,33 +188,29 @@
 
     <main class="main-content">
         <section class="card">
-            <h1>Registro de Saídas e Comportamento Recebido</h1>
-            <p>Consulte os dados gerados em tempo de execução real, incluindo logs de rede, capturas de tela, respostas HTTP, eventos e tempos de resposta.</p>
+            <h1>Mapeamento de Resultados Recebidos</h1>
+            <p>Consulte os dados gerados em tempo de execução real, capturados para a validação dos testes de regressão.</p>
 
             <!-- Toolbar Principal -->
             <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="abrirModalRecebido('novo')">+ Novo Recebido</button>
+                    <button class="btn" onclick="abrirModalSelecaoRegressao()">+ Novo Recebido</button>
                     <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
                 </div>
 
+                <!-- Filtros: Origem e Descrição -->
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar por URL, log ou erro..." class="min-width-200">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search">
                     </div>
 
                     <div class="form-group margin-none">
-                        <select id="filterStatus">
-                            <option value="">Todos os Status</option>
-                            <option value="Sucesso">Sucesso / 2xx</option>
-                            <option value="Erro HTTP">Erro HTTP / 4xx - 5xx</option>
-                            <option value="Exceção">Exceção / Log Console</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search">
                     </div>
                 </div>
             </div>
 
-            <!-- Tabela de Dados Recebidos -->
+            <!-- Tabela de Resultados Recebidos -->
             <div class="table-responsive">
                 <table class="data-table">
                     <thead>
@@ -85,80 +218,52 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID Exec.</th>
-                            <th>Cenário Relacionado</th>
-                            <th>HTTP / Resposta</th>
-                            <th>Evidências & Mídia</th>
-                            <th>Logs & Console</th>
-                            <th>Tempo Total</th>
+                            <th>Origem</th>
+                            <th>Descrição</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="recebidoTableBody">
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                            <td>#REC-8801</td>
-                            <td>Login e Checkout PIX</td>
-                            <td><span class="status-success-text font-bold">200 OK</span> (JSON)</td>
-                            <td>Screenshot, Vídeo MP4</td>
-                            <td>Console limpo (0 erros)</td>
-                            <td>1.240 ms</td>
+                            <td><strong>API</strong></td>
+                            <td>Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="visualizarDetalhes('1')">Inspecionar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarRecebido('1')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalRecebido('editar', '1')">Editar</button>
+                                    <button class="btn btn-sm" onclick="visualizarRecebido('1', 'API', 'Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.', '{\n  &quot;status&quot;: 200,\n  &quot;message&quot;: &quot;Autenticado com sucesso&quot;,\n  &quot;token&quot;: &quot;eyJhbGciOiJIUzI1Ni...&quot;,\n  &quot;data_emissao&quot;: &quot;2026-03-30T10:00:00Z&quot;\n}')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirRecebido('1')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                            <td>#REC-8802</td>
-                            <td>Consulta Saldo API Rest</td>
-                            <td><span class="status-error-text font-bold">500 Internal Error</span></td>
-                            <td>Network HAR Log</td>
-                            <td><span class="status-error-text">NullPointerInService.java</span></td>
-                            <td>450 ms</td>
+                            <td><strong>Web</strong></td>
+                            <td>Validação visual da renderização do dashboard principal e menu lateral de navegação.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="visualizarDetalhes('2')">Inspecionar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarRecebido('2')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalRecebido('editar', '2')">Editar</button>
+                                    <button class="btn btn-sm" onclick="visualizarRecebido('2', 'Web', 'Validação visual da renderização do dashboard principal e menu lateral de navegação.', '')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirRecebido('2')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
-                            <td>#REC-8803</td>
-                            <td>Emissão de NF-e Desktop</td>
-                            <td><span class="status-success-text font-bold">Processado</span></td>
-                            <td>Áudio Capturado, XML, PDF</td>
-                            <td>Eventos de Interface registrado</td>
-                            <td>3.810 ms</td>
+                            <td><strong>Mobile</strong></td>
+                            <td>Captura e validação de layout dos componentes nativos e responsividade na tela de checkout.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="visualizarDetalhes('3')">Inspecionar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarRecebido('3')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalRecebido('editar', '3')">Editar</button>
+                                    <button class="btn btn-sm" onclick="visualizarRecebido('3', 'Mobile', 'Captura e validação de layout dos componentes nativos e responsividade na tela de checkout.', '')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirRecebido('3')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
-                            <td>#REC-8804</td>
-                            <td>Fluxo Biometria App</td>
-                            <td><span class="status-warning-text font-bold">408 Timeout</span></td>
-                            <td>Gravação de Tela MP4</td>
-                            <td>Uncaught Exception na UI</td>
-                            <td>10.000 ms</td>
+                            <td><strong>Desktop</strong></td>
+                            <td>Critério de integridade para arquivos e relatórios gerados via cliente Win32/Electron.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="visualizarDetalhes('4')">Inspecionar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarRecebido('4')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalRecebido('editar', '4')">Editar</button>
+                                    <button class="btn btn-sm" onclick="visualizarRecebido('4', 'Desktop', 'Critério de integridade para arquivos e relatórios gerados via cliente Win32/Electron.', '')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirRecebido('4')">Excluir</button>
                                 </div>
                             </td>
@@ -168,8 +273,8 @@
             </div>
 
             <!-- Paginação -->
-            <div class="pagination">
-                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-4 de 4 execuções registradas</span>
+            <div class="pagination margin-top-20">
+                <span class="pagination-info text-primary-dark">Exibindo 1-4 de 4 recebidos</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -179,73 +284,135 @@
         </section>
     </main>
 
-    <!-- Modal Form (Novo / Editar Recebido) -->
-    <div class="modal" id="recebidoModal">
-        <div class="modal-content max-width-800">
-            <h2 id="modalTitle" class="modal-header-title">Cadastrar Dados Recebidos</h2>
-            <form onsubmit="salvarRecebido(event)">
-                <input type="hidden" id="recebidoId">
+    <!-- Modal: Seleção de Cenários para Regressão (+ Novo Recebido) -->
+    <div class="modal" id="modalRegressaoSelecao">
+        <div class="modal-content modal-lg">
+            <h2>Executar Regressão de Cenários</h2>
+            <p style="margin-top: 6px; font-size: 13px; color: #555;">
+                Selecione os cenários cadastrados que deseja executar para capturar os novos dados recebidos:
+            </p>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="recebidoCenario">Cenário Vinculado</label>
-                        <select id="recebidoCenario" required>
-                            <option value="">Selecione o cenário...</option>
-                            <option value="1">Login e Checkout PIX</option>
-                            <option value="2">Consulta Saldo API Rest</option>
-                            <option value="3">Emissão de NF-e Desktop</option>
-                            <option value="4">Fluxo Biometria App</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="recebidoTempo">Tempo de Execução (ms)</label>
-                        <input type="text" id="recebidoTempo" placeholder="Ex: 1240ms">
+            <!-- Filtros Pesquisáveis dentro do Modal -->
+            <div style="display: flex; gap: 10px; margin-top: 15px; margin-bottom: 12px; flex-wrap: wrap;">
+                <input type="text" id="modalSearchCenario" placeholder="Buscar cenário por descrição..." oninput="filtrarCenariosModal()" style="flex: 2; min-width: 180px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <input type="text" id="modalSearchOrigem" placeholder="Filtrar por Origem..." oninput="filtrarCenariosModal()" style="flex: 1; min-width: 140px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <!-- Toolbar de Ações Rápidas (Checkboxes) -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px;">
+                <span><strong>Cenários Selecionados:</strong> <span id="countSelecionados">0</span></span>
+                <div>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="marcarTodosCenarios(true)">Marcar Todos</button>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="marcarTodosCenarios(false)">Desmarcar Todos</button>
+                </div>
+            </div>
+
+            <!-- Lista de Cenários com Checkbox -->
+            <div class="scenario-select-box" id="listaCenariosModal">
+                <div class="scenario-item" data-origem="api" data-desc="consulta de saldo e extrato do usuario via endpoint rest">
+                    <input type="checkbox" class="chk-cenario" id="cen_1" value="1" onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-api">API</span>
+                            <span>Consulta de Saldo e Extrato do Usuário</span>
+                        </div>
+                        <div class="scenario-desc">Consulta de Saldo e Extrato do Usuário via Endpoint REST.</div>
                     </div>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="recebidoHttp">Resposta HTTP / URL Solicitada</label>
-                        <input type="text" id="recebidoHttp" placeholder="Ex: GET https://api.<h2>SISTEMA</h2>.com/v1/user - Status 200">
-                    </div>
-                    <div class="form-group">
-                        <label for="recebidoHeaders">Headers do Request/Response</label>
-                        <input type="text" id="recebidoHeaders" placeholder="Ex: Content-Type: application/json; x-request-id: 123">
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="recebidoBodyJson">Body Retornado (JSON / DOM / HTML)</label>
-                        <textarea id="recebidoBodyJson" placeholder='Ex: { "status": "ok", "token": "abc..." }'></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="recebidoLogs">Console, Eventos e Logs de Erro</label>
-                        <textarea id="recebidoLogs" placeholder="Cole aqui as saídas do console, falhas, stacktraces ou eventos capturados..."></textarea>
+                <div class="scenario-item" data-origem="web" data-desc="validacao de checkout e pagamento via pix no painel do cliente">
+                    <input type="checkbox" class="chk-cenario" id="cen_2" value="2" onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-web">Web</span>
+                            <span>Validação de Checkout e Pagamento PIX</span>
+                        </div>
+                        <div class="scenario-desc">Validação de Checkout e Pagamento via PIX no Painel do Cliente.</div>
                     </div>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="recebidoMidia">Mídias Capturadas (Screenshots, Vídeos, Áudio)</label>
-                        <input type="text" id="recebidoMidia" placeholder="Caminho/URL da gravação ou screenshot de erro...">
+                <div class="scenario-item" data-origem="mobile" data-desc="fluxo de validacao de biometria e token transacional no app">
+                    <input type="checkbox" class="chk-cenario" id="cen_3" value="3" onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-mobile">Mobile</span>
+                            <span>Fluxo de Biometria e Token Transacional</span>
+                        </div>
+                        <div class="scenario-desc">Fluxo de Validação de Biometria e Token Transacional no App.</div>
                     </div>
-                    <div class="form-group">
-                        <label for="recebidoArquivos">Arquivos, Downloads e Traces de Network</label>
-                        <input type="text" id="recebidoArquivos" placeholder="Anexar arquivo .har, .pdf baixado ou documentos gerados...">
+                </div>
+
+                <div class="scenario-item" data-origem="desktop" data-desc="emissao e impressao de nota fiscal eletronica nf-e">
+                    <input type="checkbox" class="chk-cenario" id="cen_4" value="4" onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-desktop">Desktop</span>
+                            <span>Emissão de Nota Fiscal Eletrônica (NF-e)</span>
+                        </div>
+                        <div class="scenario-desc">Emissão e Impressão de Nota Fiscal Eletrônica (NF-e).</div>
                     </div>
+                </div>
+            </div>
+
+            <div class="flex-end-gap-10 margin-top-20">
+                <button type="button" class="btn btn-secondary" id="btnCancelarRegressao" onclick="cancelarRegressao()">Cancelar</button>
+                <button type="button" class="btn" id="btnOkRegressao" onclick="iniciarRegressao()">OK / Executar Regressão</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Visualizar Registro Recebido (Modo Leitura) -->
+    <div class="modal" id="visualizarModal">
+        <div class="modal-content modal-lg">
+            <h2>Detalhes do Resultado Recebido</h2>
+            <div style="margin-top: 15px;">
+                <div class="form-group">
+                    <label><strong>Origem:</strong></label>
+                    <span id="viewOrigem" style="font-weight: bold; font-size: 15px; display: block; margin-top: 4px;"></span>
+                </div>
+
+                <div class="form-group margin-top-10">
+                    <label><strong>Descrição:</strong></label>
+                    <p id="viewDescricao" style="background-color: #f8f9fa; padding: 10px; border-radius: 4px; border: 1px solid #e9ecef; margin-top: 4px;"></p>
+                </div>
+
+                <!-- Exibição de Imagem Recebida (Web/Mobile/Desktop) -->
+                <div class="form-group margin-top-10" id="viewImagemGroup" style="display: none;">
+                    <label><strong>Evidência Visual Capturada:</strong></label>
+                    <div class="preview-canvas-wrapper" style="margin-top: 6px;">
+                        <img src="../jabutiqa.jpg" alt="Evidência Recebida">
+                    </div>
+
+                    <!-- Bloco de Download de Documentos Gerados no Teste -->
+                    <div class="document-download-box" id="blocoDocumentoRecebido">
+                        <div>
+                            <h4 id="tituloDocRecebido">Documento Capturado na Execução</h4>
+                            <p style="font-size: 12px; color: #475569; margin: 0;" id="descDocRecebido">Arquivo gerado dinamicamente durante o teste de regressão.</p>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-secondary" id="btnDownloadDocRecebido" onclick="baixarDocumentoRecebido()"> Baixar Arquivo Recebido</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exibição de Payload / JSON (API) -->
+                <div class="form-group margin-top-10" id="viewResponseGroup" style="display: none;">
+                    <label><strong>Payload HTTP / JSON Recebido:</strong></label>
+                    <pre id="viewResponse" style="background-color: #272822; color: #f8f8f2; padding: 12px; border-radius: 6px; font-family: monospace; overflow-x: auto; margin-top: 6px; font-size: 13px; max-height: 250px;"></pre>
                 </div>
 
                 <div class="flex-end-gap-10 margin-top-20">
-                    <button type="button" class="btn btn-secondary" onclick="fecharModal('recebidoModal')">Cancelar</button>
-                    <button type="submit" class="btn">Salvar Registro</button>
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('visualizarModal')">Fechar</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
     <!-- Scripts de Interatividade -->
     <script>
+        let docRecebidoAtual = { nome: '' };
+        let regressaoTimer = null;
+
         function toggleSelectAll(master) {
             const checkboxes = document.querySelectorAll('.item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
@@ -256,47 +423,130 @@
             return Array.from(checkboxes).map(cb => cb.value);
         }
 
-        function abrirModalRecebido(modo, id = '') {
-            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Cadastrar Dados Recebidos' : 'Editar Dados Recebidos';
-            document.getElementById('recebidoId').value = id;
-            if (modo === 'novo') {
-                document.getElementById('recebidoCenario').value = '';
-                document.getElementById('recebidoTempo').value = '';
-                document.getElementById('recebidoHttp').value = '';
-                document.getElementById('recebidoHeaders').value = '';
-                document.getElementById('recebidoBodyJson').value = '';
-                document.getElementById('recebidoLogs').value = '';
-                document.getElementById('recebidoMidia').value = '';
-                document.getElementById('recebidoArquivos').value = '';
+        /* Lógica do Modal de Seleção de Cenários para Regressão (+ Novo Recebido) */
+        function abrirModalSelecaoRegressao() {
+            const btnOk = document.getElementById('btnOkRegressao');
+            const btnCancelar = document.getElementById('btnCancelarRegressao');
+            btnOk.disabled = false;
+            btnCancelar.disabled = false;
+            btnOk.innerHTML = 'OK / Executar Regressão';
+
+            document.getElementById('modalSearchCenario').value = '';
+            document.getElementById('modalSearchOrigem').value = '';
+            filtrarCenariosModal();
+            marcarTodosCenarios(true);
+
+            document.getElementById('modalRegressaoSelecao').style.display = 'flex';
+        }
+
+        function filtrarCenariosModal() {
+            const textDesc = document.getElementById('modalSearchCenario').value.toLowerCase().trim();
+            const textOrigem = document.getElementById('modalSearchOrigem').value.toLowerCase().trim();
+            const items = document.querySelectorAll('#listaCenariosModal .scenario-item');
+
+            items.forEach(item => {
+                const itemOrigem = item.getAttribute('data-origem');
+                const itemDesc = item.getAttribute('data-desc');
+
+                const matchesDesc = !textDesc || itemDesc.includes(textDesc);
+                const matchesOrigem = !textOrigem || itemOrigem.includes(textOrigem);
+
+                if (matchesDesc && matchesOrigem) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function marcarTodosCenarios(status) {
+            const visibleCheckboxes = document.querySelectorAll('#listaCenariosModal .scenario-item:not([style*="display: none"]) .chk-cenario');
+            visibleCheckboxes.forEach(cb => cb.checked = status);
+            atualizarContador();
+        }
+
+        function atualizarContador() {
+            const checkedCount = document.querySelectorAll('#listaCenariosModal .chk-cenario:checked').length;
+            document.getElementById('countSelecionados').innerText = checkedCount;
+        }
+
+        function iniciarRegressao() {
+            const selecionados = document.querySelectorAll('#listaCenariosModal .chk-cenario:checked');
+            if (selecionados.length === 0) {
+                alert('Selecione pelo menos um cenário para executar a regressão.');
+                return;
             }
-            document.getElementById('recebidoModal').style.display = 'flex';
+
+            const btnOk = document.getElementById('btnOkRegressao');
+            const btnCancelar = document.getElementById('btnCancelarRegressao');
+            
+            btnOk.disabled = true;
+            btnCancelar.disabled = false;
+            btnOk.innerHTML = `<span class="spinner"></span> Executando (${selecionados.length})...`;
+
+            regressaoTimer = setTimeout(() => {
+                alert(`Regressão concluída com sucesso para os ${selecionados.length} cenários selecionados!`);
+                fecharModal('modalRegressaoSelecao');
+            }, 3000);
+        }
+
+        function cancelarRegressao() {
+            if (regressaoTimer) {
+                clearTimeout(regressaoTimer);
+                regressaoTimer = null;
+            }
+            fecharModal('modalRegressaoSelecao');
+        }
+
+        /* Modal para Visualizar Detalhes com Download do Documento Recebido */
+        function visualizarRecebido(id, origem, descricao, responseVal) {
+            document.getElementById('viewOrigem').innerText = origem;
+            document.getElementById('viewDescricao').innerText = descricao;
+
+            const viewImagem = document.getElementById('viewImagemGroup');
+            const viewResponse = document.getElementById('viewResponseGroup');
+
+            if (origem === 'API') {
+                viewImagem.style.display = 'none';
+                viewResponse.style.display = 'block';
+                document.getElementById('viewResponse').innerText = responseVal || '{}';
+            } else {
+                viewResponse.style.display = 'none';
+                viewImagem.style.display = 'block';
+
+                if (id === '2' || origem === 'Web') {
+                    document.getElementById('tituloDocRecebido').innerText = 'Documento Gerado (PDF - Web)';
+                    document.getElementById('descDocRecebido').innerText = 'Arquivo capturado: Proposta_Comercial_Executada_2026.pdf';
+                    document.getElementById('btnDownloadDocRecebido').innerText = ' Baixar Proposta Gerada (PDF)';
+                    docRecebidoAtual = { nome: 'Proposta_Comercial_Executada_2026.pdf' };
+                } else if (id === '3' || origem === 'Mobile') {
+                    document.getElementById('tituloDocRecebido').innerText = 'Documento Gerado (XLS - Mobile)';
+                    document.getElementById('descDocRecebido').innerText = 'Arquivo capturado: Fechamento_Caixa_Executado_2026-03-30.xls';
+                    document.getElementById('btnDownloadDocRecebido').innerText = ' Baixar Relatório Gerado (XLS)';
+                    docRecebidoAtual = { nome: 'Fechamento_Caixa_Executado_2026-03-30.xls' };
+                } else if (id === '4' || origem === 'Desktop') {
+                    document.getElementById('tituloDocRecebido').innerText = 'Documento Gerado (CSV - Desktop)';
+                    document.getElementById('descDocRecebido').innerText = 'Arquivo capturado: Extrato_Faturamento_Executado_Consolidado.csv';
+                    document.getElementById('btnDownloadDocRecebido').innerText = ' Baixar Extrato Gerado (CSV)';
+                    docRecebidoAtual = { nome: 'Extrato_Faturamento_Executado_Consolidado.csv' };
+                }
+            }
+
+            document.getElementById('visualizarModal').style.display = 'flex';
+        }
+
+        function baixarDocumentoRecebido() {
+            if (docRecebidoAtual.nome) {
+                alert(` [Download Recebido]: O arquivo capturado "${docRecebidoAtual.nome}" foi baixado com sucesso!`);
+            }
         }
 
         function fecharModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
 
-        function salvarRecebido(e) {
-            e.preventDefault();
-            const id = document.getElementById('recebidoId').value;
-            if (id) {
-                alert(`Registro de execução #${id} atualizado com sucesso!`);
-            } else {
-                alert(`Novos dados de execução cadastrados com sucesso!`);
-            }
-            fecharModal('recebidoModal');
-        }
-
-        function visualizarDetalhes(id) {
-            alert(`Exibindo detalhes completos da execução #${id}:\n\n- Headers HTTP completos\n- Inspeção de DOM / Screenshots\n- Traces de Network e Payload JSON`);
-        }
-
-        function duplicarRecebido(id) {
-            alert(`Registro de execução "#${id}" duplicado com sucesso!`);
-        }
-
         function excluirRecebido(id) {
-            if (confirm(`Deseja mover o registro #${id} para a lixeira?`)) {
+            if (confirm(`Deseja mover o registro recebido #${id} para a lixeira?`)) {
                 alert(`Registro #${id} enviado para a lixeira.`);
             }
         }
@@ -304,11 +554,11 @@
         function excluirSelecionados() {
             const ids = getSelecionados();
             if (ids.length === 0) {
-                alert('Nenhum registro selecionado.');
+                alert('Nenhum item selecionado.');
                 return;
             }
-            if (confirm(`Deseja mover os ${ids.length} registros selecionados para a lixeira?`)) {
-                alert(`Registros [${ids.join(', ')}] movidos para a lixeira.`);
+            if (confirm(`Deseja mover os ${ids.length} itens selecionados para a lixeira?`)) {
+                alert(`Itens [${ids.join(', ')}] movidos para a lixeira.`);
             }
         }
 

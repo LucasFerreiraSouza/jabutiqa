@@ -5,21 +5,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comparação Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+        .diff-modal-body {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .diff-pane {
+            flex: 1;
+            background: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        .diff-pane h4 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        .json-viewer {
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            background: #fff;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+        .curl-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: monospace;
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .curl-box span {
+            color: #4ec9b0;
+        }
+        .diff-added { background-color: #d1fae5; color: #065f46; }
+        .diff-ignored { background-color: #e2e8f0; color: #64748b; text-decoration: line-through; }
+        .alert-box {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .visual-grid {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .visual-item {
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+            flex: 1;
+            position: relative;
+        }
+        .img-container {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #555;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .visual-item img {
+            max-width: 100%;
+            height: 90px;
+            object-fit: cover;
+            display: block;
+        }
+        .ignore-overlay {
+            position: absolute;
+            background: rgba(239, 68, 68, 0.4);
+            border: 1px dashed #ef4444;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-list {
+            font-size: 12px;
+            background: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-top: 6px;
+            max-height: 105px;
+            overflow-y: auto;
+        }
+        .step-list ol {
+            margin-left: 18px;
+            margin-bottom: 0;
+        }
+        .video-placeholder {
+            background: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 6px;
+            border: 1px solid #444;
+        }
+        .section-box-modal {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+        .section-box-modal h4 {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .transcription-box {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #3b82f6;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #334155;
+            font-style: italic;
+            margin-top: 6px;
+        }
+        .ignored-fields-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .field-tag {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-family: monospace;
+        }
+        .document-download-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+        .audio-player-custom {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> (MÓDULO) -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,22 +214,18 @@
             <li><a href="comparacao.html" class="active">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
-            <!-- Sair / Encerrar Sessão -->
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
-                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+                <a href="#" onclick="encerrarSessao(event)">Encerrar Sessão</a>
             </li>
         </ul>
     </aside>
@@ -53,154 +233,83 @@
     <main class="main-content">
         <section class="card">
             <h1>Motor de Comparação e Diffing</h1>
-            <p>Gerencie as regras reutilizáveis de validação (Definições) e acompanhe o histórico de relatórios de divergência (Resultados).</p>
+            <p>Acompanhe os resultados de divergência e validação estrutural ou visual entre o esperado e o recebido.</p>
 
-
-            <!-- SEÇÃO 1: DEFINIÇÕES DE COMPARAÇÃO -->
-            <div id="secaoDefinicoes">
-                <div class="toolbar">
-                    <div class="toolbar-group">
-                        <button class="btn" onclick="abrirModalDefinicao('novo')">+ Nova Comparação</button>
-                        <button class="btn btn-danger" onclick="excluirSelecionados('defTableBody')">Excluir Selecionados</button>
-                    </div>
-
-                    <div class="toolbar-group">
-                        <div class="form-group margin-none">
-                            <input type="text" placeholder="Buscar regra de comparação..." class="input-search">
-                        </div>
-                    </div>
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="btn" onclick="abrirModalNovaComparacao()">+ Nova Comparação</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th class="th-checkbox">
-                                    <input type="checkbox" onclick="toggleSelectAll(this, 'defTableBody')">
-                                </th>
-                                <th>ID Regra</th>
-                                <th>Nome da Definição</th>
-                                <th>Esperado Vinculado</th>
-                                <th>Tipo / Validador</th>
-                                <th>Campos / Regiões Ignoradas</th>
-                                <th>Tolerância</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="defTableBody">
-                            <tr>
-                                <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                                <td>#DEF-101</td>
-                                <td><strong>Validação Rigorosa JSON API</strong></td>
-                                <td>Payload Resposta Login</td>
-                                <td>JSON Diff</td>
-                                <td><code>timestamp</code>, <code>uuid</code></td>
-                                <td>0% erro</td>
-                                <td class="text-center">
-                                    <div class="action-buttons-group">
-                                        <button class="btn btn-sm btn-secondary" onclick="duplicarDefinicao('1')">Duplicar</button>
-                                        <button class="btn btn-sm btn-warning" onclick="abrirModalDefinicao('editar', '1')">Editar</button>
-                                        <button class="btn btn-sm btn-danger" onclick="excluirItem('1', 'Definição')">Excluir</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                                <td>#DEF-102</td>
-                                <td><strong>Análise Visual Layout Home</strong></td>
-                                <td>Layout Dashboard Financeiro</td>
-                                <td>Visual Regression (Pixel)</td>
-                                <td>Header Anúncios, Banner Rotativo</td>
-                                <td>Delta &lt; 2%</td>
-                                <td class="text-center">
-                                    <div class="action-buttons-group">
-                                        <button class="btn btn-sm btn-secondary" onclick="duplicarDefinicao('2')">Duplicar</button>
-                                        <button class="btn btn-sm btn-warning" onclick="abrirModalDefinicao('editar', '2')">Editar</button>
-                                        <button class="btn btn-sm btn-danger" onclick="excluirItem('2', 'Definição')">Excluir</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="toolbar-group">
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search" oninput="filtrarTabela()">
+                    </div>
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search" oninput="filtrarTabela()">
+                    </div>
                 </div>
             </div>
 
-            <!-- SEÇÃO 2: RESULTADOS DE COMPARAÇÃO -->
-            <div id="secaoResultados" class="display-none">
-                <div class="toolbar">
-                    <div class="toolbar-group">
-                        <button class="btn btn-danger" onclick="excluirSelecionados('resTableBody')">Excluir Selecionados</button>
-                    </div>
-
-                    <div class="toolbar-group">
-                        <div class="form-group margin-none">
-                            <input type="text" placeholder="Filtrar resultados..." class="input-search">
-                        </div>
-                        <div class="form-group margin-none">
-                            <select>
-                                <option value="">Todos os Status</option>
-                                <option value="PASSED">PASSED (Sucesso)</option>
-                                <option value="FAILED">FAILED (Divergência)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th class="th-checkbox">
-                                    <input type="checkbox" onclick="toggleSelectAll(this, 'resTableBody')">
-                                </th>
-                                <th>ID Result.</th>
-                                <th>Definição Aplicada</th>
-                                <th>Execução Vinculada</th>
-                                <th>Status Diff</th>
-                                <th>Divergências Encontradas</th>
-                                <th>Data / Hora</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="resTableBody">
-                            <tr>
-                                <td class="text-center"><input type="checkbox" class="item-checkbox" value="101"></td>
-                                <td>#RES-9901</td>
-                                <td>Validação Rigorosa JSON API</td>
-                                <td>Execução #8801</td>
-                                <td><span class="status-passed">PASSED</span></td>
-                                <td>0 divergências (100% igual)</td>
-                                <td>24/10/2026 14:30</td>
-                                <td class="text-center">
-                                    <div class="action-buttons-group">
-                                        <button class="btn btn-sm btn-auth" onclick="verRelatorioDiff('9901')">Relatório Diff</button>
-                                        <button class="btn btn-sm btn-danger" onclick="excluirItem('9901', 'Resultado')">Excluir</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><input type="checkbox" class="item-checkbox" value="102"></td>
-                                <td>#RES-9902</td>
-                                <td>Análise Visual Layout Home</td>
-                                <td>Execução #8802</td>
-                                <td><span class="status-failed">FAILED</span></td>
-                                <td>3 pixels desalinhados na região #main-nav</td>
-                                <td>24/10/2026 14:35</td>
-                                <td class="text-center">
-                                    <div class="action-buttons-group">
-                                        <button class="btn btn-sm btn-auth" onclick="verRelatorioDiff('9902')">Relatório Diff</button>
-                                        <button class="btn btn-sm btn-danger" onclick="excluirItem('9902', 'Resultado')">Excluir</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                            </th>
+                            <th>Origem</th>
+                            <th>Descrição</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparacaoTableBody">
+                        <tr data-origem="api" data-desc="validação estrutural de payload rest json">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                            <td><strong>API</strong></td>
+                            <td>Validação estrutural de Payload REST JSON (Status 200 vs Resposta Obtida).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('API')">Visualizar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="web" data-desc="comparação visual de layout do dashboard web">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                            <td><strong>Web</strong></td>
+                            <td>Comparação visual de layout e componentes do Dashboard principal (Pixel Diff).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('Web')">Visualizar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="mobile" data-desc="comparação de componentes nativos da tela de checkout mobile">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
+                            <td><strong>Mobile</strong></td>
+                            <td>Comparação de componentes nativos e responsividade na tela de Checkout.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('Mobile')">Visualizar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="desktop" data-desc="verificação de integridade e layout de relatórios desktop win32">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td><strong>Desktop</strong></td>
+                            <td>Verificação de integridade visual e layout de relatórios gerados via cliente Win32.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('Desktop')">Visualizar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Paginação -->
-            <div class="pagination">
-                <span class="pagination-info">Exibindo registros atualizados</span>
+            <div class="pagination margin-top-20">
+                <span class="pagination-info">Exibindo 1-4 de 4 registros</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -210,150 +319,247 @@
         </section>
     </main>
 
-    <!-- Modal Form (Definição de Comparação) -->
-    <div class="modal" id="definicaoModal">
-        <div class="modal-content modal-lg">
-            <h2 id="modalTitle">Configurar Definição de Comparação</h2>
-            <form onsubmit="salvarDefinicao(event)">
-                <input type="hidden" id="defId">
+    <!-- Modal de Visualização Diff -->
+    <div class="modal" id="modalDiff">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 id="diffModalTitle">Relatório de Comparação / Diff</h2>
+            <div id="diffModalContent"></div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button type="button" class="btn btn-secondary" onclick="fecharModal('modalDiff')">Fechar</button>
+            </div>
+        </div>
+    </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="defNome">Nome da Definição</label>
-                        <input type="text" id="defNome" required placeholder="Ex: Validador estrito de Schema JSON">
-                    </div>
-                    <div class="form-group">
-                        <label for="defEsperado">Oráculo / Esperado Vinculado</label>
-                        <select id="defEsperado" required>
-                            <option value="">Selecione...</option>
-                            <option value="1">Payload Resposta Login</option>
-                            <option value="2">Layout Dashboard Financeiro</option>
-                            <option value="3">Relatório Mensal de Vendas</option>
-                        </select>
-                    </div>
+    <!-- Modal Nova Comparação -->
+    <div class="modal" id="modalNovaComparacao">
+        <div class="modal-content">
+            <h2>Nova Comparação</h2>
+            <form onsubmit="salvarNovaComparacao(event)">
+                <div class="alert-box">
+                    <strong>Aviso:</strong> Para pegar o Recebido mais atual, é indicado ir para a tela de Recebido e fazer uma integração.
                 </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="defTipo">Tipo de Comparação / Algoritmo</label>
-                        <select id="defTipo" required>
-                            <option value="JSON Diff">JSON Diff (Estrutural)</option>
-                            <option value="Visual Regression">Visual Regression (Imagens)</option>
-                            <option value="DOM Tree">DOM / HTML Inspector</option>
-                            <option value="Text Exact">Texto Exato / Regex</option>
-                            <option value="File Hash">Hash de Arquivo / Binary Diff</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="defTolerancia">Tolerância / Margem Aceitável</label>
-                        <input type="text" id="defTolerancia" placeholder="Ex: Delta de cor < 5% | 100ms variação">
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="defCamposIgnorados">Campos Ignorados (Chaves / Atributos)</label>
-                        <textarea id="defCamposIgnorados" placeholder="Ex: id, dataCriacao, token, session_id"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="defRegioesIgnoradas">Regiões Ignoradas (Bounding Box / Banners)</label>
-                        <textarea id="defRegioesIgnoradas" placeholder="Ex: #header-ads, .footer-timestamp, x:0 y:0 w:100 h:50"></textarea>
-                    </div>
-                </div>
-
                 <div class="form-group">
-                    <label for="defRegrasEspecificas">Validadores & Regras Específicas</label>
-                    <textarea id="defRegrasEspecificas" placeholder="Ex: Validar se campo 'valor' é > 0; Validar mascaramento de CPF..."></textarea>
+                    <label for="novaOrigem">Origem</label>
+                    <input type="text" id="novaOrigem" required placeholder="Digite a origem (ex: API, Web, Mobile, Desktop)...">
                 </div>
-
+                <div class="form-group">
+                    <label for="novaDescricao">Descrição</label>
+                    <input type="text" id="novaDescricao" required placeholder="Descreva a comparação...">
+                </div>
+                <div class="form-group">
+                    <label for="tolPixel">Tolerância de Pixel</label>
+                    <input type="text" id="tolPixel" placeholder="Ex: 2% ou 5px">
+                </div>
+                <div class="form-group">
+                    <label for="duracaoMs">Duração (ms)</label>
+                    <input type="number" id="duracaoMs" min="0" placeholder="Ex: 500">
+                </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="fecharModal('definicaoModal')">Cancelar</button>
-                    <button type="submit" class="btn">Salvar Definição</button>
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modalNovaComparacao')">Cancelar</button>
+                    <button type="submit" class="btn">Salvar Comparação</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Scripts de Interatividade -->
     <script>
-        function trocarAba(aba) {
-            const secDef = document.getElementById('secaoDefinicoes');
-            const secRes = document.getElementById('secaoResultados');
-            const btnDef = document.getElementById('tabDefBtn');
-            const btnRes = document.getElementById('tabResBtn');
-
-            if (aba === 'definicoes') {
-                secDef.classList.remove('display-none');
-                secRes.classList.add('display-none');
-                btnDef.classList.add('btn-tab-active');
-                btnDef.classList.remove('btn-secondary');
-                btnRes.classList.remove('btn-tab-active');
-                btnRes.classList.add('btn-secondary');
-            } else {
-                secDef.classList.add('display-none');
-                secRes.classList.remove('display-none');
-                btnRes.classList.add('btn-tab-active');
-                btnRes.classList.remove('btn-secondary');
-                btnDef.classList.remove('btn-tab-active');
-                btnDef.classList.add('btn-secondary');
-            }
-        }
-
-        function toggleSelectAll(master, targetId) {
-            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox`);
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
         }
 
-        function abrirModalDefinicao(modo, id = '') {
-            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Nova Definição de Comparação' : 'Editar Definição de Comparação';
-            document.getElementById('defId').value = id;
-            if (modo === 'novo') {
-                document.getElementById('defNome').value = '';
-                document.getElementById('defEsperado').value = '';
-                document.getElementById('defTipo').value = 'JSON Diff';
-                document.getElementById('defTolerancia').value = '';
-                document.getElementById('defCamposIgnorados').value = '';
-                document.getElementById('defRegioesIgnoradas').value = '';
-                document.getElementById('defRegrasEspecificas').value = '';
+        function filtrarTabela() {
+            const fOrigem = document.getElementById('filterOrigem').value.toLowerCase();
+            const fDesc = document.getElementById('filterDescricao').value.toLowerCase();
+            const linhas = document.querySelectorAll('#comparacaoTableBody tr');
+
+            linhas.forEach(linha => {
+                const origem = linha.querySelector('td:nth-child(2)').innerText.toLowerCase();
+                const desc = linha.querySelector('td:nth-child(3)').innerText.toLowerCase();
+
+                if (origem.includes(fOrigem) && desc.includes(fDesc)) {
+                    linha.style.display = '';
+                } else {
+                    linha.style.display = 'none';
+                }
+            });
+        }
+
+        function abrirModalDiff(origem) {
+            const titulo = document.getElementById('diffModalTitle');
+            const conteudo = document.getElementById('diffModalContent');
+            
+            titulo.innerText = `Relatório de Comparação - ${origem}`;
+
+            if (origem === 'API') {
+                conteudo.innerHTML = `
+                    <p style="font-size: 13px; color: #555; margin-bottom: 6px;">cURL do cenário gerador:</p>
+                    <div class="curl-box">curl -X <span>POST</span> "https://api.jabutiqa.com/v1/validacao" -H "Content-Type: application/json" -d '{"id": 1024, "validar": true}'</div>
+                    
+                    <p style="font-size: 13px; color: #555; margin-bottom: 6px;">Comparação Estrutural de JSON (JSON Diff) com campos ignorados aplicados:</p>
+                    <div class="diff-modal-body">
+                        <div class="diff-pane">
+                            <h4>Esperado (Oráculo)</h4>
+                            <div class="json-viewer">{
+  "status": 200,
+  "message": "Sucesso",
+  "data": {
+    "id": 1024,
+    "ativo": true,
+    <span class="diff-ignored">"data_emissao": "2026-03-30...",</span>
+    <span class="diff-ignored">"timestamp": 1711795200</span>
+  }
+}</div>
+                        </div>
+                        <div class="diff-pane">
+                            <h4>Recebido (Execução)</h4>
+                            <div class="json-viewer">{
+  "status": 200,
+  "message": "Sucesso",
+  "data": {
+    "id": 1024,
+    <span class="diff-added">"ativo": true,</span>
+    <span class="diff-added">"token": "abc123xyz",</span>
+    <span class="diff-ignored">"data_emissao": "2026-03-30...",</span>
+    <span class="diff-ignored">"timestamp": 1711795521</span>
+  }
+}</div>
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Campos Ignorados da API</h4>
+                        <p style="font-size: 12px; color: #64748b;">Chaves dinâmicas ou variáveis desconsideradas na validação estrutural:</p>
+                        <div class="ignored-fields-tag">
+                            <span class="field-tag">data_emissao</span>
+                            <span class="field-tag">timestamp</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                conteudo.innerHTML = `
+                    <p style="font-size: 13px; color: #555; margin-bottom: 4px;">Análise de Regressão Visual (Pixel Diff) com Regiões Ignoradas:</p>
+                    <div class="visual-grid">
+                        <div class="visual-item">
+                            <p style="margin-bottom: 2px; color: #aaa;">Esperado</p>
+                            <div class="img-container">
+                                <img src="../jabutiqa.jpg" alt="Esperado">
+                                <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px;">IGNORAR</div>
+                                <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px;">IGNORAR</div>
+                            </div>
+                        </div>
+                        <div class="visual-item">
+                            <p style="margin-bottom: 2px; color: #aaa;">Recebido</p>
+                            <div class="img-container">
+                                <img src="../jabutiqa.jpg" alt="Recebido">
+                                <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px;">IGNORAR</div>
+                                <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px;">IGNORAR</div>
+                            </div>
+                        </div>
+                        <div class="visual-item">
+                            <p style="margin-bottom: 2px; color: #f87171;">Diferença (Diff)</p>
+                            <div class="img-container" style="border-color: #ef4444;">
+                                <img src="../jabutiqa.jpg" alt="Diff" style="filter: invert(1) hue-rotate(90deg);">
+                                <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px; background: rgba(100,100,100,0.5); border-color: #888;">IGNORAR</div>
+                                <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px; background: rgba(100,100,100,0.5); border-color: #888;">IGNORAR</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 6px; font-size: 12px; color: #e74c3c;"><strong>Divergência detectada:</strong> Delta de 0.4% nos pixels da região superior (Regiões delimitadas em vermelho foram desconsideradas).</p>
+
+                    <div style="display: flex; gap: 10px; margin-top: 6px;">
+                        <div style="flex: 1;">
+                            <p style="font-size: 12px; font-weight: bold; color: #333; margin-bottom: 2px;">Passo a Passo Percorrido:</p>
+                            <div class="step-list">
+                                <ol>
+                                    <li>Acessar a página inicial do sistema ${origem}.</li>
+                                    <li>Navegar até o componente principal do Dashboard.</li>
+                                    <li>Acionar a captura de tela para validação visual.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div style="flex: 1;">
+                            <p style="font-size: 12px; font-weight: bold; color: #333; margin-bottom: 2px;">Vídeo do Cenário Executado (Áudio Sincronizado):</p>
+                            <div class="video-placeholder">
+                                <strong>Vídeo + Áudio Integrado (${origem})</strong><br>
+                                <div style="margin-top: 6px;">
+                                    <button class="btn btn-sm" style="font-size: 11px; padding: 4px 8px;" onclick="alert('Reproduzindo vídeo e áudio sincronizados da execução...')">Reproduzir Gravação</button>
+                                </div>
+                                <span style="font-size: 10px; color: #aaa; display: block; margin-top: 4px;">Duração: 00:12s | 30 FPS | Faixa de Áudio Stereo Ativa</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Áudio Importado da Execução</h4>
+                        <div class="audio-player-custom">
+                            <button type="button" class="btn btn-sm" onclick="alert('Reproduzindo áudio gravado...')">Ouvir Áudio</button>
+                            <div style="flex: 1; font-size: 11px; color: #334155;">
+                                <span>Gravacao_Comando_Voz_${origem}.wav</span>
+                                <div style="background: #cbd5e1; height: 6px; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                                    <div style="background: #2563eb; width: 45%; height: 100%;"></div>
+                                </div>
+                            </div>
+                            <span style="font-size: 10px; color: #64748b;">00:05s / 00:12s</span>
+                        </div>
+                        
+                        <p style="font-size: 12px; font-weight: bold; color: #333; margin-top: 8px; margin-bottom: 2px;">Transcrição do Áudio:</p>
+                        <div class="transcription-box">
+                            "Confirmar a transação do usuário no painel principal e verificar a emissão do comprovante de validação."
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Campos e Regiões do Documento Ignorados</h4>
+                        <p style="font-size: 12px; color: #64748b;">Regiões visuais e tags de documentos desconsideradas para evitar falsos positivos:</p>
+                        <div class="ignored-fields-tag">
+                            <span class="field-tag">Região Visual: #header-banner-clock</span>
+                            <span class="field-tag">Região Visual: #user-avatar-dynamic</span>
+                            <span class="field-tag">Tag Doc: {Data_Emissao_Relatorio}</span>
+                            <span class="field-tag">Tag Doc: {Hash_Transacao_Sessao}</span>
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Documentos Capturados na Execução</h4>
+                        <div class="document-download-card">
+                            <div>
+                                <strong style="font-size: 12px; color: #1e293b;">Relatorio_Execucao_${origem}_2026.pdf</strong>
+                                <span style="display: block; font-size: 11px; color: #64748b;">Formato PDF | Gerado automaticamente durante a regressão</span>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="alert('Download do documento PDF capturado com sucesso!')">Baixar Documento (PDF)</button>
+                        </div>
+                    </div>
+                `;
             }
-            document.getElementById('definicaoModal').style.display = 'flex';
+
+            document.getElementById('modalDiff').style.display = 'flex';
+        }
+
+        function abrirModalNovaComparacao() {
+            document.getElementById('novaOrigem').value = '';
+            document.getElementById('novaDescricao').value = '';
+            document.getElementById('tolPixel').value = '';
+            document.getElementById('duracaoMs').value = '';
+            document.getElementById('modalNovaComparacao').style.display = 'flex';
         }
 
         function fecharModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
 
-        function salvarDefinicao(e) {
+        function salvarNovaComparacao(e) {
             e.preventDefault();
-            const id = document.getElementById('defId').value;
-            const nome = document.getElementById('defNome').value;
-            if (id) {
-                alert(`Definição de comparação "${nome}" atualizada com sucesso!`);
-            } else {
-                alert(`Definição de comparação "${nome}" criada com sucesso!`);
-            }
-            fecharModal('definicaoModal');
+            const origem = document.getElementById('novaOrigem').value;
+            alert(`Nova comparação de "${origem}" criada com sucesso!`);
+            fecharModal('modalNovaComparacao');
         }
 
-        function verRelatorioDiff(id) {
-            alert(`Gerando visualização de mapa de divergência para o Resultado #${id}...\n\nComparando Esperado vs Recebido com realce de diferenças.`);
-        }
-
-        function duplicarDefinicao(id) {
-            alert(`Definição "#${id}" duplicada com sucesso! Cópia gerada.`);
-        }
-
-        function excluirItem(id, tipo) {
-            if (confirm(`Deseja mover o item de ${tipo} #${id} para a lixeira?`)) {
-                alert(`${tipo} #${id} enviado para a lixeira.`);
-            }
-        }
-
-        function excluirSelecionados(targetId) {
-            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox:checked`);
+        function excluirSelecionados() {
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
             const ids = Array.from(checkboxes).map(cb => cb.value);
             if (ids.length === 0) {
-                alert('Nenhum item selecionado nesta seção.');
+                alert('Nenhum item selecionado.');
                 return;
             }
             if (confirm(`Deseja mover os ${ids.length} itens selecionados para a lixeira?`)) {

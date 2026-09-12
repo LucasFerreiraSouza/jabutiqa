@@ -8,18 +8,17 @@
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <!-- Categoria: SISTEMA -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> (MÓDULO) -->
+            <!-- Categoria: NÚCLEO -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,14 +29,13 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <!-- Categoria: MÉTRICA -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <!-- Categoria: EXTENSÃO -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
@@ -53,31 +51,26 @@
     <main class="main-content">
         <section class="card">
             <h1>Central de Autenticação</h1>
-            <p>Gerencie e valide as formas de acesso e credenciais utilizadas nos testes de integração dos sitemass.</p>
+            <p>Gerencie e valide as formas de acesso e credenciais utilizadas nos testes de integração dos sistemas.</p>
 
             <!-- Toolbar principal -->
             <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="abrirModalForm('novo')">+ Nova Credencial</button>
+                    <button class="btn" onclick="abrirModalForm('novo')">+ Nova Autenticação</button>
                     <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
                 </div>
 
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar perfil de acesso..." class="input-search">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem...">
                     </div>
 
                     <div class="form-group margin-none">
-                        <select id="filterMech">
-                            <option value="">Todos os Mecanismos</option>
-                            <option value="Usuário / Senha">Usuário / Senha</option>
-                            <option value="Bearer Token">Bearer Token</option>
-                            <option value="API Key">API Key</option>
-                            <option value="Basic Auth">Basic Auth</option>
-                            <option value="Headers">Headers Customizados</option>
-                            <option value="Cookies">Cookies</option>
-                            <option value="Sessão">Sessão / Variáveis</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-min-200">
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterTipo" placeholder="Filtrar por Tipo...">
                     </div>
                 </div>
             </div>
@@ -90,69 +83,62 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID</th>
-                            <th>Nome do Perfil</th>
-                            <th>Mecanismo</th>
-                            <th>Identificador / Chave</th>
-                            <th>Status da Sessão</th>
+                            <th>Origem</th>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="authTableBody">
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                            <td>#001</td>
-                            <td><strong>Acesso Admin ERP</strong></td>
-                            <td><span class="badge-mech">Usuário / Senha</span></td>
-                            <td>admin_prod</td>
-                            <td><span class="status-success">Autenticado</span></td>
+                            <td>API</td>
+                            <td>Autenticação por Bearer Token JWT e API Keys do gateway REST.</td>
+                            <td>Bearer Token</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-auth" onclick="autenticar('1', 'Acesso Admin ERP')">Autenticar</button>
-                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('1', 'Acesso Admin ERP')">Duplicar</button>
-                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '1', 'Acesso Admin ERP', 'Usuário / Senha', 'admin_prod')">Editar</button>
-                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('1')">Excluir</button>
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '1', 'API', 'Bearer Token', 'Autenticação por Bearer Token JWT e API Keys do gateway REST.')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirPerfil('1')">Excluir</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                            <td>#002</td>
-                            <td><strong>Gateway REST API</strong></td>
-                            <td><span class="badge-mech">Bearer Token</span></td>
-                            <td>eyJhbGciOiJIUzI1Ni...</td>
-                            <td><span class="status-danger">Expirado</span></td>
+                            <td>Web</td>
+                            <td>Fluxo gravado de autenticação Web via formulário de login.</td>
+                            <td>gravar web</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-auth" onclick="autenticar('2', 'Gateway REST API')">Autenticar</button>
-                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('2', 'Gateway REST API')">Duplicar</button>
-                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '2', 'Gateway REST API', 'Bearer Token', 'eyJhbGci...')">Editar</button>
-                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('2')">Excluir</button>
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm" onclick="iniciarGravar('gravar web')">Gravar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '2', 'Web', 'gravar web', 'Fluxo gravado de autenticação Web via formulário de login.')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirPerfil('2')">Excluir</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
-                            <td>#003</td>
-                            <td><strong>Serviço Parceiro</strong></td>
-                            <td><span class="badge-mech">API Key</span></td>
-                            <td>X-API-Key: k8s_sec_9948</td>
-                            <td><span class="status-success">Ativo</span></td>
+                            <td>Mobile</td>
+                            <td>Fluxo de gravação de passos de acesso em dispositivo móvel.</td>
+                            <td>gravar mobile</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-auth" onclick="autenticar('3', 'Serviço Parceiro')">Autenticar</button>
-                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('3', 'Serviço Parceiro')">Duplicar</button>
-                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '3', 'Serviço Parceiro', 'API Key', 'X-API-Key: k8s_sec_9948')">Editar</button>
-                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('3')">Excluir</button>
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm" onclick="iniciarGravar('gravar mobile')">Gravar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '3', 'Mobile', 'gravar mobile', 'Fluxo de gravação de passos de acesso em dispositivo móvel.')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirPerfil('3')">Excluir</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
-                            <td>#004</td>
-                            <td><strong>Sessão Web Cookies</strong></td>
-                            <td><span class="badge-mech">Cookies</span></td>
-                            <td>PHPSESSID=a8f9c1...</td>
-                            <td><span class="status-warning">Pendente</span></td>
+                            <td>Desktop</td>
+                            <td>Gravação de ações de login no cliente de aplicação desktop.</td>
+                            <td>gravar desktop</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-auth" onclick="autenticar('4', 'Sessão Web Cookies')">Autenticar</button>
-                                <button class="btn btn-sm btn-secondary" onclick="duplicarPerfil('4', 'Sessão Web Cookies')">Duplicar</button>
-                                <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '4', 'Sessão Web Cookies', 'Cookies', 'PHPSESSID=a8f9c1...')">Editar</button>
-                                <button class="btn btn-sm btn-danger" onclick="excluirPerfil('4')">Excluir</button>
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm" onclick="iniciarGravar('gravar desktop')">Gravar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '4', 'Desktop', 'gravar desktop', 'Gravação de ações de login no cliente de aplicação desktop.')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirPerfil('4')">Excluir</button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -160,8 +146,8 @@
             </div>
 
             <!-- Paginação -->
-            <div class="pagination">
-                <span class="pagination-info">Exibindo 1-4 de 4 configurações</span>
+            <div class="pagination margin-top-20">
+                <span class="pagination-info text-primary-dark">Exibindo 1-4 de 4 configurações</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -173,39 +159,88 @@
 
     <!-- Modal Form (Novo / Editar Perfil de Autenticação) -->
     <div class="modal" id="formModal">
-        <div class="modal-content">
-            <h2 id="modalFormTitle" class="modal-title">Nova Credencial</h2>
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 id="modalFormTitle" class="modal-header-title">Nova Credencial</h2>
             <form onsubmit="salvarPerfil(event)">
                 <input type="hidden" id="authId">
                 
                 <div class="form-group">
-                    <label for="authName">Nome do Perfil de Autenticação</label>
-                    <input type="text" id="authName" required placeholder="Ex: Acesso Ambiente Homologação">
+                    <label for="authOrigem">Origem</label>
+
+                    <input type="text" id="authOrigem" list="origensSugeridas" required placeholder="Ex: API, Web, Mobile, Desktop" style="width: 100%;">
+                    <datalist id="origensSugeridas">
+                        <option value="API">
+                        <option value="Web">
+                        <option value="Mobile">
+                        <option value="Desktop">
+                    </datalist>
+                </div>
+
+                <!-- Campo para importar cURL -->
+                <div class="form-group">
+                    <label for="curlInput">Importar de cURL (Auto-detectar)</label>
+                    <textarea id="curlInput" rows="3" style="width: 100%; font-family: monospace; font-size: 0.85rem;" placeholder="Cole o comando cURL aqui para detectar a autenticação automaticamente..." oninput="processarCurl(this.value)"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="authMechanism">Mecanismo de Autenticação</label>
-                    <select id="authMechanism" required onchange="ajustarCamposDinamicos(this.value)">
-                        <option value="">Selecione...</option>
-                        <option value="Usuário / Senha">Usuário / Senha</option>
-                        <option value="Bearer Token">Bearer Token</option>
-                        <option value="API Key">API Key</option>
-                        <option value="Basic Auth">Basic Auth</option>
-                        <option value="Headers">Headers Customizados</option>
-                        <option value="Cookies">Cookies</option>
-                        <option value="Sessão">Sessão / Variáveis</option>
-                        <option value="Outro">Outros Mecanismos Configuráveis</option>
+                    <label for="authTipo">Tipo</label>
+                    <select id="authTipo" required onchange="renderizarCamposDinamicos(this.value)" style="width: 100%;">
+                        <option value="">Selecione o tipo...</option>
+                        <optgroup label="APIs & Web Services">
+                            <option value="AWS Sig v4">AWS Sig v4</option>
+                            <option value="Basic Auth">Basic Auth</option>
+                            <option value="Bearer Token">Bearer Token</option>
+                            <option value="Digest Auth">Digest Auth</option>
+                            <option value="NTLM Auth">NTLM Auth</option>
+                            <option value="OAuth 1.0">OAuth 1.0</option>
+                            <option value="OAuth 2.0">OAuth 2.0</option>
+                            <option value="WSSE Auth">WSSE Auth</option>
+                            <option value="API Key">API Key</option>
+                            <option value="Akamai EdgeGrid">Akamai EdgeGrid</option>
+                            <option value="Inherit">Inherit</option>
+                            <option value="No Auth">No Auth</option>
+                        </optgroup>
+                        <optgroup label="Fluxos de Gravação">
+                            <option value="gravar web">gravar web</option>
+                            <option value="gravar mobile">gravar mobile</option>
+                            <option value="gravar desktop">gravar desktop</option>
+                        </optgroup>
                     </select>
                 </div>
 
-                <!-- Campos Dinâmicos Baseados no Mecanismo Selecionado -->
-                <div class="dynamic-fields" id="dynamicContainer">
-                    <p class="dynamic-help-text">Selecione um mecanismo acima para visualizar os parâmetros de configuração específicos.</p>
+                <!-- ÁREA DINÂMICA DE CAMPOS DA AUTENTICAÇÃO -->
+                <div id="dynamicAuthFields" style="margin-top: 15px; padding: 15px; border: 1px dashed #ccc; border-radius: 6px; display: none; background-color: #f9f9f9;">
+                    <!-- Campos injetados via JavaScript -->
                 </div>
 
-                <div class="modal-actions">
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="authDesc">Descrição</label>
+                    <textarea id="authDesc" rows="3" style="width: 100%;" placeholder="Descreva os parâmetros ou regras desta autenticação..."></textarea>
+                </div>
+
+                <div class="flex-end-gap-10 margin-top-15">
                     <button type="button" class="btn btn-secondary" onclick="fecharModal('formModal')">Cancelar</button>
                     <button type="submit" class="btn">Salvar Credencial</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Específico para Gravação -->
+    <div class="modal" id="gravarModal">
+        <div class="modal-content">
+            <h2 id="modalGravarTitle" class="modal-header-title">Iniciar Gravação</h2>
+            <form onsubmit="confirmarGravação(event)">
+                <input type="hidden" id="gravarTipoAtual">
+                
+                <div class="form-group">
+                    <label id="lblGravarInput" for="gravarTarget">URL da Aplicação</label>
+                    <input type="text" id="gravarTarget" required placeholder="https://exemplo.com.br/login" style="width: 100%;">
+                </div>
+
+                <div class="flex-end-gap-10 margin-top-15">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('gravarModal')">Cancelar</button>
+                    <button type="submit" class="btn">Iniciar Gravação</button>
                 </div>
             </form>
         </div>
@@ -223,56 +258,15 @@
             return Array.from(checkboxes).map(cb => cb.value);
         }
 
-        function ajustarCamposDinamicos(mech) {
-            const container = document.getElementById('dynamicContainer');
-            if (!mech) {
-                container.innerHTML = '<p class="dynamic-help-text">Selecione um mecanismo para carregar o formulário.</p>';
-                return;
-            }
-
-            let html = '';
-            if (mech === 'Usuário / Senha' || mech === 'Basic Auth') {
-                html = `
-                    <div class="form-group">
-                        <label>Usuário / Username</label>
-                        <input type="text" placeholder="Informe o usuário..." required>
-                    </div>
-                    <div class="form-group margin-none">
-                        <label>Senha / Password</label>
-                        <input type="password" placeholder="Informe a senha..." required>
-                    </div>`;
-            } else if (mech === 'Bearer Token') {
-                html = `
-                    <div class="form-group margin-none">
-                        <label>Bearer Token Value</label>
-                        <textarea placeholder="Cole o token JWT/Bearer aqui..." required></textarea>
-                    </div>`;
-            } else if (mech === 'API Key') {
-                html = `
-                    <div class="form-group">
-                        <label>Nome do Header/Parâmetro (Key)</label>
-                        <input type="text" placeholder="Ex: X-API-Key" required>
-                    </div>
-                    <div class="form-group margin-none">
-                        <label>Valor da Chave (Value)</label>
-                        <input type="text" placeholder="Ex: secret_12345" required>
-                    </div>`;
-            } else if (mech === 'Headers' || mech === 'Cookies' || mech === 'Sessão' || mech === 'Outro') {
-                html = `
-                    <div class="form-group margin-none">
-                        <label>Parâmetros / Variáveis de Sessão (JSON ou Key-Value)</label>
-                        <textarea placeholder='Ex: {"Header-Custom": "Valor", "Cookie_Session": "abc123xyz"}' required></textarea>
-                    </div>`;
-            }
-            container.innerHTML = html;
-        }
-
-        function abrirModalForm(modo, id = '', nome = '', mech = '', val = '') {
+        function abrirModalForm(modo, id = '', origem = '', tipo = '', desc = '') {
             document.getElementById('modalFormTitle').innerText = modo === 'novo' ? 'Nova Credencial' : 'Editar Credencial';
             document.getElementById('authId').value = id;
-            document.getElementById('authName').value = nome;
-            document.getElementById('authMechanism').value = mech;
-            ajustarCamposDinamicos(mech);
+            document.getElementById('authOrigem').value = origem;
+            document.getElementById('authTipo').value = tipo;
+            document.getElementById('authDesc').value = desc;
+            document.getElementById('curlInput').value = '';
+            
+            renderizarCamposDinamicos(tipo);
             document.getElementById('formModal').style.display = 'flex';
         }
 
@@ -280,41 +274,213 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
+        // Exibe campos dinâmicos ao selecionar um tipo
+        function renderizarCamposDinamicos(tipo, dados = {}) {
+            const container = document.getElementById('dynamicAuthFields');
+            container.innerHTML = '';
+
+            if (!tipo || tipo === 'No Auth' || tipo === 'Inherit' || tipo.startsWith('gravar')) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+
+            if (tipo === 'Bearer Token') {
+                container.innerHTML = `
+                    <div class="form-group margin-none">
+                        <label for="authToken">Token:</label>
+                        <input type="text" id="authToken" class="input-search" style="width: 100%;" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." value="${dados.token || ''}">
+                    </div>
+                `;
+            } else if (tipo === 'Basic Auth') {
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="form-group margin-none">
+                            <label for="authUsername">Usuário:</label>
+                            <input type="text" id="authUsername" class="input-search" style="width: 100%;" placeholder="admin" value="${dados.username || ''}">
+                        </div>
+                        <div class="form-group margin-none">
+                            <label for="authPassword">Senha:</label>
+                            <input type="password" id="authPassword" class="input-search" style="width: 100%;" placeholder="••••••••" value="${dados.password || ''}">
+                        </div>
+                    </div>
+                `;
+            } else if (tipo === 'API Key') {
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="form-group margin-none">
+                            <label for="apiKeyHeader">Chave (Key):</label>
+                            <input type="text" id="apiKeyHeader" class="input-search" style="width: 100%;" placeholder="X-API-Key" value="${dados.key || ''}">
+                        </div>
+                        <div class="form-group margin-none">
+                            <label for="apiKeyValue">Valor (Value):</label>
+                            <input type="text" id="apiKeyValue" class="input-search" style="width: 100%;" placeholder="key_sec_12345..." value="${dados.value || ''}">
+                        </div>
+                    </div>
+                `;
+            } else if (tipo === 'OAuth 2.0') {
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <div class="form-group margin-none">
+                            <label for="oauthGrantType">Grant Type:</label>
+                            <select id="oauthGrantType" style="width: 100%;">
+                                <option value="client_credentials">Client Credentials</option>
+                                <option value="authorization_code">Authorization Code</option>
+                            </select>
+                        </div>
+                        <div class="form-group margin-none">
+                            <label for="oauthTokenUrl">Access Token URL:</label>
+                            <input type="text" id="oauthTokenUrl" class="input-search" style="width: 100%;" placeholder="https://auth.exemplo.com/oauth/token">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="form-group margin-none">
+                            <label for="oauthClientId">Client ID:</label>
+                            <input type="text" id="oauthClientId" class="input-search" style="width: 100%;" placeholder="client_id_123">
+                        </div>
+                        <div class="form-group margin-none">
+                            <label for="oauthClientSecret">Client Secret:</label>
+                            <input type="password" id="oauthClientSecret" class="input-search" style="width: 100%;" placeholder="••••••••">
+                        </div>
+                    </div>
+                `;
+            } else if (tipo === 'AWS Sig v4') {
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <div class="form-group margin-none">
+                            <label for="awsAccessKey">Access Key ID:</label>
+                            <input type="text" id="awsAccessKey" class="input-search" style="width: 100%;" placeholder="AKIAIOSFODNN7EXAMPLE">
+                        </div>
+                        <div class="form-group margin-none">
+                            <label for="awsSecretKey">Secret Access Key:</label>
+                            <input type="password" id="awsSecretKey" class="input-search" style="width: 100%;" placeholder="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="form-group margin-none">
+                            <label for="awsRegion">AWS Region:</label>
+                            <input type="text" id="awsRegion" class="input-search" style="width: 100%;" placeholder="us-east-1">
+                        </div>
+                        <div class="form-group margin-none">
+                            <label for="awsService">Service Name:</label>
+                            <input type="text" id="awsService" class="input-search" style="width: 100%;" placeholder="execute-api">
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<small style="color: #666;">Campos de configuração específica para ${tipo} serão apresentados ao salvar.</small>`;
+            }
+        }
+
+        // Auto-detecta o tipo e preenche dados ao colar um comando cURL
+        function processarCurl(curl) {
+            if (!curl || !curl.trim()) return;
+
+            const selectTipo = document.getElementById('authTipo');
+            const selectOrigem = document.getElementById('authOrigem');
+
+            // Define origem como API se estiver vazio ou não for Web/Mobile/Desktop
+            if (!selectOrigem.value) {
+                selectOrigem.value = 'API';
+            }
+
+            // Detecta Bearer Token
+            const bearerMatch = curl.match(/-H\s+['"]Authorization:\s*Bearer\s+([^'"]+)['"]/i);
+            if (bearerMatch) {
+                selectTipo.value = 'Bearer Token';
+                renderizarCamposDinamicos('Bearer Token', { token: bearerMatch[1] });
+                return;
+            }
+
+            // Detecta Basic Auth (-u user:pass ou Header Basic)
+            const basicHeaderMatch = curl.match(/-H\s+['"]Authorization:\s*Basic\s+([^'"]+)['"]/i);
+            const basicUserMatch = curl.match(/-u\s+['"]?([^:'"]+):([^'"]+)['"]?/i);
+
+            if (basicUserMatch) {
+                selectTipo.value = 'Basic Auth';
+                renderizarCamposDinamicos('Basic Auth', { username: basicUserMatch[1], password: basicUserMatch[2] });
+                return;
+            } else if (basicHeaderMatch) {
+                try {
+                    const decoded = atob(basicHeaderMatch[1]);
+                    const [user, pass] = decoded.split(':');
+                    selectTipo.value = 'Basic Auth';
+                    renderizarCamposDinamicos('Basic Auth', { username: user, password: pass });
+                    return;
+                } catch(e) {}
+            }
+
+            // Detecta API Key comum no Header (ex: x-api-key: xyz)
+            const apiKeyMatch = curl.match(/-H\s+['"](x-api-key|api-key|apikey|x-api-token):\s*([^'"]+)['"]/i);
+            if (apiKeyMatch) {
+                selectTipo.value = 'API Key';
+                renderizarCamposDinamicos('API Key', { key: apiKeyMatch[1], value: apiKeyMatch[2] });
+                return;
+            }
+        }
+
         function salvarPerfil(e) {
             e.preventDefault();
             const id = document.getElementById('authId').value;
-            const nome = document.getElementById('authName').value;
+            const origem = document.getElementById('authOrigem').value;
             if (id) {
-                alert(`Perfil de Autenticação "${nome}" atualizado com sucesso!`);
+                alert(`Credencial para a origem "${origem}" atualizada com sucesso!`);
             } else {
-                alert(`Perfil de Autenticação "${nome}" criado com sucesso!`);
+                alert(`Nova Credencial para a origem "${origem}" criada com sucesso!`);
             }
             fecharModal('formModal');
         }
 
-        function autenticar(id, nome) {
-            alert(`Executando processo de autenticação para "${nome}" (#${id})...\n\nResultado: Autenticado com Sucesso! Token/Sessão atualizados.`);
-        }
-
-        function duplicarPerfil(id, nome) {
-            alert(`Perfil "#${id} - ${nome}" duplicado com sucesso! Cópia criada como "${nome} (Cópia)".`);
-        }
-
         function excluirPerfil(id) {
-            if (confirm(`Deseja mover o perfil de autenticação #${id} para a lixeira?`)) {
-                alert(`Perfil #${id} movido para a lixeira.`);
+            if (confirm(`Deseja mover a credencial #${id} para a lixeira?`)) {
+                alert(`Credencial #${id} movida para a lixeira.`);
             }
         }
 
         function excluirSelecionados() {
             const ids = getSelecionados();
             if (ids.length === 0) {
-                alert('Nenhum perfil de autenticação selecionado.');
+                alert('Nenhuma credencial selecionada para exclusão.');
                 return;
             }
-            if (confirm(`Deseja mover os ${ids.length} perfis selecionados para a lixeira?`)) {
-                alert(`Perfis [${ids.join(', ')}] movidos para a lixeira.`);
+            if (confirm(`Deseja mover as ${ids.length} credenciais selecionadas para a lixeira?`)) {
+                alert(`Credenciais [${ids.join(', ')}] movidas para a lixeira.`);
             }
+        }
+
+        function iniciarGravar(tipo) {
+            document.getElementById('gravarTipoAtual').value = tipo;
+            document.getElementById('gravarTarget').value = '';
+
+            const title = document.getElementById('modalGravarTitle');
+            const label = document.getElementById('lblGravarInput');
+            const input = document.getElementById('gravarTarget');
+
+            if (tipo === 'gravar web') {
+                title.innerText = 'Iniciar Gravação Web';
+                label.innerText = 'URL da Aplicação Web';
+                input.placeholder = 'https://meusistema.com/login';
+            } else if (tipo === 'gravar desktop') {
+                title.innerText = 'Iniciar Gravação Desktop';
+                label.innerText = 'Caminho de Instalação do Executável (.exe)';
+                input.placeholder = 'C:\\Program Files\\MeuApp\\app.exe';
+            } else if (tipo === 'gravar mobile') {
+                title.innerText = 'Iniciar Gravação Mobile';
+                label.innerText = 'Caminho do App (.apk / .ipa ou pacote instalado)';
+                input.placeholder = 'com.empresa.meuapp ou /caminho/app.apk';
+            }
+
+            document.getElementById('gravarModal').style.display = 'flex';
+        }
+
+        function confirmarGravação(e) {
+            e.preventDefault();
+            const tipo = document.getElementById('gravarTipoAtual').value;
+            const target = document.getElementById('gravarTarget').value;
+
+            alert(`Iniciando gravação para [${tipo}]\nAlvo: ${target}`);
+            fecharModal('gravarModal');
         }
 
         function encerrarSessao(e) {

@@ -5,21 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cenário Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .video-simulator-box {
+            background: #111;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 15px;
+            position: relative;
+        }
+        .video-simulator-box img {
+            max-width: 100%;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 4px;
+            filter: brightness(0.9);
+        }
+        .video-play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* ESTILOS DO PAINEL DE ÁUDIO, TRANSCRIÇÃO E PASSO A PASSO */
+        .audio-section-container {
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 15px;
+        }
+        .audio-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .audio-imported-card {
+            width: 100%;
+        }
+        .audio-player-wrapper {
+            background-color: #ebf0f7;
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .btn-ouvir-audio {
+            background-color: #000;
+            color: #fff;
+            font-weight: 800;
+            font-size: 11px;
+            line-height: 1.2;
+            text-align: center;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+        .btn-ouvir-audio:hover {
+            background-color: #222;
+        }
+        .audio-player-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .audio-track-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+        .audio-filename {
+            color: #4a5568;
+            font-family: monospace;
+            font-weight: 600;
+        }
+        .audio-time {
+            color: #a0aec0;
+            font-size: 11px;
+        }
+        .audio-progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #cbd5e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .audio-progress-fill {
+            height: 100%;
+            background-color: #3182ce;
+        }
+        .audio-transcript-card {
+            width: 100%;
+        }
+        .transcript-quote-box {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #3182ce;
+            border-radius: 4px;
+            padding: 12px 14px;
+        }
+        .transcript-quote-box p {
+            margin: 0;
+            font-size: 13px;
+            font-style: italic;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        /* NOVO ESTILO: PASSO A PASSO PERCORRIDO (IGUAL À IMAGEM) */
+        .steps-card-container {
+            width: 100%;
+        }
+        .steps-box {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 14px 18px;
+        }
+        .steps-list {
+            margin: 0;
+            padding-left: 20px;
+            color: #2d3748;
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+        .steps-list li {
+            margin-bottom: 6px;
+        }
+        .steps-list li:last-child {
+            margin-bottom: 0;
+        }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <!-- Categoria: SISTEMA -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> (MÓDULO) -->
+            <!-- Categoria: NÚCLEO -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,14 +183,13 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <!-- Categoria: MÉTRICA -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <!-- Categoria: EXTENSÃO -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
@@ -52,8 +204,8 @@
 
     <main class="main-content">
         <section class="card">
-            <h1>Gestão de Cenários de Teste</h1>
-            <p>Defina e gerencie como os comportamentos do sistema serão executados, associando mídia, evidências, configurações e parâmetros.</p>
+            <h1>Central de Cenários</h1>
+            <p>Gerencie os cenários de teste associados às configurações de autenticação do sistema.</p>
 
             <!-- Toolbar Principal -->
             <div class="toolbar">
@@ -64,17 +216,13 @@
 
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar cenário..." class="input-search">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search">
                     </div>
-
                     <div class="form-group margin-none">
-                        <select id="filterType">
-                            <option value="">Todos os Tipos</option>
-                            <option value="API">API</option>
-                            <option value="Web">Web</option>
-                            <option value="Desktop">Desktop</option>
-                            <option value="Mobile">Mobile</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search">
+                    </div>
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterAutenticacao" placeholder="Filtrar por Autenticação..." class="input-search">
                     </div>
                 </div>
             </div>
@@ -87,81 +235,61 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID</th>
-                            <th>Nome do Cenário</th>
-                            <th>Tipo</th>
-                            <th>Autenticação</th>
-                            <th>Mídia / Evidências</th>
-                            <th>Config. Execução</th>
-                            <th class="text-center">Ações</th>
+                            <th>ORIGEM</th>
+                            <th>DESCRIÇÃO</th>
+                            <th>AUTENTICAÇÃO</th>
+                            <th class="text-center">AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody id="cenarioTableBody">
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                            <td>#SC-001</td>
-                            <td><strong>Login e Checkout PIX</strong></td>
-                            <td><span class="badge-categoria">Web</span></td>
-                            <td>Admin ERP</td>
-                            <td>Vídeo, Network Log</td>
-                            <td>Headless / Chrome</td>
+                            <td>API</td>
+                            <td>Consulta de Saldo e Extrato do Usuário via Endpoint REST.</td>
+                            <td>Bearer Token</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('1', 'Login e Checkout PIX')">Executar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('1', 'Login e Checkout PIX')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '1')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('1')">Excluir</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '1')">EDITAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('1')">EXCLUIR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                            <td>#SC-002</td>
-                            <td><strong>Consulta Saldo API Rest</strong></td>
-                            <td><span class="badge-categoria">API</span></td>
-                            <td>Bearer Token</td>
-                            <td>Arquivos JSON</td>
-                            <td>Timeout 5000ms</td>
+                            <td>Web</td>
+                            <td>Validação de Checkout e Pagamento via PIX no Painel do Cliente.</td>
+                            <td>gravar web</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('2', 'Consulta Saldo API Rest')">Executar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('2', 'Consulta Saldo API Rest')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '2')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('2')">Excluir</button>
+                                    <button class="btn btn-sm btn-dark" onclick="gravarCenario('2', 'Web')">GRAVAR</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '2')">EDITAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('2')">EXCLUIR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
-                            <td>#SC-003</td>
-                            <td><strong>Emissão de NF-e Desktop</strong></td>
-                            <td><span class="badge-categoria">Desktop</span></td>
-                            <td>Basic Auth</td>
-                            <td>Áudio, Tutorial PDF</td>
-                            <td>WinAppDriver / x64</td>
+                            <td>Mobile</td>
+                            <td>Fluxo de Validação de Biometria e Token Transacional no App.</td>
+                            <td>gravar mobile</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('3', 'Emissão de NF-e Desktop')">Executar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('3', 'Emissão de NF-e Desktop')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '3')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('3')">Excluir</button>
+                                    <button class="btn btn-sm btn-dark" onclick="gravarCenario('3', 'Mobile')">GRAVAR</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '3')">EDITAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('3')">EXCLUIR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
-                            <td>#SC-004</td>
-                            <td><strong>Fluxo Biometria App</strong></td>
-                            <td><span class="badge-categoria">Mobile</span></td>
-                            <td>API Key</td>
-                            <td>Gravação Tela, Evidências</td>
-                            <td>Appium / Android 13</td>
+                            <td>Desktop</td>
+                            <td>Emissão e Impressão de Nota Fiscal Eletrônica (NF-e).</td>
+                            <td>gravar desktop</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="executarCenario('4', 'Fluxo Biometria App')">Executar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarCenario('4', 'Fluxo Biometria App')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '4')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('4')">Excluir</button>
+                                    <button class="btn btn-sm btn-dark" onclick="gravarCenario('4', 'Desktop')">GRAVAR</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '4')">EDITAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirCenario('4')">EXCLUIR</button>
                                 </div>
                             </td>
                         </tr>
@@ -183,66 +311,134 @@
 
     <!-- Modal Form (Novo / Editar Cenário) -->
     <div class="modal" id="cenarioModal">
-        <div class="modal-content modal-lg">
-            <h2 id="modalTitle">Novo Cenário de Execução</h2>
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 id="modalTitle">Novo Cenário</h2>
             <form onsubmit="salvarCenario(event)">
                 <input type="hidden" id="cenarioId">
 
                 <div class="info-grid">
                     <div class="form-group">
-                        <label for="cenarioNome">Nome do Cenário</label>
-                        <input type="text" id="cenarioNome" required placeholder="Ex: Validação de Checkout Web">
-                    </div>
-                    <div class="form-group">
-                        <label for="cenarioTipo">Tipo de Plataforma</label>
-                        <select id="cenarioTipo" required>
+                        <label for="cenarioOrigem">Origem</label>
+                        <select id="cenarioOrigem" required onchange="alterarCamposPorOrigem(this.value)">
                             <option value="">Selecione...</option>
                             <option value="API">API</option>
                             <option value="Web">Web</option>
-                            <option value="Desktop">Desktop</option>
                             <option value="Mobile">Mobile</option>
+                            <option value="Desktop">Desktop</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cenarioAutenticacao">Autenticação</label>
+                        <select id="cenarioAutenticacao" required>
+                            <option value="">Selecione a Autenticação...</option>
+                            <option value="Bearer Token">Bearer Token (API)</option>
+                            <option value="gravar web">gravar web (Web)</option>
+                            <option value="gravar mobile">gravar mobile (Mobile)</option>
+                            <option value="gravar desktop">gravar desktop (Desktop)</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="cenarioAuth">Perfil de Autenticação</label>
-                        <select id="cenarioAuth">
-                            <option value="">Nenhuma / Pública</option>
-                            <option value="1">Acesso Admin ERP</option>
-                            <option value="2">Gateway REST API (Bearer)</option>
-                            <option value="3">Serviço Parceiro (API Key)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cenarioConfig">Configuração de Execução</label>
-                        <input type="text" id="cenarioConfig" placeholder="Ex: Headless=true; Timeout=5000">
-                    </div>
-                </div>
-
                 <div class="form-group">
-                    <label for="cenarioPassos">Passos da Execução</label>
-                    <textarea id="cenarioPassos" placeholder="1. Dado que o usuário acesse...&#10;2. Quando preencher o formulário...&#10;3. Então deve validar..."></textarea>
+                    <label for="cenarioDescricao">Descrição</label>
+                    <textarea id="cenarioDescricao" rows="3" required placeholder="Exemplo: Validação do fluxo de login e checkout com pagamento via PIX no e-commerce."></textarea>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="cenarioParametros">Parâmetros & Dados</label>
-                        <textarea id="cenarioParametros" placeholder="Ex: { 'payload': { 'id': 100 } }"></textarea>
+                <!-- CAMPO DINÂMICO 1: API -->
+                <div class="form-group campo-dinamico" id="campoCurlAPI" style="display: none;">
+                    <label for="curlMassaNovo">Importar cURLs em Massa (API) - Exemplo:</label>
+                    <textarea id="curlMassaNovo" rows="3" class="input-search" style="width: 100%; font-family: monospace; font-size: 0.85rem;" placeholder="curl -X GET 'https://api.exemplo.com/v1/saldo' -H 'Authorization: Bearer token...'&#10;curl -X POST 'https://api.exemplo.com/v1/pix' -d '{...}'"></textarea>
+                    <small style="color: #666; display: block; margin-top: 4px;">* Importação em massa. Linhas ou comandos cURL duplicados serão ignorados automaticamente.</small>
+                </div>
+
+                <!-- CAMPO DINÂMICO 2: Web -->
+                <div class="form-group campo-dinamico" id="campoUrlWeb" style="display: none;">
+                    <label for="urlMassaNovo">Importar URLs em Massa (Web) - Exemplo:</label>
+                    <textarea id="urlMassaNovo" rows="3" class="input-search" style="width: 100%; font-family: monospace; font-size: 0.85rem;" placeholder="https://exemplo.com.br/login&#10;https://exemplo.com.br/checkout&#10;https://exemplo.com.br/painel"></textarea>
+                    <small style="color: #666; display: block; margin-top: 4px;">* Uma URL por linha. URLs duplicadas serão ignoradas automaticamente.</small>
+
+                    <div style="margin-top: 10px; display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="chkCapturarApiNovo" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkCapturarApiNovo" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                            <strong>Capturar requisições da API</strong>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(monitorar e salvar tráfego HTTP/REST durante a navegação)</span>
+                        </label>
                     </div>
-                    <div class="form-group">
-                        <label for="cenarioMidia">Mídias, Tutoriais & Gravação</label>
-                        <textarea id="cenarioMidia" placeholder="URLs de Vídeo, Áudio, Tutoriais ou Network Logs..."></textarea>
+
+                    <div style="margin-top: 8px; display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="chkModoMobileNovo" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkModoMobileNovo" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                            <strong>Capturar no modo mobile</strong>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(simular viewport e User-Agent de dispositivo móvel durante a navegação)</span>
+                        </label>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="cenarioArquivos">Documentos e Evidências (Arquivos)</label>
-                    <input type="text" id="cenarioArquivos" placeholder="Anexos, imagens de evidência, relatórios em PDF...">
+                <!-- CAMPO DINÂMICO 3: Desktop / Mobile -->
+                <div class="form-group campo-dinamico" id="campoAppCaminho" style="display: none;">
+                    <label id="lblCaminhoApp" for="caminhoAppNovo">Caminho da Instalação/App:</label>
+                    <input type="text" id="caminhoAppNovo" class="input-search" style="width: 100%;" placeholder="Exemplo: C:\Arquivos de Programas\Sistema\app.exe">
                 </div>
 
-                <div class="modal-actions">
+                <!-- SIMULADOR DE VÍDEO -->
+                <div class="video-simulator-box" id="blocoVideoSimulado" style="display: none;">
+                    <span style="font-size: 11px; color: #aaa; display: block; margin-bottom: 6px;">Visualização da Gravação do Cenário (Vídeo Reproduzível)</span>
+                    <div style="position: relative; display: inline-block; width: 100%;">
+                        <img src="../jabutiqa.jpg" alt="Simulação de Vídeo do Cenário">
+                        <div class="video-play-overlay" onclick="reproduzirVideoSimulado()">
+                            ▶ Reproduzir Vídeo Gravado
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO DE ÁUDIO, TRANSCRIÇÃO E PASSO A PASSO -->
+                <div class="audio-section-container">
+                    <!-- Box Áudio Importado -->
+                    <div class="audio-imported-card">
+                        <h3 class="audio-card-title">Áudio Importado da Execução</h3>
+                        
+                        <div class="audio-player-wrapper">
+                            <button type="button" class="btn-ouvir-audio" onclick="document.getElementById('inputImportarAudioRef').click()">
+                                OUVIR<br>ÁUDIO
+                            </button>
+                            <input type="file" id="inputImportarAudioRef" accept="audio/*" style="display: none;" onchange="atualizarNomeAudio(this)">
+                            
+                            <div class="audio-player-info">
+                                <div class="audio-track-details">
+                                    <span id="audioFileName" class="audio-filename">Gravacao_Comando_Voz_Web.wav</span>
+                                    <span id="audioTimeInfo" class="audio-time">00:05s / 00:12s</span>
+                                </div>
+                                <div class="audio-progress-bar">
+                                    <div class="audio-progress-fill" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Box Transcrição -->
+                    <div class="audio-transcript-card">
+                        <h3 class="audio-card-title">Transcrição do Áudio:</h3>
+                        <div class="transcript-quote-box">
+                            <p id="transcricaoTextoRef">
+                                "Confirmar a transação do usuário no painel principal e verificar a emissão do comprovante de validação."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- NOVO COMPONENTE: Passo a Passo Percorrido -->
+                    <div class="steps-card-container">
+                        <h3 class="audio-card-title">Passo a Passo Percorrido:</h3>
+                        <div class="steps-box">
+                            <ol class="steps-list" id="listaPassoAPasso">
+                                <li>Acessar a página inicial do sistema Web.</li>
+                                <li>Navegar até o componente principal do Dashboard.</li>
+                                <li>Acionar a captura de tela para validação visual.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 20px;">
                     <button type="button" class="btn btn-secondary" onclick="fecharModal('cenarioModal')">Cancelar</button>
                     <button type="submit" class="btn">Salvar Cenário</button>
                 </div>
@@ -250,8 +446,60 @@
         </div>
     </div>
 
+    <!-- Modal Gravação da Tabela -->
+    <div class="modal" id="gravarModal">
+        <div class="modal-content">
+            <h2 id="gravarModalTitle">Gravar Cenário</h2>
+            <form onsubmit="confirmarGraving(event)">
+                <input type="hidden" id="gravarCenarioId">
+                <input type="hidden" id="gravarOrigem">
+
+                <div class="form-group">
+                    <label id="gravarFieldLabel" for="gravarInput">Informe o Caminho:</label>
+                    <input type="text" id="gravarInput" required class="input-search" style="width: 100%;">
+                </div>
+
+                <div id="opcoesGravarWeb" style="display: none; margin-top: 15px; text-align: left;">
+                    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                        <input type="checkbox" id="chkGravarCapturarApi" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkGravarCapturarApi" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                            <strong>Capturar requisições da API</strong>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(monitorar e salvar tráfego HTTP/REST durante a navegação)</span>
+                        </label>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="chkGravarModoMobile" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkGravarModoMobile" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                            <strong>Capturar no modo mobile</strong>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(simular viewport e User-Agent de dispositivo móvel)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="margin-top: 12px; text-align: left;">
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="chkGravarAudioMicrofone" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;" checked>
+                        <label for="chkGravarAudioMicrofone" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                            <strong>Capturar áudio do microfone durante a gravação</strong>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(gravar a entrada de áudio do microfone junto com o vídeo)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('gravarModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-dark">Iniciar Gravação & Gerar Vídeo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Scripts de Interatividade -->
     <script>
+        const curlsCadastrados = new Set();
+        const urlsCadastradas = new Set();
+
         function toggleSelectAll(master) {
             const checkboxes = document.querySelectorAll('.item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
@@ -263,19 +511,69 @@
         }
 
         function abrirModalCenario(modo, id = '') {
-            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Novo Cenário de Execução' : 'Editar Cenário de Execução';
+            const tituloModal = document.getElementById('modalTitle');
+            const blocoVideo = document.getElementById('blocoVideoSimulado');
+
             document.getElementById('cenarioId').value = id;
+
             if (modo === 'novo') {
-                document.getElementById('cenarioNome').value = '';
-                document.getElementById('cenarioTipo').value = '';
-                document.getElementById('cenarioAuth').value = '';
-                document.getElementById('cenarioConfig').value = '';
-                document.getElementById('cenarioPassos').value = '';
-                document.getElementById('cenarioParametros').value = '';
-                document.getElementById('cenarioMidia').value = '';
-                document.getElementById('cenarioArquivos').value = '';
+                tituloModal.innerText = 'Novo Cenário';
+                document.getElementById('cenarioOrigem').value = '';
+                document.getElementById('cenarioAutenticacao').value = '';
+                document.getElementById('cenarioDescricao').value = '';
+                document.getElementById('curlMassaNovo').value = '';
+                document.getElementById('urlMassaNovo').value = '';
+                document.getElementById('caminhoAppNovo').value = '';
+                document.getElementById('chkCapturarApiNovo').checked = false;
+                document.getElementById('chkModoMobileNovo').checked = false;
+                document.getElementById('transcricaoTextoRef').innerText = '"Nenhum áudio importado ou transcrito até o momento."';
+                document.getElementById('audioFileName').innerText = 'Nenhum arquivo selecionado';
+                blocoVideo.style.display = 'none';
+                alterarCamposPorOrigem('');
+            } else {
+                tituloModal.innerText = `Editar Cenário #${id}`;
+                document.getElementById('cenarioDescricao').value = 'Exemplo: Validação do fluxo de login e checkout com pagamento via PIX no e-commerce.';
+                document.getElementById('transcricaoTextoRef').innerText = '"Confirmar a transação do usuário no painel principal e verificar a emissão do comprovante de validação."';
+                document.getElementById('audioFileName').innerText = 'Gravacao_Comando_Voz_Web.wav';
+                blocoVideo.style.display = 'block';
             }
             document.getElementById('cenarioModal').style.display = 'flex';
+        }
+
+        function alterarCamposPorOrigem(origem) {
+            const campoCurl = document.getElementById('campoCurlAPI');
+            const campoUrl = document.getElementById('campoUrlWeb');
+            const campoApp = document.getElementById('campoAppCaminho');
+            const lblCaminho = document.getElementById('lblCaminhoApp');
+
+            campoCurl.style.display = 'none';
+            campoUrl.style.display = 'none';
+            campoApp.style.display = 'none';
+
+            if (origem === 'API') {
+                campoCurl.style.display = 'block';
+            } else if (origem === 'Web') {
+                campoUrl.style.display = 'block';
+            } else if (origem === 'Mobile') {
+                campoApp.style.display = 'block';
+                lblCaminho.innerText = 'Caminho de Instalação do App (.apk / .app):';
+                document.getElementById('caminhoAppNovo').placeholder = '/caminho/para/aplicativo.apk';
+            } else if (origem === 'Desktop') {
+                campoApp.style.display = 'block';
+                lblCaminho.innerText = 'Caminho do Executável (.exe / .app):';
+                document.getElementById('caminhoAppNovo').placeholder = 'C:\\Arquivos de Programas\\Sistema\\app.exe';
+            }
+        }
+
+        function reproduzirVideoSimulado() {
+            alert('▶ [Player Simulado]: Reproduzindo vídeo gravado do cenário com trilha de áudio sincronizada a 30 FPS.');
+        }
+
+        function atualizarNomeAudio(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('audioFileName').innerText = input.files[0].name;
+                document.getElementById('transcricaoTextoRef').innerText = `"[Áudio ${input.files[0].name} Carregado]: Transcrição pronta para processamento."`;
+            }
         }
 
         function fecharModal(modalId) {
@@ -285,26 +583,94 @@
         function salvarCenario(e) {
             e.preventDefault();
             const id = document.getElementById('cenarioId').value;
-            const nome = document.getElementById('cenarioNome').value;
-            if (id) {
-                alert(`Cenário "${nome}" atualizado com sucesso!`);
-            } else {
-                alert(`Cenário "${nome}" registrado com sucesso!`);
+            const origem = document.getElementById('cenarioOrigem').value;
+
+            if (origem === 'API') {
+                const rawCurls = document.getElementById('curlMassaNovo').value;
+                const linhasCurl = rawCurls.split('\n').map(c => c.trim()).filter(c => c.length > 0);
+                
+                let adic = 0, dup = 0;
+                linhasCurl.forEach(curl => {
+                    if (curlsCadastrados.has(curl)) dup++;
+                    else { curlsCadastrados.add(curl); adic++; }
+                });
+
+                if (linhasCurl.length > 0 && adic === 0 && dup > 0) {
+                    alert('Todos os cURLs informados já existem e foram ignorados!');
+                    return;
+                }
+            } else if (origem === 'Web') {
+                const rawUrls = document.getElementById('urlMassaNovo').value;
+                const linhasUrl = rawUrls.split('\n').map(u => u.trim()).filter(u => u.length > 0);
+
+                let adic = 0, dup = 0;
+                linhasUrl.forEach(url => {
+                    if (urlsCadastradas.has(url)) dup++;
+                    else { urlsCadastradas.add(url); adic++; }
+                });
+
+                if (linhasUrl.length > 0 && adic === 0 && dup > 0) {
+                    alert('Todas as URLs informadas já existem e foram ignorados!');
+                    return;
+                }
             }
+
+            alert(id ? 'Cenário atualizado com sucesso!' : 'Cenário registrado com sucesso!');
             fecharModal('cenarioModal');
         }
 
-        function executarCenario(id, nome) {
-            alert(`Iniciando execução do Cenário #${id} - "${nome}"...\n\nProcessando passos, capturando evidências e logs de Network.`);
+        function gravarCenario(id, origem) {
+            document.getElementById('gravarCenarioId').value = id;
+            document.getElementById('gravarOrigem').value = origem;
+            document.getElementById('gravarInput').value = '';
+
+            const label = document.getElementById('gravarFieldLabel');
+            const input = document.getElementById('gravarInput');
+            const opcoesWeb = document.getElementById('opcoesGravarWeb');
+
+            document.getElementById('chkGravarCapturarApi').checked = false;
+            document.getElementById('chkGravarModoMobile').checked = false;
+            document.getElementById('chkGravarAudioMicrofone').checked = true;
+
+            if (origem === 'Web') {
+                label.innerText = 'Informe a URL de Acesso:';
+                input.placeholder = 'https://exemplo.com.br/login';
+                opcoesWeb.style.display = 'block';
+            } else {
+                opcoesWeb.style.display = 'none';
+                if (origem === 'Mobile') {
+                    label.innerText = 'Informe o Caminho de Instalação do App (.apk / .app):';
+                    input.placeholder = '/caminho/para/aplicativo.apk';
+                } else if (origem === 'Desktop') {
+                    label.innerText = 'Informe o Caminho do Executável (.exe / .app):';
+                    input.placeholder = 'C:\\Arquivos de Programas\\Sistema\\app.exe';
+                }
+            }
+
+            document.getElementById('gravarModal').style.display = 'flex';
         }
 
-        function duplicarCenario(id, nome) {
-            alert(`Cenário "#${id} - ${nome}" duplicado com sucesso! Cópia criada.`);
+        function confirmarGraving(e) {
+            e.preventDefault();
+            const id = document.getElementById('gravarCenarioId').value;
+            const origem = document.getElementById('gravarOrigem').value;
+            const valor = document.getElementById('gravarInput').value;
+
+            if (origem === 'Web') {
+                if (urlsCadastradas.has(valor)) {
+                    alert('Esta URL já foi cadastrada previamente!');
+                    return;
+                }
+                urlsCadastradas.add(valor);
+            }
+
+            alert(`Gravação concluída para o Cenário #${id} (${origem})\nVídeo reproduzível gerado com sucesso!`);
+            fecharModal('gravarModal');
         }
 
         function excluirCenario(id) {
-            if (confirm(`Deseja mover o cenário #${id} para a lixeira?`)) {
-                alert(`Cenário #${id} enviado para a lixeira.`);
+            if (confirm(`Deseja excluir o cenário #${id}?`)) {
+                alert(`Cenário #${id} excluído com sucesso.`);
             }
         }
 
@@ -314,8 +680,8 @@
                 alert('Nenhum cenário selecionado.');
                 return;
             }
-            if (confirm(`Deseja mover os ${ids.length} cenários selecionados para a lixeira?`)) {
-                alert(`Cenários [${ids.join(', ')}] movidos para a lixeira.`);
+            if (confirm(`Deseja excluir os ${ids.length} cenários selecionados?`)) {
+                alert(`Cenários [${ids.join(', ')}] excluídos com sucesso.`);
             }
         }
 

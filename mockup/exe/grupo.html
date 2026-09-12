@@ -8,18 +8,18 @@
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
+        <!-- BANNER / LOGO -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <!-- Categoria: SISTEMA -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> -->
+            <!-- Categoria: NÚCLEO -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html" class="active">1. Grupo</a></li>
@@ -30,13 +30,13 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <!-- Categoria: MÉTRICA -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <!-- Categoria: EXTENSÃO -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
@@ -63,19 +63,15 @@
 
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar grupo..." class="input-min-200">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem...">
                     </div>
 
                     <div class="form-group margin-none">
-                        <select id="filterOrg">
-                            <option value="">Todas as Organizações</option>
-                            <option value="Produto">Produto</option>
-                            <option value="<h2>SISTEMA</h2>"><h2>SISTEMA</h2></option>
-                            <option value="Aplicação">Aplicação</option>
-                            <option value="Projeto">Projeto</option>
-                            <option value="Ambiente">Ambiente</option>
-                            <option value="Domínio">Domínio</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-min-200">
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterCor" placeholder="Filtrar por Cor...">
                     </div>
                 </div>
             </div>
@@ -88,102 +84,58 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID</th>
-                            <th>Nome do Grupo</th>
-                            <th>Organiza por</th>
-                            <th>Exemplo / Contexto</th>
+                            <th>Origem</th>
                             <th>Descrição</th>
+                            <th>Cor</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="groupTableBody">
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                            <td>#001</td>
-                            <td><strong>Portal Web Corporativo</strong></td>
-                            <td><span class="badge-categoria">Aplicação</span></td>
-                            <td>Web</td>
-                            <td>Interface web principal do sistema.</td>
+                            <td>API</td>
+                            <td>Serviços e endpoints REST para integração.</td>
+                            <td>Azul</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('1', 'Portal Web Corporativo', 'Aplicação', 'Web', 'Interface web principal do <h2>SISTEMA</h2>.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '1', 'Portal Web Corporativo', 'Aplicação', 'Web', 'Interface web principal do <h2>SISTEMA</h2>.')">Editar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '1', 'API', 'Serviços e endpoints REST para integração.', 'Azul')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirGrupo('1')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                            <td>#002</td>
-                            <td><strong>Gateway de Integração</strong></td>
-                            <td><span class="badge-categoria">SISTEMA</span></td>
-                            <td>API</td>
-                            <td>Serviços e endpoints REST para integração.</td>
+                            <td>Web</td>
+                            <td>Interface web principal do sistema.</td>
+                            <td>Verde</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('2', 'Gateway de Integração', '<h2>SISTEMA</h2>', 'API', 'Serviços e endpoints REST para integração.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '2', 'Gateway de Integração', '<h2>SISTEMA</h2>', 'API', 'Serviços e endpoints REST para integração.')">Editar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '2', 'Web', 'Interface web principal do sistema.', 'Verde')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirGrupo('2')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
-                            <td>#003</td>
-                            <td><strong>Gestão Financeira & RH</strong></td>
-                            <td><span class="badge-categoria">Produto</span></td>
-                            <td>ERP</td>
-                            <td>Módulos administrativos e operacionais.</td>
+                            <td>Mobile</td>
+                            <td>Aplicativo móvel iOS/Android.</td>
+                            <td>Laranja</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('3', 'Gestão Financeira & RH', 'Produto', 'ERP', 'Módulos administrativos e operacionais.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '3', 'Gestão Financeira & RH', 'Produto', 'ERP', 'Módulos administrativos e operacionais.')">Editar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '3', 'Mobile', 'Aplicativo móvel iOS/Android.', 'Laranja')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirGrupo('3')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
-                            <td>#004</td>
-                            <td><strong>Administração de Operações</strong></td>
-                            <td><span class="badge-categoria">Domínio</span></td>
-                            <td>Backoffice</td>
-                            <td>Plataforma interna de acompanhamento.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('4', 'Administração de Operações', 'Domínio', 'Backoffice', 'Plataforma interna de acompanhamento.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '4', 'Administração de Operações', 'Domínio', 'Backoffice', 'Plataforma interna de acompanhamento.')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirGrupo('4')">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="5"></td>
-                            <td>#005</td>
-                            <td><strong>Aplicativo Mobile Paciente</strong></td>
-                            <td><span class="badge-categoria">Aplicação</span></td>
-                            <td>App</td>
-                            <td>Aplicativo móvel iOS/Android.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('5', 'Aplicativo Mobile Paciente', 'Aplicação', 'App', 'Aplicativo móvel iOS/Android.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '5', 'Aplicativo Mobile Paciente', 'Aplicação', 'App', 'Aplicativo móvel iOS/Android.')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirGrupo('5')">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="6"></td>
-                            <td>#006</td>
-                            <td><strong>Terminal do Laboratório</strong></td>
-                            <td><span class="badge-categoria">Ambiente</span></td>
                             <td>Desktop</td>
                             <td>Software cliente instalado nas máquinas locais.</td>
+                            <td>Roxo</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="abrirDetalhes('6', 'Terminal do Laboratório', 'Ambiente', 'Desktop', 'Software cliente instalado nas máquinas locais.')">Abrir</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '6', 'Terminal do Laboratório', 'Ambiente', 'Desktop', 'Software cliente instalado nas máquinas locais.')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirGrupo('6')">Excluir</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalForm('editar', '4', 'Desktop', 'Software cliente instalado nas máquinas locais.', 'Roxo')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirGrupo('4')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
@@ -193,7 +145,7 @@
 
             <!-- Paginação -->
             <div class="pagination margin-top-20">
-                <span class="pagination-info text-primary-dark">Exibindo 1-6 de 6 grupos</span>
+                <span class="pagination-info text-primary-dark">Exibindo 1-4 de 4 grupos</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -210,59 +162,22 @@
             <form onsubmit="salvarGrupo(event)">
                 <input type="hidden" id="groupId">
                 <div class="form-group">
-                    <label for="groupName">Nome do Grupo</label>
-                    <input type="text" id="groupName" required placeholder="Ex: <h2>SISTEMA</h2> Financeiro">
-                </div>
-                <div class="form-group">
-                    <label for="groupOrg">Organização (O que organiza?)</label>
-                    <select id="groupOrg" required>
-                        <option value="">Selecione...</option>
-                        <option value="Produto">Produto</option>
-                        <option value="<h2>SISTEMA</h2>"><h2>SISTEMA</h2></option>
-                        <option value="Aplicação">Aplicação</option>
-                        <option value="Projeto">Projeto</option>
-                        <option value="Ambiente">Ambiente</option>
-                        <option value="Domínio">Domínio</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="groupEx">Exemplo / Exibição</label>
-                    <select id="groupEx" required>
-                        <option value="">Selecione...</option>
-                        <option value="Web">Web</option>
-                        <option value="API">API</option>
-                        <option value="ERP">ERP</option>
-                        <option value="Backoffice">Backoffice</option>
-                        <option value="App">App</option>
-                        <option value="Desktop">Desktop</option>
-                    </select>
+                    <label for="groupOrigem">Origem</label>
+                    <input type="text" id="groupOrigem" required placeholder="Ex: API, Web, Mobile, Desktop">
                 </div>
                 <div class="form-group">
                     <label for="groupDesc">Descrição</label>
-                    <textarea id="groupDesc" placeholder="Descreva os objetivos deste grupo..."></textarea>
+                    <textarea id="groupDesc" placeholder="Descreva a origem..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="groupCor">Cor</label>
+                    <input type="text" id="groupCor" required placeholder="Ex: Azul, #FF0000">
                 </div>
                 <div class="flex-end-gap-10 margin-top-15">
                     <button type="button" class="btn btn-secondary" onclick="fecharModal('formModal')">Cancelar</button>
                     <button type="submit" class="btn">Salvar Grupo</button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Modal Detalhes (Abrir) -->
-    <div class="modal" id="detailsModal">
-        <div class="modal-content">
-            <h2 class="modal-header-title">Detalhes do Grupo</h2>
-            <div class="info-grid grid-single-col-gap-10">
-                <div class="info-item"><label>ID</label><span id="viewId">-</span></div>
-                <div class="info-item"><label>Nome do Grupo</label><span id="viewName">-</span></div>
-                <div class="info-item"><label>Organiza por</label><span id="viewOrg">-</span></div>
-                <div class="info-item"><label>Exemplo / Tipo</label><span id="viewEx">-</span></div>
-                <div class="info-item"><label>Descrição</label><span id="viewDesc">-</span></div>
-            </div>
-            <div class="text-right margin-top-15">
-                <button class="btn btn-secondary" onclick="fecharModal('detailsModal')">Fechar</button>
-            </div>
         </div>
     </div>
 
@@ -278,23 +193,13 @@
             return Array.from(checkboxes).map(cb => cb.value);
         }
 
-        function abrirModalForm(modo, id = '', nome = '', org = '', ex = '', desc = '') {
+        function abrirModalForm(modo, id = '', origem = '', desc = '', cor = '') {
             document.getElementById('modalFormTitle').innerText = modo === 'novo' ? 'Novo Grupo' : 'Editar Grupo';
             document.getElementById('groupId').value = id;
-            document.getElementById('groupName').value = nome;
-            document.getElementById('groupOrg').value = org;
-            document.getElementById('groupEx').value = ex;
+            document.getElementById('groupOrigem').value = origem;
             document.getElementById('groupDesc').value = desc;
+            document.getElementById('groupCor').value = cor;
             document.getElementById('formModal').style.display = 'flex';
-        }
-
-        function abrirDetalhes(id, nome, org, ex, desc) {
-            document.getElementById('viewId').innerText = '#' + id;
-            document.getElementById('viewName').innerText = nome;
-            document.getElementById('viewOrg').innerText = org;
-            document.getElementById('viewEx').innerText = ex;
-            document.getElementById('viewDesc').innerText = desc;
-            document.getElementById('detailsModal').style.display = 'flex';
         }
 
         function fecharModal(modalId) {
@@ -304,11 +209,11 @@
         function salvarGrupo(e) {
             e.preventDefault();
             const id = document.getElementById('groupId').value;
-            const nome = document.getElementById('groupName').value;
+            const origem = document.getElementById('groupOrigem').value;
             if (id) {
-                alert(`Grupo "${nome}" atualizado com sucesso!`);
+                alert(`Grupo "${origem}" atualizado com sucesso!`);
             } else {
-                alert(`Novo Grupo "${nome}" cadastrado com sucesso!`);
+                alert(`Novo Grupo "${origem}" cadastrado com sucesso!`);
             }
             fecharModal('formModal');
         }

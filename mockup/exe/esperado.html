@@ -5,21 +5,196 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esperado Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Alinhamento horizontal dos botões de ação na tabela */
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+
+        /* Estilos para o spinner de carregamento e campos condicionais */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .dynamic-field {
+            margin-top: 15px;
+        }
+
+        /* Checklist de campos para ignorar no JSON e Documentos */
+        .ignore-checklist-box {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .ignore-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+
+        /* Container de Recorte / Seleção de Regiões na Imagem */
+        .crop-canvas-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #222;
+            overflow: hidden;
+            text-align: center;
+            user-select: none;
+        }
+
+        .crop-canvas-wrapper img {
+            max-width: 100%;
+            max-height: 320px;
+            display: block;
+            margin: 0 auto;
+            pointer-events: none;
+        }
+
+        .crop-overlay-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .crop-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Caixa do Documento Esperado com Layout Ajustado e Limpo */
+        .document-download-box {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .document-download-box h4 {
+            font-size: 13px;
+            margin-bottom: 2px;
+            color: #1e293b;
+        }
+
+        .document-download-box button {
+            align-self: flex-start;
+            white-space: normal;
+            word-break: break-word;
+            text-align: left;
+        }
+
+        /* Estilos específicos para a caixa de seleção de cenários no modal */
+        .scenario-select-box {
+            max-height: 240px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 8px;
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .scenario-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .scenario-item:hover {
+            background: #f1f5f9;
+        }
+
+        .scenario-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            width: 100%;
+        }
+
+        .scenario-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e293b;
+        }
+
+        .scenario-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* Tags de Origem estilizadas */
+        .badge-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .badge-api { background-color: #e0f2fe; color: #0369a1; }
+        .badge-web { background-color: #d1fae5; color: #065f46; }
+        .badge-mobile { background-color: #ede9fe; color: #6d28d9; }
+        .badge-desktop { background-color: #ffee99; color: #854d0e; }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
+            <!-- Categoria: SISTEMA -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> (MÓDULO) -->
+            <!-- Categoria: NÚCLEO -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,14 +205,13 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
+            <!-- Categoria: MÉTRICA -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
+            <!-- Categoria: EXTENSÃO -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
@@ -53,28 +227,24 @@
     <main class="main-content">
         <section class="card">
             <h1>Mapeamento de Resultados Esperados</h1>
-            <p>Cadastre os critérios de aceite, oráculos de teste e regras de validação considerados corretos para a comparação das execuções.</p>
+            <p>Cadastre os critérios de aceite, esperados de teste e regras de validação considerados corretos para a comparação das execuções.</p>
 
             <!-- Toolbar Principal -->
             <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="abrirModalEsperado('novo')">+ Novo Esperado</button>
+                    <button class="btn" onclick="abrirModalExecucao()">+ Novo Esperado</button>
                     <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
                 </div>
 
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar padrão esperado..." class="input-search">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search">
                     </div>
-
                     <div class="form-group margin-none">
-                        <select id="filterType">
-                            <option value="">Todas as Estruturas</option>
-                            <option value="HTTP / API">HTTP / API</option>
-                            <option value="DOM / UI">DOM / UI</option>
-                            <option value="Visual / Screenshot">Visual / Screenshot</option>
-                            <option value="Arquivos / Downloads">Arquivos / Downloads</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search">
+                    </div>
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterSituacao" placeholder="Filtrar por Situação..." class="input-search">
                     </div>
                 </div>
             </div>
@@ -87,71 +257,61 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID</th>
-                            <th>Nome do Oráculo / Regra</th>
-                            <th>Tipo de Resposta</th>
-                            <th>Validações Principais</th>
-                            <th>Tolerância Ajustada</th>
+                            <th>Origem</th>
+                            <th>Descrição</th>
+                            <th>Situação</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="esperadoTableBody">
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                            <td>#EXP-001</td>
-                            <td><strong>Payload Resposta Login</strong></td>
-                            <td><span class="badge-categoria">HTTP / API</span></td>
-                            <td>Status 200, JSON, Headers, Body</td>
-                            <td>Estrita (0% variação)</td>
+                            <td><strong>API</strong></td>
+                            <td>Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
+                            <td><span class="badge badge-success" id="situacao-1">Aprovado</span></td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('1', 'Payload Resposta Login')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '1')">Editar</button>
+                                    <button class="btn btn-sm btn-success" onclick="aprovarItem('1')">Aprovar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEditar('1', 'API', 'Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.', '{\n  &quot;status&quot;: 200,\n  &quot;message&quot;: &quot;Autenticado com sucesso&quot;,\n  &quot;token&quot;: &quot;eyJhbGciOiJIUzI1Ni...&quot;,\n  &quot;data_emissao&quot;: &quot;2026-03-30T10:00:00Z&quot;\n}')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirEsperado('1')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                            <td>#EXP-002</td>
-                            <td><strong>Layout Dashboard Financeiro</strong></td>
-                            <td><span class="badge-categoria">Visual / Screenshot</span></td>
-                            <td>Screenshot, Imagem, Vídeo</td>
-                            <td>Layout 95% similaridade</td>
+                            <td><strong>Web</strong></td>
+                            <td>Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).</td>
+                            <td><span class="badge badge-warning" id="situacao-2">Pendente</span></td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('2', 'Layout Dashboard Financeiro')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '2')">Editar</button>
+                                    <button class="btn btn-sm btn-success" onclick="aprovarItem('2')">Aprovar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEditar('2', 'Web', 'Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).', '')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirEsperado('2')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
-                            <td>#EXP-003</td>
-                            <td><strong>Relatório Mensal de Vendas</strong></td>
-                            <td><span class="badge-categoria">Arquivos / Downloads</span></td>
-                            <td>PDF, XLSX, CSV, XML</td>
-                            <td>Ignorar Timestamps em cabeçalhos</td>
+                            <td><strong>Mobile</strong></td>
+                            <td>Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).</td>
+                            <td><span class="badge badge-success" id="situacao-3">Aprovado</span></td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('3', 'Relatório Mensal de Vendas')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '3')">Editar</button>
+                                    <button class="btn btn-sm btn-success" onclick="aprovarItem('3')">Aprovar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEditar('3', 'Mobile', 'Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).', '')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirEsperado('3')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
-                            <td>#EXP-004</td>
-                            <td><strong>Elementos da Tela de Checkout</strong></td>
-                            <td><span class="badge-categoria">DOM / UI</span></td>
-                            <td>DOM, Texto, Campos, Regiões</td>
-                            <td>Aceita novos atributos HTML5</td>
+                            <td><strong>Desktop</strong></td>
+                            <td>Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).</td>
+                            <td><span class="badge badge-warning" id="situacao-4">Pendente</span></td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarEsperado('4', 'Elementos da Tela de Checkout')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEsperado('editar', '4')">Editar</button>
+                                    <button class="btn btn-sm btn-success" onclick="aprovarItem('4')">Aprovar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalEditar('4', 'Desktop', 'Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).', '')">Editar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirEsperado('4')">Excluir</button>
                                 </div>
                             </td>
@@ -161,8 +321,8 @@
             </div>
 
             <!-- Paginação -->
-            <div class="pagination">
-                <span class="pagination-info">Exibindo 1-4 de 4 oráculos cadastrados</span>
+            <div class="pagination margin-top-20">
+                <span class="pagination-info text-primary-dark">Exibindo 1-4 de 4 esperados</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -172,66 +332,169 @@
         </section>
     </main>
 
-    <!-- Modal Form (Novo / Editar Esperado) -->
+    <!-- Modal 1: Informativo da Execução de Cenários (+ Novo Esperado) -->
+    <div class="modal" id="modalExecucao">
+        <div class="modal-content">
+            <h2>Executar Regressão de Cenários</h2>
+            <p style="margin-top: 6px; font-size: 13px; color: #555; line-height: 1.4;">
+                Selecione os cenários cadastrados que deseja executar para capturar os novos dados recebidos e documentos gerados:
+            </p>
+
+            <div style="display: flex; gap: 10px; margin-top: 12px; margin-bottom: 10px; flex-wrap: wrap;">
+                <input type="text" id="modalSearchCenario" placeholder="Buscar cenário por descrição..." oninput="filtrarCenariosModal()" style="flex: 2; min-width: 180px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px;">
+                <input type="text" id="modalSearchOrigem" placeholder="Filtrar por Origem..." oninput="filtrarCenariosModal()" style="flex: 1; min-width: 140px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px;">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px;">
+                <span><strong>Cenários Selecionados:</strong> <span id="countSelecionados">4</span></span>
+                <div>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="marcarTodosCenarios(true)">Marcar Todos</button>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="marcarTodosCenarios(false)">Desmarcar Todos</button>
+                </div>
+            </div>
+
+            <div class="scenario-select-box" id="listaCenariosModal">
+                <div class="scenario-item" data-origem="api" data-desc="consulta de saldo e extrato do usuario via endpoint rest">
+                    <input type="checkbox" class="chk-cenario" id="cen_1" value="1" checked onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-api">API</span>
+                            <span>Consulta de Saldo e Extrato do Usuário</span>
+                        </div>
+                        <div class="scenario-desc">Payload JSON e estrutura HTTP 200 REST.</div>
+                    </div>
+                </div>
+
+                <div class="scenario-item" data-origem="web" data-desc="geracao e validacao de proposta comercial em pdf via painel web">
+                    <input type="checkbox" class="chk-cenario" id="cen_2" value="2" checked onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-web">Web</span>
+                            <span>Proposta Comercial PDF (Web)</span>
+                        </div>
+                        <div class="scenario-desc">Arquivo gerado: <code>Proposta_Comercial_Cliente_Alpha_2026.pdf</code></div>
+                    </div>
+                </div>
+
+                <div class="scenario-item" data-origem="mobile" data-desc="fechamento de caixa e exportacao de relatorio em xls via app mobile">
+                    <input type="checkbox" class="chk-cenario" id="cen_3" value="3" checked onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-mobile">Mobile</span>
+                            <span>Relatório de Caixa XLS (Mobile)</span>
+                        </div>
+                        <div class="scenario-desc">Arquivo gerado: <code>Fechamento_Caixa_Loja_Centro_2026-03-30.xls</code></div>
+                    </div>
+                </div>
+
+                <div class="scenario-item" data-origem="desktop" data-desc="emissao e exportacao de extrato de faturamento em csv via cliente desktop">
+                    <input type="checkbox" class="chk-cenario" id="cen_4" value="4" checked onchange="atualizarContador()">
+                    <div class="scenario-info">
+                        <div class="scenario-title">
+                            <span class="badge-tag badge-desktop">Desktop</span>
+                            <span>Extrato de Faturamento CSV (Desktop)</span>
+                        </div>
+                        <div class="scenario-desc">Arquivo gerado: <code>Extrato_Faturamento_Anual_2025_Consolidado.csv</code></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex-end-gap-10 margin-top-20" style="display: flex; justify-content: space-between; align-items: center;">
+                <button type="button" class="btn btn-secondary" id="btnCancelarExec" onclick="fecharModal('modalExecucao')">Cancelar</button>
+                <button type="button" class="btn" id="btnOkExec" onclick="iniciarExecucao()">OK / Executar Regressão</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Editar Registro Esperado -->
     <div class="modal" id="esperadoModal">
         <div class="modal-content modal-lg">
-            <h2 id="modalTitle">Cadastrar Resultado Esperado</h2>
+            <h2>Editar Resultado Esperado</h2>
             <form onsubmit="salvarEsperado(event)">
                 <input type="hidden" id="esperadoId">
+                <input type="hidden" id="esperadoOrigem">
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="esperadoNome">Nome do Padrão Esperado</label>
-                        <input type="text" id="esperadoNome" required placeholder="Ex: Resposta Validação de Pedido">
+                <div class="form-group">
+                    <label for="esperadoDescricao">Descrição</label>
+                    <textarea id="esperadoDescricao" rows="2" required style="width: 100%;"></textarea>
+                </div>
+
+                <!-- Campo Dinâmico: Imagem e Seleção de Regiões Ignoradas (Web, Mobile, Desktop) -->
+                <div class="form-group dynamic-field" id="campoImagemGroup" style="display: none;">
+                    <label for="esperadoImagem">Imagem de Referência e Regiões Ignoradas (Web / Mobile / Desktop)</label>
+                    <input type="file" id="esperadoImagem" accept="image/*" onchange="carregarImagemPreview(this)" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
+                    
+                    <div class="crop-canvas-wrapper" id="cropWrapper">
+                        <img id="imgPreviewReference" src="../jabutiqa.jpg" alt="Imagem para Mapeamento">
+                        <canvas id="cropOverlayCanvas" class="crop-overlay-canvas"></canvas>
                     </div>
-                    <div class="form-group">
-                        <label for="esperadoTipo">Categoria de Análise</label>
-                        <select id="esperadoTipo" required>
-                            <option value="">Selecione...</option>
-                            <option value="HTTP / API">HTTP / API / Protocolos</option>
-                            <option value="DOM / UI">Elementos DOM / Texto UI</option>
-                            <option value="Visual / Screenshot">Visual / Mídia / Screenshot</option>
-                            <option value="Arquivos / Downloads">Documentos e Arquivos</option>
-                        </select>
+                    <div class="crop-toolbar">
+                        <span>Clique e arraste sobre a imagem para marcar áreas vermelhas que devem ser <strong>ignoradas na comparação</strong>.</span>
+                        <button type="button" class="btn btn-sm btn-secondary" onclick="limparRegioesIgnoradas()">Limpar Regiões</button>
+                    </div>
+
+                    <!-- Bloco Dinâmico para Download do Documento Esperado Cadastrado -->
+                    <div class="document-download-box" id="blocoDocumentoEsperado">
+                        <div>
+                            <h4 id="tituloDocEsperado">Documento Esperado de Referência</h4>
+                            <p style="font-size: 12px; color: #475569; margin: 0;" id="descDocEsperado">Arquivo de gabarito para ser comparado com a nova execução.</p>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-secondary" id="btnDownloadDocEsperado" onclick="baixarDocumentoEsperado()"> Baixar Arquivo Esperado</button>
+                        </div>
+                    </div>
+
+                    <!-- Checklist de Campos a Ignorar dentro do Documento Baixado -->
+                    <label style="margin-top: 15px; display: block; font-weight: bold;">Campos/Trechos do Documento a ignorar na Comparação:</label>
+                    <div class="ignore-checklist-box" id="docChecklistBox">
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_doc_data" value="data_emissao" checked>
+                            <label for="chk_doc_data"><code>Data/Hora de Emissão</code> (Linha/Célula dinâmica)</label>
+                        </div>
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_doc_protocolo" value="protocolo_id" checked>
+                            <label for="chk_doc_protocolo"><code>Número de Protocolo / ID</code> (Variável por teste)</label>
+                        </div>
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_doc_rodape" value="rodape_pagina">
+                            <label for="chk_doc_rodape"><code>Rodapé / Número de Página</code></label>
+                        </div>
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_doc_hash" value="hash_documento">
+                            <label for="chk_doc_hash"><code>Hash de Validação / QrCode</code></label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="esperadoHttpUrl">Validação HTTP / URL / Headers</label>
-                        <input type="text" id="esperadoHttpUrl" placeholder="Ex: Status 200 | Content-Type: application/json">
-                    </div>
-                    <div class="form-group">
-                        <label for="esperadoTolerancia">Configuração de Tolerância</label>
-                        <input type="text" id="esperadoTolerancia" placeholder="Ex: Variação < 5% em imagens | Ignorar campos dinâmicos">
+                <!-- Campo Dinâmico: Response + Checklist de Ignorar Campos (API) -->
+                <div class="form-group dynamic-field" id="campoResponseGroup" style="display: none;">
+                    <label for="esperadoResponse">Response Esperado (JSON / Payload API)</label>
+                    <textarea id="esperadoResponse" rows="5" style="width: 100%; font-family: monospace; background-color: #f8f9fa;" placeholder='{ "status": 200, "data": {} }'></textarea>
+
+                    <label style="margin-top: 15px; display: block; font-weight: bold;">Campos do JSON a serem ignorados na Comparação:</label>
+                    <div class="ignore-checklist-box" id="jsonChecklistBox">
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_data_emissao" value="data_emissao" checked>
+                            <label for="chk_data_emissao"><code>data_emissao</code> (Ex: data/hora da emissão)</label>
+                        </div>
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_timestamp" value="timestamp" checked>
+                            <label for="chk_timestamp"><code>timestamp</code> (Ex: carimbo de data/hora)</label>
+                        </div>
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_token" value="token">
+                            <label for="chk_token"><code>token</code> (Ex: token de sessão dinâmico)</label>
+                        </div>
+                        <div class="ignore-item">
+                            <input type="checkbox" id="chk_id_transacao" value="id_transacao">
+                            <label for="chk_id_transacao"><code>id_transacao</code> (Ex: ID gerado dinamicamente)</label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="esperadoBodyJson">Estrutura de Body (JSON, XML ou Texto)</label>
-                        <textarea id="esperadoBodyJson" placeholder='Ex: { "status": "sucesso", "codigo": 200 }'></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="esperadoDomCampos">Seletores DOM, Campos e Regiões Espelhadas</label>
-                        <textarea id="esperadoDomCampos" placeholder="Ex: #btn-pagamento, .alerta-sucesso, div.container-regional"></textarea>
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="esperadoMidia">Mídias de Referência (Imagem, Screenshot, Vídeo, Áudio)</label>
-                        <input type="text" id="esperadoMidia" placeholder="Caminho/URL de imagem base ou mídia oráculo...">
-                    </div>
-                    <div class="form-group">
-                        <label for="esperadoArquivos">Documentos Esperados (PDF, CSV, XLSX, XML, Downloads)</label>
-                        <input type="text" id="esperadoArquivos" placeholder="Anexar modelo de arquivo ou esquema de validação...">
-                    </div>
-                </div>
-
-                <div class="modal-actions">
+                <div class="flex-end-gap-10 margin-top-20">
                     <button type="button" class="btn btn-secondary" onclick="fecharModal('esperadoModal')">Cancelar</button>
-                    <button type="submit" class="btn">Salvar Esperado</button>
+                    <button type="submit" class="btn">Salvar Alterações</button>
                 </div>
             </form>
         </div>
@@ -239,6 +502,8 @@
 
     <!-- Scripts de Interatividade -->
     <script>
+        let docEsperadoAtual = { nome: '', tipo: '' };
+
         function toggleSelectAll(master) {
             const checkboxes = document.querySelectorAll('.item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
@@ -249,20 +514,117 @@
             return Array.from(checkboxes).map(cb => cb.value);
         }
 
-        function abrirModalEsperado(modo, id = '') {
-            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Cadastrar Resultado Esperado' : 'Editar Padrão Esperado';
-            document.getElementById('esperadoId').value = id;
-            if (modo === 'novo') {
-                document.getElementById('esperadoNome').value = '';
-                document.getElementById('esperadoTipo').value = '';
-                document.getElementById('esperadoHttpUrl').value = '';
-                document.getElementById('esperadoTolerancia').value = '';
-                document.getElementById('esperadoBodyJson').value = '';
-                document.getElementById('esperadoDomCampos').value = '';
-                document.getElementById('esperadoMidia').value = '';
-                document.getElementById('esperadoArquivos').value = '';
+        /* Funções do Modal de Execução (+ Novo Esperado) */
+        function abrirModalExecucao() {
+            const btnOk = document.getElementById('btnOkExec');
+            const btnCancelar = document.getElementById('btnCancelarExec');
+            btnOk.disabled = false;
+            btnCancelar.disabled = false;
+            btnOk.innerHTML = 'OK / Executar Regressão';
+            document.getElementById('modalExecucao').style.display = 'flex';
+            atualizarContador();
+        }
+
+        function iniciarExecucao() {
+            const btnOk = document.getElementById('btnOkExec');
+            const btnCancelar = document.getElementById('btnCancelarExec');
+            
+            btnOk.disabled = true;
+            btnCancelar.disabled = true;
+            btnOk.innerHTML = '<span class="spinner"></span> Executando...';
+
+            setTimeout(() => {
+                alert('Cenários executados com sucesso! O resultado esperado e os arquivos correspondentes foram gerados no módulo "Recebido".');
+                fecharModal('modalExecucao');
+            }, 2500);
+        }
+
+        function atualizarContador() {
+            const total = document.querySelectorAll('.chk-cenario:checked').length;
+            const span = document.getElementById('countSelecionados');
+            if (span) span.innerText = total;
+        }
+
+        function marcarTodosCenarios(marcar) {
+            document.querySelectorAll('.chk-cenario').forEach(cb => cb.checked = marcar);
+            atualizarContador();
+        }
+
+        function filtrarCenariosModal() {
+            const buscaCenario = document.getElementById('modalSearchCenario').value.toLowerCase();
+            const buscaOrigem = document.getElementById('modalSearchOrigem').value.toLowerCase();
+            const itens = document.querySelectorAll('.scenario-item');
+
+            itens.forEach(item => {
+                const desc = item.getAttribute('data-desc') || '';
+                const origem = item.getAttribute('data-origem') || '';
+                
+                const matchDesc = desc.includes(buscaCenario);
+                const matchOrigem = origem.includes(buscaOrigem);
+
+                if (matchDesc && matchOrigem) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        /* Função de Aprovar Item */
+        function aprovarItem(id) {
+            const elemBadge = document.getElementById(`situacao-${id}`);
+            if (elemBadge) {
+                elemBadge.className = 'badge badge-success';
+                elemBadge.innerText = 'Aprovado';
+                alert(`Resultado #${id} aprovado com sucesso!`);
             }
+        }
+
+        /* Modal de Edição com Campos Dinâmicos */
+        function abrirModalEditar(id, origem, descricao, responseVal) {
+            document.getElementById('esperadoId').value = id;
+            document.getElementById('esperadoOrigem').value = origem;
+            document.getElementById('esperadoDescricao').value = descricao;
+
+            const campoImagem = document.getElementById('campoImagemGroup');
+            const campoResponse = document.getElementById('campoResponseGroup');
+
+            if (origem === 'API') {
+                campoImagem.style.display = 'none';
+                campoResponse.style.display = 'block';
+                document.getElementById('esperadoResponse').value = responseVal || '';
+            } else {
+                campoResponse.style.display = 'none';
+                campoImagem.style.display = 'block';
+                document.getElementById('esperadoImagem').value = '';
+                
+                if (id === '2' || origem === 'Web') {
+                    document.getElementById('tituloDocEsperado').innerText = 'Documento Esperado (PDF - Web)';
+                    document.getElementById('descDocEsperado').innerText = 'Arquivo de gabarito: Proposta_Comercial_Cliente_Alpha_2026.pdf';
+                    document.getElementById('btnDownloadDocEsperado').innerText = ' Baixar Proposta Esperada (PDF)';
+                    docEsperadoAtual = { nome: 'Proposta_Comercial_Cliente_Alpha_2026.pdf' };
+                } else if (id === '3' || origem === 'Mobile') {
+                    document.getElementById('tituloDocEsperado').innerText = 'Documento Esperado (XLS - Mobile)';
+                    document.getElementById('descDocEsperado').innerText = 'Arquivo de gabarito: Fechamento_Caixa_Loja_Centro_2026-03-30.xls';
+                    document.getElementById('btnDownloadDocEsperado').innerText = ' Baixar Relatório Esperado (XLS)';
+                    docEsperadoAtual = { nome: 'Fechamento_Caixa_Loja_Centro_2026-03-30.xls' };
+                } else if (id === '4' || origem === 'Desktop') {
+                    document.getElementById('tituloDocEsperado').innerText = 'Documento Esperado (CSV - Desktop)';
+                    document.getElementById('descDocEsperado').innerText = 'Arquivo de gabarito: Extrato_Faturamento_Anual_2025_Consolidado.csv';
+                    document.getElementById('btnDownloadDocEsperado').innerText = ' Baixar Extrato Esperado (CSV)';
+                    docEsperadoAtual = { nome: 'Extrato_Faturamento_Anual_2025_Consolidado.csv' };
+                }
+                
+                setTimeout(initCropCanvas, 100);
+            }
+
             document.getElementById('esperadoModal').style.display = 'flex';
+        }
+
+        function baixarDocumentoEsperado() {
+            if (docEsperadoAtual.nome) {
+                alert(` [Download Esperado]: O arquivo de referência "${docEsperadoAtual.nome}" foi baixado com sucesso!`);
+            }
         }
 
         function fecharModal(modalId) {
@@ -271,18 +633,9 @@
 
         function salvarEsperado(e) {
             e.preventDefault();
-            const id = document.getElementById('esperadoId').value;
-            const nome = document.getElementById('esperadoNome').value;
-            if (id) {
-                alert(`Estrutura esperada "${nome}" atualizada com sucesso!`);
-            } else {
-                alert(`Estrutura esperada "${nome}" cadastrada com sucesso!`);
-            }
+            const origem = document.getElementById('esperadoOrigem').value;
+            alert(`Alterações salvas com sucesso para o Resultado Esperado ("${origem}")!`);
             fecharModal('esperadoModal');
-        }
-
-        function duplicarEsperado(id, nome) {
-            alert(`Padrão esperado "#${id} - ${nome}" duplicado com sucesso! Cópia criada.`);
         }
 
         function excluirEsperado(id) {
@@ -307,6 +660,105 @@
             localStorage.removeItem('MENU_sessao_ativa');
             localStorage.removeItem('MENU_usuario');
             window.location.href = 'login.html';
+        }
+
+        /* LÓGICA DE MARCAR REGIÕES IGNORADAS EM IMAGENS (WEB/DESKTOP/MOBILE) */
+        let rectsIgnorados = [];
+        let isDrawing = false;
+        let startX = 0, startY = 0;
+
+        function carregarImagemPreview(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('imgPreviewReference');
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        limparRegioesIgnoradas();
+                        initCropCanvas();
+                    };
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function initCropCanvas() {
+            const img = document.getElementById('imgPreviewReference');
+            const canvas = document.getElementById('cropOverlayCanvas');
+            if (!img || !canvas) return;
+
+            canvas.width = img.clientWidth || img.width;
+            canvas.height = img.clientHeight || img.height;
+
+            const ctx = canvas.getContext('2d');
+            desenharRegioes(ctx, canvas);
+
+            canvas.onmousedown = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                startX = e.clientX - rect.left;
+                startY = e.clientY - rect.top;
+                isDrawing = true;
+            };
+
+            canvas.onmousemove = (e) => {
+                if (!isDrawing) return;
+                const rect = canvas.getBoundingClientRect();
+                const currentX = e.clientX - rect.left;
+                const currentY = e.clientY - rect.top;
+
+                desenharRegioes(ctx, canvas);
+                
+                ctx.strokeStyle = 'rgba(255, 0, 0, 0.9)';
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.35)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(startX, startY, currentX - startX, currentY - startY);
+                ctx.fillRect(startX, startY, currentX - startX, currentY - startY);
+            };
+
+            canvas.onmouseup = (e) => {
+                if (!isDrawing) return;
+                isDrawing = false;
+                const rect = canvas.getBoundingClientRect();
+                const endX = e.clientX - rect.left;
+                const endY = e.clientY - rect.top;
+
+                const width = endX - startX;
+                const height = endY - startY;
+
+                if (Math.abs(width) > 5 && Math.abs(height) > 5) {
+                    rectsIgnorados.push({
+                        x: width < 0 ? endX : startX,
+                        y: height < 0 ? endY : startY,
+                        w: Math.abs(width),
+                        h: Math.abs(height)
+                    });
+                }
+                desenharRegioes(ctx, canvas);
+            };
+        }
+
+        function desenharRegioes(ctx, canvas) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            rectsIgnorados.forEach((r) => {
+                ctx.strokeStyle = '#e74c3c';
+                ctx.fillStyle = 'rgba(231, 76, 60, 0.4)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(r.x, r.y, r.w, r.h);
+                ctx.fillRect(r.x, r.y, r.w, r.h);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillText('IGNORAR', r.x + 4, r.y + 14);
+            });
+        }
+
+        function limparRegioesIgnoradas() {
+            rectsIgnorados = [];
+            const canvas = document.getElementById('cropOverlayCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
         }
     </script>
 </body>
