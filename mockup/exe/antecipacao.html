@@ -3,22 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antecipação Sistema de Gestão MENU</title>
+    <title>0. Antecipação Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+        .section-box-modal {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 15px;
+        }
+        .section-box-modal h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+        .qa-checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        .score-badge {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .score-success { background-color: #d1e7dd; color: #0f5132; }
+        .score-warning { background-color: #fff3cd; color: #664d03; }
+        .score-danger { background-color: #f8d7da; color: #842029; }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
-        <h2><h2>MENU</h2></h2>
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html" class="active">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -29,20 +64,16 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
-            <!-- Sair / Encerrar Sessão -->
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                 <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
@@ -55,585 +86,280 @@
             <p>Análise prévia de ambiguidade, conflitos e lacunas em User Stories antes do desenvolvimento e testes.</p>
 
             <div class="toolbar" style="margin-top: 20px;">
-                <div class="toolbar-group" style="width: 100%; justify-content: space-between;">
-                    <button class="btn" onclick="copiarPromptCompleto()">Copiar Prompt com Card Anexado</button>
-                    <button class="btn btn-secondary" onclick="limparCard()">Limpar Card</button>
+                <div class="toolbar-group">
+                    <button class="btn" onclick="abrirModalFormulário('nova')">+ Nova Antecipação</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
+                </div>
+
+                <div class="toolbar-group">
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search" oninput="filtrarTabela()">
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group margin-top-15">
-                <label for="userStoryCard"><strong>Cole aqui o Card / User Story do Azure DevOps ou Jira:</strong></label>
-                <textarea id="userStoryCard" style="height: 150px; width: 100%; padding: 12px; font-family: monospace;" placeholder="Exemplo: Como administrador do SISTEMA, quero cadastrar um novo usuário..."></textarea>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                            </th>
+                            <th>Descrição</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="antecipacaoTableBody">
+                        <tr data-origem="API" data-card="Title: US101 - Endpoint de Autenticação API&#10;&#10;Description:&#10;Como aplicação client, quero autenticar via token JWT para consumir recursos protegidos.&#10;&#10;Acceptance Criteria:&#10;1. Validar e-mail e senha no payload JSON.&#10;2. Retornar HTTP 200 com token JWT válido.">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                            <td><strong>API</strong> — Análise e antecipação de requisitos para serviços e contratos de Backend.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="Web" data-card="Title: US102 - Interface da Tela de Login Web&#10;&#10;Description:&#10;Como usuário do sistema Web, quero acessar a tela de login para informar minhas credenciais.&#10;&#10;Acceptance Criteria:&#10;1. Exibir campos E-mail, Senha e botão Entrar.&#10;2. Exibir mensagem de erro para credenciais inválidas.">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                            <td><strong>Web</strong> — Análise e antecipação de requisitos para interface e experiência Web.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="Mobile" data-card="Title: US103 - Login Biométrico Mobile&#10;&#10;Description:&#10;Como usuário Mobile, quero autenticar via Biometria/FaceID para acesso rápido ao aplicativo.&#10;&#10;Acceptance Criteria:&#10;1. Solicitar permissão de biometria no primeiro acesso.&#10;2. Permitir login padrão em caso de falha na leitura facial.">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
+                            <td><strong>Mobile</strong> — Análise e antecipação de requisitos para telas e regras de aplicação Mobile.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="Desktop" data-card="Title: US104 - Módulo Local Desktop&#10;&#10;Description:&#10;Como usuário Desktop, quero sincronizar credenciais locais com o servidor central.&#10;&#10;Acceptance Criteria:&#10;1. Salvar token em storage seguro local.&#10;2. Reconectar automaticamente em caso de queda de rede.">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td><strong>Desktop</strong> — Análise e antecipação de requisitos para módulos e funcionalidades Desktop.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="form-group margin-top-20">
-                <label><strong>Prompt Base da Análise (Pré-pronto):</strong></label>
-                <textarea id="basePromptText" readonly style="height: 250px; width: 100%; padding: 12px; background-color: #ffffff#ffffff; color: #333; font-family: monospace;"># PROMPT — ANÁLISE DE AMBIGUIDADES, CONFLITOS E LACUNAS EM USER STORY
-
-
-Atue simultaneamente como:
-
-* Analista de Requisitos Sênior;
-* QA Sênior;
-* Engenheiro de Software Sênior;
-* Especialista em testes funcionais;
-* Especialista em segurança de aplicações;
-* Especialista em API e contratos;
-* Especialista em Shift Left Testing.
-
-Vou fornecer abaixo uma User Story / requisito funcional.
-
-Sua função **NÃO é simplesmente reescrever ou melhorar o requisito**.
-
-Sua função é realizar uma **análise crítica de qualidade do requisito**, identificando tudo que possa gerar interpretações diferentes, implementação incorreta, testes incompletos, bugs ou conflitos entre Produto, Desenvolvimento e QA.
-
----
-
-# OBJETIVO DA ANÁLISE
-
-Analise o requisito procurando:
-
-1. Ambiguidades;
-2. Informações ausentes;
-3. Regras de negócio não definidas;
-4. Comportamentos não especificados;
-5. Conflitos entre requisitos;
-6. Contradições;
-7. Critérios de aceitação incompletos;
-8. Cenários positivos ausentes;
-9. Cenários negativos ausentes;
-10. Casos extremos e limites;
-11. Regras de validação indefinidas;
-12. Regras de permissão indefinidas;
-13. Regras de segurança ausentes;
-14. Regras de concorrência;
-15. Idempotência e duplicidade;
-16. Tratamento de erros;
-17. Comportamento da interface;
-18. Comportamento da API;
-19. Persistência dos dados;
-20. Regras de auditoria;
-21. Regras de mensagens exibidas ao usuário;
-22. Dependências externas;
-23. Regras de estado;
-24. Regras de transição;
-25. Dados obrigatórios e opcionais;
-26. Limites mínimos e máximos;
-27. Formatos permitidos;
-28. Internacionalização/localização;
-29. Datas, horários e timezone;
-30. Performance;
-31. Observabilidade;
-32. Recuperação de falhas;
-33. Impactos em outros módulos;
-34. Regras de exclusão/alteração;
-35. Regras de consistência;
-36. Possíveis vulnerabilidades;
-37. Cenários que poderiam passar despercebidos pelo QA.
-
----
-
-# REGRA PRINCIPAL
-
-**NÃO ASSUMA COMPORTAMENTOS QUE NÃO ESTÃO ESPECIFICADOS.**
-
-Se uma informação não estiver definida, marque explicitamente como:
-
-> ⚠️ NÃO ESPECIFICADO
-
-Não invente uma regra para preencher a lacuna.
-
-Quando houver uma interpretação provável, apresente-a apenas como hipótese e deixe claro que precisa de confirmação.
-
----
-
-# CLASSIFICAÇÃO
-
-Classifique cada problema encontrado como:
-
-### 🔴 CRÍTICO
-
-Pode causar:
-
-* implementação incorreta;
-* comportamento incompatível;
-* falha de segurança;
-* perda/corrupção de dados;
-* violação de regra de negócio;
-* impossibilidade de testar corretamente.
-
-### 🟠 ALTO
-
-Pode causar:
-
-* bugs relevantes;
-* divergência entre <h2>SISTEMA</h2>s;
-* comportamento inconsistente;
-* retrabalho significativo.
-
-### 🟡 MÉDIO
-
-Pode gerar:
-
-* dúvidas de implementação;
-* testes incompletos;
-* comportamento inconsistente em casos específicos.
-
-### 🟢 BAIXO
-
-Problema menor de clareza, documentação ou padronização.
-
----
-
-# FORMATO DA RESPOSTA
-
-## 1. RESUMO EXECUTIVO
-
-Informe:
-
-* Nota do requisito de 0 a 10;
-* Quantidade de problemas encontrados;
-* Quantidade por severidade;
-* Se o requisito está pronto para desenvolvimento;
-* Se está pronto para QA;
-* Principal risco encontrado.
-
-Use:
-
-```text
-Nota: X/10
-Pronto para desenvolvimento: SIM/NÃO
-Pronto para QA: SIM/NÃO
-Risco principal: ...
-```
-
----
-
-# 2. AMBIGUIDADES
-
-Crie uma tabela:
-
-| ID | Trecho | Problema | Por que é ambíguo | Impacto | Severidade |
-| -- | ------ | -------- | ----------------- | ------- | ---------- |
-
-Para cada ambiguidade, explique exatamente o que pode ser interpretado de mais de uma maneira.
-
----
-
-# 3. INFORMAÇÕES AUSENTES
-
-Identifique tudo que deveria estar definido para que Dev e QA consigam implementar/testar sem precisar adivinhar.
-
-| ID | Informação ausente | Por que é necessária | Severidade |
-| -- | ------------------ | -------------------- | ---------- |
-
----
-
-# 4. CONFLITOS E CONTRADIÇÕES
-
-Procure conflitos:
-
-* dentro do próprio requisito;
-* entre descrição e critérios de aceitação;
-* entre critérios de aceitação;
-* entre comportamento esperado e regras de negócio.
-
-| ID | Regra A | Regra B | Conflito | Severidade |
-| -- | ------- | ------- | -------- | ---------- |
-
-Se não houver conflitos, informe explicitamente:
-
-> Nenhum conflito identificado.
-
----
-
-# 5. REGRAS DE NEGÓCIO NÃO DEFINIDAS
-
-Liste perguntas que precisam ser respondidas pelo Product Owner/Analista.
-
-Exemplos:
-
-* O e-mail é único globalmente?
-* E-mail diferencia maiúsculas/minúsculas?
-* O usuário pode ser criado sem senha?
-* O usuário começa ativo ou inativo?
-* O administrador pode criar outro administrador?
-* Existe limite de usuários?
-* O usuário recebe e-mail?
-* O que acontece se o envio do e-mail falhar?
-
-Não responda essas perguntas por conta própria.
-
----
-
-# 6. VALIDAÇÕES AUSENTES
-
-Analise todos os campos.
-
-Para cada campo, procure:
-
-* obrigatório/opcional;
-* tamanho mínimo;
-* tamanho máximo;
-* formato;
-* caracteres permitidos;
-* caracteres proibidos;
-* espaços;
-* acentos;
-* Unicode;
-* valores duplicados;
-* normalização;
-* case sensitivity;
-* valores nulos;
-* valores vazios.
-
-Use:
-
-| Campo | Regra existente | Regra ausente | Pergunta necessária |
-| ----- | --------------- | ------------- | ------------------- |
-
----
-
-# 7. MATRIZ DE CENÁRIOS DE TESTE
-
-Crie uma matriz abrangente.
-
-Inclua obrigatoriamente:
-
-### Happy Path
-
-* fluxo válido principal.
-
-### Negative Testing
-
-* dados inválidos;
-* campos vazios;
-* campos ausentes;
-* formato inválido;
-* valores inexistentes.
-
-### Boundary Testing
-
-* mínimo;
-* máximo;
-* abaixo do mínimo;
-* acima do máximo.
-
-### Security Testing
-
-* autenticação;
-* autorização;
-* privilege escalation;
-* injection;
-* XSS;
-* abuso de endpoint;
-* enumeração;
-* exposição de dados.
-
-### Concurrency
-
-* dois usuários realizando a mesma operação simultaneamente;
-* duplo clique;
-* múltiplas requisições;
-* retry.
-
-### Failure
-
-* API indisponível;
-* timeout;
-* banco indisponível;
-* erro parcial;
-* perda de conexão.
-
-### Recovery
-
-* retry;
-* refresh;
-* reprocessamento;
-* recuperação após falha.
-
-Use:
-
-| ID | Cenário | Pré-condição | Ação | Resultado esperado | Prioridade |
-| -- | ------- | ------------ | ---- | ------------------ | ---------- |
-
----
-
-# 8. API / CONTRATO
-
-Se o requisito envolver API, identifique o que está faltando:
-
-* método HTTP;
-* endpoint;
-* autenticação;
-* autorização;
-* headers;
-* request;
-* response;
-* HTTP status;
-* schema;
-* campos obrigatórios;
-* campos opcionais;
-* erros;
-* códigos de erro;
-* idempotência;
-* paginação;
-* rate limit;
-* timeout.
-
-Se não houver informação suficiente, marque:
-
-> ⚠️ CONTRATO DA API NÃO ESPECIFICADO.
-
-NÃO invente endpoints ou códigos HTTP como se fossem requisitos existentes.
-
----
-
-# 9. UI / UX
-
-Analise:
-
-* estados da tela;
-* loading;
-* sucesso;
-* erro;
-* campos inválidos;
-* mensagens;
-* botão habilitado/desabilitado;
-* duplo clique;
-* cancelamento;
-* confirmação;
-* refresh;
-* perda de dados;
-* acessibilidade.
-
-Liste o que precisa ser definido.
-
----
-
-# 10. SEGURANÇA
-
-Faça uma análise específica de segurança.
-
-Considere, quando aplicável:
-
-* autenticação;
-* autorização;
-* RBAC;
-* privilégio mínimo;
-* enumeração de usuários;
-* exposição de informações;
-* senha;
-* armazenamento de senha;
-* logs;
-* dados sensíveis;
-* injection;
-* XSS;
-* CSRF;
-* rate limiting;
-* brute force;
-* auditoria.
-
-Classifique cada risco.
-
----
-
-# 11. OBSERVABILIDADE
-
-Identifique se deveria existir definição para:
-
-* logs;
-* eventos;
-* auditoria;
-* <h2>MÉTRICA</h2>s;
-* rastreamento;
-* correlation ID;
-* erros;
-* alertas.
-
-Exemplo:
-
-> Quem criou o usuário?
-> Quando?
-> De onde?
-> Qual resultado?
-> Qual erro ocorreu?
-
----
-
-# 12. CONCORRÊNCIA E IDEMPOTÊNCIA
-
-Verifique especificamente:
-
-* duas criações simultâneas;
-* mesma requisição enviada duas vezes;
-* refresh;
-* retry automático;
-* timeout seguido de retry;
-* duplo clique;
-* múltiplas abas.
-
-Pergunte:
-
-> Existe garantia de que a mesma operação não criará duas entidades?
-
-Se não estiver definido:
-
-> ⚠️ IDEMPOTÊNCIA NÃO ESPECIFICADA.
-
----
-
-# 13. PERSISTÊNCIA E ESTADO
-
-Analise:
-
-* quando os dados são persistidos;
-* transação;
-* rollback;
-* estado inicial;
-* estado final;
-* consistência;
-* cache;
-* atualização da interface;
-* comportamento após refresh.
-
----
-
-# 14. IMPACTO EM OUTROS MÓDULOS
-
-Identifique possíveis impactos em:
-
-* autenticação;
-* autorização;
-* banco de dados;
-* notificações;
-* relatórios;
-* auditoria;
-* integrações;
-* e-mails;
-* dashboards;
-* APIs;
-* outros usuários.
-
----
-
-# 15. PERGUNTAS PARA O PRODUCT OWNER
-
-Crie uma lista final contendo **somente perguntas que precisam de decisão humana**.
-
-Exemplo:
-
-```text
-PO01 — O e-mail deve ser único globalmente?
-PO02 — O e-mail deve ser case-insensitive?
-PO03 — Qual o tamanho mínimo da senha?
-PO04 — Qual o tamanho máximo da senha?
-PO05 — O usuário nasce ativo?
-PO06 — O administrador pode criar outro administrador?
-```
-
-Priorize primeiro as perguntas que bloqueiam desenvolvimento.
-
----
-
-# 16. DEFINITION OF READY
-
-Avalie se o requisito atende uma Definition of Ready mínima.
-
-Checklist:
-
-* [ ] Objetivo claro
-* [ ] Regra de negócio clara
-* [ ] Critérios de aceitação testáveis
-* [ ] Campos definidos
-* [ ] Validações definidas
-* [ ] Permissões definidas
-* [ ] Erros definidos
-* [ ] Segurança considerada
-* [ ] Cenários negativos definidos
-* [ ] Limites definidos
-* [ ] Dependências conhecidas
-* [ ] API definida quando aplicável
-* [ ] Estados definidos
-* [ ] Concorrência considerada
-* [ ] Observabilidade definida quando necessária
-
-Marque cada item como:
-
-✅ OK
-⚠️ Parcial
-✕ Ausente
-
----
-
-# 17. ANÁLISE DE SHIFT LEFT
-
-Explique:
-
-1. Quais problemas poderiam ser descobertos antes do desenvolvimento?
-2. Quais problemas deveriam ser resolvidos no requisito?
-3. Quais deveriam ser resolvidos durante o desenvolvimento?
-4. Quais deveriam virar testes automatizados?
-5. Quais deveriam virar testes de integração?
-6. Quais deveriam ser cobertos pelo QA?
-7. Quais deveriam ser monitorados em produção?
-
-Monte:
-
-| Problema | Momento ideal para descobrir | Responsável |
-| -------- | ---------------------------- | ----------- |
-
----
-
-# 18. VEREDITO FINAL
-
-Finalize obrigatoriamente com:
-
-```text
-VEREDITO:
-
-🟢 Pronto
-🟡 Pronto com ressalvas
-🔴 Não pronto
-```
-
-Explique objetivamente o motivo.
-
-Se estiver 🟡 ou 🔴, informe exatamente quais pontos precisam ser resolvidos antes do desenvolvimento.
-
----
-
-# REQUISITO PARA ANÁLISE
-
-[COLE AQUI A USER STORY / CARD DO AZURE DEVOPS]
-
-</textarea>
+            <div class="pagination margin-top-20">
+                <span class="pagination-info">Exibindo 1-4 de 4 registros</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Scripts de Interatividade -->
-    <script>
-        function copiarPromptCompleto() {
-            const cardContent = document.getElementById('userStoryCard').value.trim();
+    <!-- Modal Antecipação (Nova / Editar) -->
+    <div class="modal" id="modalAntecipacao">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 id="modalFormTitle">Nova Antecipação</h2>
             
-            if (!cardContent) {
-                alert('Por favor, cole o conteúdo do Card / User Story antes de copiar.');
-                return;
-            }
+            <form onsubmit="salvarAntecipacao(event)">
+                <!-- 1. Descrição do Card -->
+                <div class="form-group margin-top-15">
+                    <label for="formCardDevOps"><strong>Cole aqui o Card / User Story do Azure DevOps ou Jira:</strong></label>
+                    <textarea id="formCardDevOps" required style="height: 140px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Title: US1024 - Realizar login de usuários no sistema&#10;&#10;Description:&#10;Como um usuário cadastrado,&#10;Quero realizar autenticação informando e-mail e senha,&#10;Para acessar o painel administrativo.&#10;&#10;Acceptance Criteria:&#10;1. Dado que o usuário informa e-mail e senha válidos, então o sistema redireciona para a home.&#10;2. Dado que a senha esteja incorreta, exibe mensagem 'Usuário ou senha inválidos'." oninput="atualizarPromptEmTempoReal()"></textarea>
+                </div>
 
-            const basePrompt = document.getElementById('basePromptText').value;
-            const promptFinal = basePrompt + '\n' + cardContent;
+                <!-- 2. Prompt da Análise -->
+                <div class="form-group margin-top-15">
+                    <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão (Copie e envie para a IA):</strong></label>
+                    <textarea id="formPromptGerado" readonly style="height: 110px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
+                    <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
+                </div>
 
-            navigator.clipboard.writeText(promptFinal).then(() => {
-                alert('Prompt completo copiado com sucesso! Agora é só colar na IA.');
-            }).catch(err => {
-                alert('Erro ao copiar o prompt: ' + err);
+                <!-- 3. Campo para Colar a Resposta da IA -->
+                <div class="form-group margin-top-15">
+                    <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
+                    <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA após a execução do prompt..."></textarea>
+                </div>
+
+                <!-- 4. Tabela de Pontuação (0 a 10) -->
+                <div class="section-box-modal">
+                    <h4>Tabela de Avaliação de Aptidão para Desenvolvimento</h4>
+                    <div class="table-responsive">
+                        <table class="data-table" style="font-size: 12px;">
+                            <thead>
+                                <tr>
+                                    <th>Pontuação</th>
+                                    <th>Status do Requisito</th>
+                                    <th>Ambiguidades</th>
+                                    <th>Dúvidas PO</th>
+                                    <th>Apto para Dev?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="font-size: 14px;">8.5 / 10</strong></td>
+                                    <td><span class="score-badge score-success">APROVADO</span></td>
+                                    <td>1 identificada</td>
+                                    <td>2 perguntas</td>
+                                    <td><strong>SIM (com ressalvas)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 5. Perguntas para o Product Owner (PO) -->
+                <div class="section-box-modal">
+                    <h4>Dúvidas e Perguntas para o Product Owner (PO)</h4>
+                    <ul style="padding-left: 20px; font-size: 13px; color: #333; line-height: 1.6;">
+                        <li><strong>PO-01:</strong> Qual é o tempo limite de expiração do token JWT após o login?</li>
+                        <li><strong>PO-02:</strong> Existe limite de tentativas de login incorretas antes de bloquear a conta?</li>
+                    </ul>
+                </div>
+
+                <!-- 6. Checklist de Critérios de Aceite para o QA -->
+                <div class="section-box-modal">
+                    <h4>Checklist de Critérios de Aceite (Guia de Testes para o QA)</h4>
+                    <div class="qa-checklist-item">
+                        <input type="checkbox" id="qa1" checked>
+                        <label for="qa1">[Happy Path] Validar autenticação com e-mail e senha corretos.</label>
+                    </div>
+                    <div class="qa-checklist-item">
+                        <input type="checkbox" id="qa2" checked>
+                        <label for="qa2">[Negativo] Validar mensagem de erro para credenciais incorretas.</label>
+                    </div>
+                    <div class="qa-checklist-item">
+                        <input type="checkbox" id="qa3">
+                        <label for="qa3">[Segurança] Testar injeção SQL/XSS nos campos de formulário.</label>
+                    </div>
+                    <div class="qa-checklist-item">
+                        <input type="checkbox" id="qa4">
+                        <label for="qa4">[Limites] Testar comportamento com campos vazios ou excedendo caracteres.</label>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modalAntecipacao')">Cancelar</button>
+                    <button type="submit" class="btn">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script de Funcionalidades -->
+    <script>
+        let trEdicaoAtual = null;
+
+        const TEMPLATE_PROMPT_ANALISE = `PROMPT DE ANÁLISE — O REQUISITO ESTÁ APTO PARA DESENVOLVIMENTO?
+
+Atue como QA Sênior e Analista de Requisitos. Avalie o card abaixo e informe se o requisito está APTO para ir para o desenvolvimento.
+
+REQUISITO:
+[CARD_TEXT]
+
+INSTRUÇÃO DE RESPOSTA:
+1. Retorne uma Pontuação de 0 a 10 (<=5 Reprovado, 6-8 Pendente, >8 Aprovado).
+2. Liste as perguntas pendentes que precisam de confirmação do PO.
+3. Forneça o checklist de critérios de aceite essenciais para orientação do QA.`;
+
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
+
+        function filtrarTabela() {
+            const fDesc = document.getElementById('filterDescricao').value.toLowerCase();
+            const linhas = document.querySelectorAll('#antecipacaoTableBody tr');
+
+            linhas.forEach(linha => {
+                const desc = linha.querySelector('td:nth-child(2)').innerText.toLowerCase();
+                if (desc.includes(fDesc)) {
+                    linha.style.display = '';
+                } else {
+                    linha.style.display = 'none';
+                }
             });
         }
 
-        function limparCard() {
-            document.getElementById('userStoryCard').value = '';
+        function abrirModalFormulário(modo, btn = null) {
+            const titulo = document.getElementById('modalFormTitle');
+            const cardInput = document.getElementById('formCardDevOps');
+            const respostaIA = document.getElementById('formRespostaIA');
+
+            respostaIA.value = '';
+
+            if (modo === 'nova') {
+                trEdicaoAtual = null;
+                titulo.innerText = 'Nova Antecipação';
+                cardInput.value = `Title: US1024 - Realizar login de usuários no sistema\n\nDescription:\nComo um usuário cadastrado,\nQuero realizar autenticação informando e-mail e senha,\nPara acessar o painel administrativo.\n\nAcceptance Criteria:\n1. Dado que o usuário informa e-mail e senha válidos, então o sistema redireciona para a home.\n2. Dado que a senha esteja incorreta, exibe mensagem 'Usuário ou senha inválidos'.`;
+            } else {
+                trEdicaoAtual = btn.closest('tr');
+                const origem = trEdicaoAtual.getAttribute('data-origem') || 'Geral';
+                const cardData = trEdicaoAtual.getAttribute('data-card') || '';
+
+                titulo.innerText = `Editar Antecipação - ${origem}`;
+                cardInput.value = cardData;
+            }
+
+            atualizarPromptEmTempoReal();
+            document.getElementById('modalAntecipacao').style.display = 'flex';
+        }
+
+        function atualizarPromptEmTempoReal() {
+            const cardText = document.getElementById('formCardDevOps').value;
+            const promptFinal = TEMPLATE_PROMPT_ANALISE.replace('[CARD_TEXT]', cardText);
+            document.getElementById('formPromptGerado').value = promptFinal;
+        }
+
+        function copiarPromptModal() {
+            const promptText = document.getElementById('formPromptGerado').value;
+            navigator.clipboard.writeText(promptText).then(() => {
+                alert('Prompt de Análise copiado com sucesso!');
+            });
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function salvarAntecipacao(e) {
+            e.preventDefault();
+            if (trEdicaoAtual) {
+                const novoCard = document.getElementById('formCardDevOps').value;
+                trEdicaoAtual.setAttribute('data-card', novoCard);
+                alert('Alterações salvas com sucesso!');
+            } else {
+                alert('Nova antecipação criada com sucesso!');
+            }
+            fecharModal('modalAntecipacao');
+        }
+
+        function excluirLinha(btn) {
+            const tr = btn.closest('tr');
+            if (confirm('Deseja mover este registro para a lixeira?')) {
+                tr.remove();
+            }
+        }
+
+        function excluirSelecionados() {
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('Nenhum item selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${checkboxes.length} itens selecionados para a lixeira?`)) {
+                checkboxes.forEach(cb => cb.closest('tr').remove());
+                alert('Itens movidos para a lixeira.');
+            }
         }
 
         function encerrarSessao(e) {

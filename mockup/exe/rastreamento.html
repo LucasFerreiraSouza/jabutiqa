@@ -6,260 +6,59 @@
     <title>7. Rastreamento Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* Ajustes e alinhamentos de componentes de Rastreamento */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
-        }
-
-        .summary-card {
-            border: 1px solid #111;
-            padding: 12px 10px;
-            border-radius: 4px;
-            text-align: center;
-            background: #fff;
-        }
-
-        .summary-card .num {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .summary-card .label {
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #555;
-        }
-
-        .summary-card.fail {
-            border-color: #d93025;
-            background-color: #fff8f8;
-        }
-
-        .summary-card.fail .num {
-            color: #d93025;
-        }
-
-        .trail-container {
-            border: 1px solid #111;
-            padding: 16px;
-            border-radius: 4px;
-            background: #f1f1f1;
-            margin: 15px 0 25px 0;
-            overflow-x: auto;
-        }
-
-        .trail-flex {
+        .action-buttons-group {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
         }
-
-        .trail-node {
-            border: 1px solid #111;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.8rem;
-            background: #fff;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .trail-node:hover {
-            background: #000;
-            color: #fff;
-        }
-
-        .trail-node.active-node {
-            background: #f0f0f0;
-            font-weight: bold;
-        }
-
-        .trail-node.fail-node {
-            border-color: #d93025;
-            color: #d93025;
-            background-color: #fff5f5;
-            font-weight: bold;
-        }
-
-        .trail-arrow {
-            font-weight: bold;
-            color: #888;
-        }
-
-        .correlation-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .info-box {
-            border: 1px solid #111;
+        .section-box-modal {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
             padding: 12px;
-            border-radius: 4px;
-            font-size: 0.82rem;
+            margin-top: 12px;
+        }
+        .section-box-modal h4 {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #1e293b;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             gap: 6px;
         }
-
-        .tabs-header {
-            display: flex;
-            border-bottom: 1px solid #111;
-            gap: 4px;
-            margin-top: 20px;
+        .field-tag {
+            background-color: #e2e8f0;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            display: inline-block;
+            margin-right: 4px;
+            margin-bottom: 4px;
         }
-
-        .tab-btn {
-            border: 1px solid transparent;
-            border-bottom: none;
-            background: none;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 0.82rem;
-            cursor: pointer;
-            border-radius: 4px 4px 0 0;
-        }
-
-        .tab-btn.active {
-            border-color: #111;
-            background: #fff;
-            margin-bottom: -1px;
-        }
-
-        .tab-content {
-            display: none;
-            border: 1px solid #111;
-            border-top: none;
-            padding: 16px;
-            background: #fff;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .code-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 16px;
-        }
-
-        .code-editor {
-            border: 1px solid #111;
+        .code-box-modal {
             background: #1e1e1e;
             color: #d4d4d4;
             font-family: monospace;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .code-header {
-            background: #2d2d2d;
-            padding: 8px 12px;
-            font-size: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #333;
-        }
-
-        .code-body {
-            padding: 12px;
-            font-size: 0.82rem;
-            line-height: 1.5;
-        }
-
-        .code-line {
-            display: flex;
-            gap: 12px;
-        }
-
-        .code-line.highlight-error {
-            background: rgba(217, 48, 37, 0.25);
-            color: #ff9999;
-            font-weight: bold;
-        }
-
-        .line-num {
-            color: #666;
-            width: 30px;
-            text-align: right;
-            user-select: none;
-        }
-
-        .origin-box {
-            border: 1px solid #111;
-            padding: 14px;
-            border-radius: 4px;
-            background: #f1f1f1;
-            font-size: 0.8rem;
-        }
-
-        .origin-details div {
-            margin-bottom: 6px;
-        }
-
-        /* Drawer lateral para detalhes do erro */
-        .drawer {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 380px;
-            height: 100vh;
-            background: #fff;
-            border-left: 2px solid #111;
-            box-shadow: -4px 0 12px rgba(0,0,0,0.1);
-            transition: right 0.3s ease;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .drawer.open {
-            right: 0;
-        }
-
-        .drawer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #111;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.82rem;
-        }
-
-        .data-table th, .data-table td {
-            border: 1px solid #eee;
-            padding: 8px 12px;
-            text-align: left;
-        }
-
-        .data-table th {
-            border-bottom: 2px solid #111;
-            background: #f1f1f1;
-        }
-
-        .row-error {
-            background-color: #fff5f5;
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 6px;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
     </style>
 </head>
 <body>
     <aside class="sidebar">
         <h2>MENU</h2>
-        <div class="banner-painel"><img src="../jabutiqa.jpg" alt="Logo JabutiQA"></div>
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
         <ul class="nav-links">
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
@@ -285,328 +84,258 @@
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
-            <li class="logout-item">
-                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">Encerrar Sessão</a>
             </li>
         </ul>
     </aside>
 
     <main class="main-content">
         <section class="card">
-            <h1>Rastreamento</h1>
-            <p>Rastreie a execução de um cenário através da aplicação, correlacionando eventos, requisições, componentes, arquivos, funções e linhas de código.</p>
+            <h1>Rastreamento de Artefatos Técnicos</h1>
+            <p>Acompanhe o mapeamento determinístico de componentes, rotas, funções e artefatos de código por camada.</p>
 
-            <div class="execution-selector-bar">
-                <div class="selector-item">
-                    <label for="selectExec">Execução</label>
-                    <select id="selectExec" onchange="alterarExecucao(this.value)">
-                        <option value="184">#EXE-000184</option>
-                        <option value="183">#EXE-000183</option>
-                    </select>
-                </div>
-                <div class="selector-item">
-                    <label for="selectScenario">Cenário</label>
-                    <select id="selectScenario"><option>Login com credenciais inválidas</option></select>
-                </div>
-                <div class="selector-item"><label>Ambiente</label><select><option>Localhost</option></select></div>
-                <div class="selector-item"><label>Aplicação</label><select><option>QA_Jabuti Web</option></select></div>
-                <div class="selector-item"><label>Status</label><span class="badge badge-danger" id="execStatus">Falhou</span></div>
-                <div class="selector-item"><label>Correlation ID</label><strong id="correlationId">REQ-8F3A92D1</strong></div>
-                <div class="selector-item"><label>Duração</label><strong id="execDuration">842 ms</strong></div>
-            </div>
-
-            <div class="toolbar margin-bottom-15">
+            <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="iniciarRastreamento()">▶ Iniciar Rastreamento</button>
-                    <button class="btn btn-secondary" onclick="atualizarRastreamento()">⟳ Atualizar</button>
-                    <button class="btn btn-warning" onclick="pararRastreamento()">⏹ Parar</button>
-                    <button class="btn btn-secondary" onclick="exportarRastreamento()">↓ Exportar Rastreamento</button>
+                    <button class="btn" onclick="abrirModalNovoRastreamento()">+ Novo Rastreamento</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
                 </div>
+
                 <div class="toolbar-group">
-                    <span id="rastreamentoAlert" class="alert-text">Rastreamento em tempo real ativo...</span>
-                </div>
-            </div>
-
-            <div class="summary-grid">
-                <div class="summary-card"><div class="num">47</div><div class="label">Eventos</div></div>
-                <div class="summary-card"><div class="num">8</div><div class="label">Requests</div></div>
-                <div class="summary-card"><div class="num">12</div><div class="label">Arquivos</div></div>
-                <div class="summary-card"><div class="num">19</div><div class="label">Funções</div></div>
-                <div class="summary-card"><div class="num">37</div><div class="label">Linhas</div></div>
-                <div class="summary-card fail"><div class="num">1</div><div class="label">Erros</div></div>
-                <div class="summary-card fail"><div class="num">HTTP 500</div><div class="label">Resultado</div></div>
-                <div class="summary-card fail" style="grid-column: span 2;"><div class="num" style="font-size: 0.9rem;">AuthService.ts:118</div><div class="label">Ponto de Falha</div></div>
-            </div>
-
-            <h3>Trilha de Execução</h3>
-            <div class="trail-container">
-                <div class="trail-flex">
-                    <div class="trail-node" onclick="carregarCodigo('LoginPage.tsx', 42, 'render()')">LoginPage.tsx:42</div><div class="trail-arrow">→</div>
-                    <div class="trail-node" onclick="carregarCodigo('LoginForm.tsx', 87, 'handleSubmit()')">LoginForm.tsx:87</div><div class="trail-arrow">→</div>
-                    <div class="trail-node" onclick="carregarCodigo('useLogin.ts', 31, 'executeLogin()')">useLogin.ts:31</div><div class="trail-arrow">→</div>
-                    <div class="trail-node" onclick="carregarCodigo('authService.ts', 54, 'postLogin()')">authService.ts:54</div><div class="trail-arrow">→</div>
-                    <div class="trail-node active-node" onclick="alternarTab('network')">POST /api/auth/login</div><div class="trail-arrow">→</div>
-                    <div class="trail-node" onclick="carregarCodigo('auth.routes.ts', 28, 'router.post()')">auth.routes.ts:28</div><div class="trail-arrow">→</div>
-                    <div class="trail-node" onclick="carregarCodigo('AuthController.ts', 73, 'login()')">AuthController.ts:73</div><div class="trail-arrow">→</div>
-                    <div class="trail-node fail-node" onclick="carregarCodigo('AuthService.ts', 118, 'authenticate()')">AuthService.ts:118 ✕</div><div class="trail-arrow">→</div>
-                    <div class="trail-node" onclick="carregarCodigo('UserRepository.ts', 46, 'findByEmail()')">UserRepository.ts:46</div><div class="trail-arrow">→</div>
-                    <div class="trail-node" onclick="carregarCodigo('User.ts', 91, 'schema()')">User.ts:91</div><div class="trail-arrow">→</div>
-                    <div class="trail-node fail-node" onclick="alternarTab('network')">HTTP 500</div>
-                </div>
-            </div>
-
-            <div class="correlation-panel">
-                <div class="info-box box-success">
-                    <strong>Nível de Rastreamento: Linha exata</strong>
-                    <p>Arquivo + Função + Linha mapeados com precisão determinística.</p>
-                </div>
-                <div class="info-box box-warning">
-                    <strong>Comparação Relacionada:</strong>
-                    <span>Esperado: HTTP 401 | Recebido: HTTP 500</span>
-                    <button class="btn btn-sm btn-warning" onclick="window.location.href='comparacao.html'">Ver Comparação</button>
-                </div>
-                <div class="info-box box-info">
-                    <strong>Recebido Relacionado:</strong>
-                    <span>Artefatos: Log, Response, Network</span>
-                    <button class="btn btn-sm btn-secondary" onclick="window.location.href='recebido.html'">Ver Recebido</button>
-                </div>
-            </div>
-
-            <div class="toolbar view-filters">
-                <div class="toolbar-group">
-                    <input type="text" placeholder="Filtrar eventos..." class="filter-input">
-                    <select class="filter-select">
-                        <option value="">Todos os Tipos</option>
-                        <option>Frontend</option><option>Backend</option><option>Database</option><option>Network</option><option>Error</option>
-                    </select>
-                    <select class="filter-select">
-                        <option value="">Todos os Status</option>
-                        <option>OK</option><option>Warning</option><option>Error</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="tabs-header">
-                <button class="tab-btn active" onclick="alternarTab('codigo', event)">Código</button>
-                <button class="tab-btn" onclick="alternarTab('execucao', event)">Execução</button>
-                <button class="tab-btn" onclick="alternarTab('mapa', event)">Mapa</button>
-                <button class="tab-btn" onclick="alternarTab('timeline', event)">Timeline</button>
-                <button class="tab-btn" onclick="alternarTab('arquivos', event)">Arquivos</button>
-                <button class="tab-btn" onclick="alternarTab('eventos', event)">Eventos</button>
-                <button class="tab-btn" onclick="alternarTab('network', event)">Network</button>
-            </div>
-
-            <div id="tab-codigo" class="tab-content active">
-                <div class="code-container">
-                    <div class="code-editor-wrapper">
-                        <div class="code-editor">
-                            <div class="code-header">
-                                <span id="codeFileName">src/services/AuthService.ts</span>
-                                <span id="codeMetaInfo">Linha 118 — authenticate()</span>
-                            </div>
-                            <div class="code-body" id="codeBody"></div>
-                        </div>
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search" oninput="filtrarTabela()">
                     </div>
-                    <div class="origin-box">
-                        <h4>Origem Técnica</h4>
-                        <div class="origin-details">
-                            <div><strong>Arquivo:</strong> <span id="origFile">src/services/AuthService.ts</span></div>
-                            <div><strong>Linha:</strong> <span id="origLine">118</span></div>
-                            <div><strong>Função:</strong> <span id="origFunc">authenticate()</span></div>
-                            <div><strong>Método:</strong> POST /api/auth/login</div>
-                            <div><strong>Processo:</strong> node.exe (PID: 18432)</div>
-                            <div><strong>Timestamp:</strong> 18:42:31.284</div>
-                            <div><strong>Correlation ID:</strong> REQ-8F3A92D1</div>
-                            <button class="btn btn-sm btn-danger margin-top-10" onclick="abrirDrawerDetalhes()">Ver Detalhes do Erro</button>
-                        </div>
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search" oninput="filtrarTabela()">
                     </div>
                 </div>
             </div>
 
-            <div id="tab-execucao" class="tab-content">
-                <div class="info-grid grid-single-col-gap-10">
-                    <div class="info-item"><label>ID da Execução</label><span>#EXE-000184</span></div>
-                    <div class="info-item"><label>Cenário</label><span>Login com credenciais inválidas</span></div>
-                    <div class="info-item"><label>Início / Fim</label><span>18:42:30.000 — 18:42:30.842</span></div>
-                    <div class="info-item"><label>Duração</label><span>842 ms</span></div>
-                    <div class="info-item"><label>Status</label><span class="badge badge-danger">✕ Falhou</span></div>
-                    <div class="info-item"><label>Correlation ID</label><span>REQ-8F3A92D1</span></div>
-                </div>
-            </div>
-
-            <div id="tab-mapa" class="tab-content">
-                <div class="map-flow">
-                    <div class="map-box">LoginPage.tsx</div><div class="map-arrow">↓</div>
-                    <div class="map-box">LoginForm.tsx</div><div class="map-arrow">↓</div>
-                    <div class="map-box">useLogin.ts</div><div class="map-arrow">↓</div>
-                    <div class="map-box">authService.ts (HTTP POST)</div><div class="map-arrow">↓</div>
-                    <div class="map-box">AuthController.ts</div><div class="map-arrow">↓</div>
-                    <div class="map-box error">AuthService.ts (Falha)</div>
-                </div>
-            </div>
-
-            <div id="tab-timeline" class="tab-content">
+            <div class="table-responsive">
                 <table class="data-table">
-                    <thead><tr><th>Tempo</th><th>Evento</th><th>Arquivo / Origem</th></tr></thead>
-                    <tbody>
-                        <tr><td>00:00.000</td><td>PAGE_LOAD</td><td>LoginPage.tsx:42</td></tr>
-                        <tr><td>00:00.121</td><td>CLICK</td><td>LoginForm.tsx:87</td></tr>
-                        <tr><td>00:00.142</td><td>FUNCTION</td><td>useLogin.ts:31</td></tr>
-                        <tr><td>00:00.168</td><td>REQUEST</td><td>POST /api/auth/login</td></tr>
-                        <tr class="row-error"><td>00:00.412</td><td>ERROR</td><td>AuthService.ts:118</td></tr>
+                    <thead>
+                        <tr>
+                            <th class="th-checkbox">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                            </th>
+                            <th>Origem</th>
+                            <th>Descrição</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rastreamentoTableBody">
+                        <tr data-origem="api" data-desc="rastreamento de artefatos de backend controllers routes e models">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                            <td><strong>API</strong></td>
+                            <td>Rastreamento de artefatos de Backend (Controllers, Routes e Models).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('API')">Visualizar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="web" data-desc="rastreamento de artefatos de frontend web pages hooks e services">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                            <td><strong>Web</strong></td>
+                            <td>Rastreamento de artefatos de Frontend Web (Pages, Hooks e Services).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Web')">Visualizar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="mobile" data-desc="rastreamento de artefatos de frontend mobile screens hooks e api services">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
+                            <td><strong>Mobile</strong></td>
+                            <td>Rastreamento de artefatos de Frontend Mobile (Screens, Hooks e API Services).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Mobile')">Visualizar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-origem="desktop" data-desc="rastreamento de artefatos de cliente desktop views handlers e local services">
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td><strong>Desktop</strong></td>
+                            <td>Rastreamento de artefatos de Cliente Desktop (Views, Handlers e Local Services).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Desktop')">Visualizar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div id="tab-arquivos" class="tab-content">
-                <div class="tree-view">
-                    <div>src/</div>
-                    <div class="tree-indent-1">├── pages/</div>
-                    <div class="tree-indent-2 tree-item" onclick="carregarCodigo('LoginPage.tsx', 42, 'render()')">├── LoginPage.tsx (42)</div>
-                    <div class="tree-indent-1">├── components/</div>
-                    <div class="tree-indent-2 tree-item" onclick="carregarCodigo('LoginForm.tsx', 87, 'handleSubmit()')">├── LoginForm.tsx (87)</div>
-                    <div class="tree-indent-1">├── services/</div>
-                    <div class="tree-indent-2 tree-item text-danger" onclick="carregarCodigo('AuthService.ts', 118, 'authenticate()')">└── AuthService.ts (118) ✕</div>
-                </div>
-            </div>
-
-            <div id="tab-eventos" class="tab-content">
-                <table class="data-table">
-                    <thead><tr><th>Timestamp</th><th>Tipo</th><th>Origem</th><th>Arquivo</th><th>Linha</th><th>Resultado</th></tr></thead>
-                    <tbody>
-                        <tr><td>00:00.121</td><td>CLICK</td><td>Browser</td><td>LoginForm.tsx</td><td>87</td><td><span class="badge badge-success">OK</span></td></tr>
-                        <tr><td>00:00.168</td><td>REQUEST</td><td>Network</td><td>authService.ts</td><td>54</td><td><span class="badge badge-success">OK</span></td></tr>
-                        <tr><td>00:00.412</td><td>ERROR</td><td>Backend</td><td>AuthService.ts</td><td>118</td><td><span class="badge badge-danger">FAIL</span></td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="tab-network" class="tab-content">
-                <div class="network-console">
-                    <div class="text-danger font-bold">POST /api/auth/login — Status 500 Internal Server Error</div>
-                    <hr class="divider">
-                    <div><strong>Request Body:</strong></div>
-                    <pre class="json-req">{ "email": "qa@jabuti.com", "password": "********" }</pre>
-                    <div><strong>Response Body:</strong></div>
-                    <pre class="json-res">{ "error": "Internal Server Error", "message": "Cannot read properties of undefined" }</pre>
-                </div>
-            </div>
-
-            <div class="drawer" id="eventDrawer">
-                <div class="drawer-header">
-                    <h3>Detalhes do Erro</h3>
-                    <button class="btn btn-sm btn-secondary" onclick="fecharDrawer()">✕ Fechar</button>
-                </div>
-                <div class="drawer-body">
-                    <div><strong>Tipo:</strong> <span class="badge badge-danger">ERROR</span></div>
-                    <div><strong>Timestamp:</strong> 18:42:30.412</div>
-                    <div><strong>Arquivo:</strong> src/services/AuthService.ts</div>
-                    <div><strong>Linha:</strong> 118</div>
-                    <div><strong>Função:</strong> authenticate()</div>
-                    <div><strong>Mensagem:</strong> <span class="text-danger">Cannot read properties of undefined</span></div>
-                    <div style="margin-top: 10px;">
-                        <strong>Stack Trace:</strong>
-                        <pre class="stack-trace" style="background:#f4f4f4; padding:8px; border:1px solid #ddd; font-size:0.75rem;">AuthService.ts:118&#10;AuthController.ts:73&#10;auth.routes.ts:28</pre>
-                    </div>
-                    <button class="btn btn-sm btn-secondary" onclick="alert('Stack Trace copiado!')" style="margin-top: 10px;">Copiar Stack Trace</button>
+            <div class="pagination margin-top-20">
+                <span class="pagination-info">Exibindo 1-4 de 4 registros</span>
+                <div class="page-buttons">
+                    <button class="page-btn" disabled>&laquo;</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled>&raquo;</button>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Modal de Visualização de Rastreamento -->
+    <div class="modal" id="modalRastreamento">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 id="rastreamentoModalTitle">Relatório de Rastreamento</h2>
+            <div id="rastreamentoModalContent"></div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button type="button" class="btn btn-secondary" onclick="fecharModal('modalRastreamento')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Rastreamento -->
+    <div class="modal" id="modalNovoRastreamento">
+        <div class="modal-content">
+            <h2>Novo Rastreamento</h2>
+            <form onsubmit="salvarNovoRastreamento(event)">
+                <div class="form-group">
+                    <label for="novaOrigem">Origem</label>
+                    <input type="text" id="novaOrigem" required placeholder="Digite a origem (ex: API, Web, Mobile, Desktop)...">
+                </div>
+                <div class="form-group">
+                    <label for="novaDescricao">Descrição</label>
+                    <input type="text" id="novaDescricao" required placeholder="Descreva o rastreamento...">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modalNovoRastreamento')">Cancelar</button>
+                    <button type="submit" class="btn">Salvar Rastreamento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        const mockCodeSnippets = {
-            'AuthService.ts': [
-                { line: 112, code: 'async authenticate(email, password) {' },
-                { line: 113, code: '' },
-                { line: 114, code: '   const user = await userRepository.findByEmail(email);' },
-                { line: 115, code: '' },
-                { line: 116, code: '   if (!user) {' },
-                { line: 117, code: '      // Erro na linha abaixo: user é undefined' },
-                { line: 118, code: '      return user.passwordHash.compare(password); // ← PONTO DE FALHA', error: true },
-                { line: 119, code: '   }' },
-                { line: 120, code: '' },
-                { line: 121, code: '   return createToken(user);' },
-                { line: 122, code: '}' }
-            ],
-            'LoginPage.tsx': [
-                { line: 40, code: 'export const LoginPage = () => {' },
-                { line: 41, code: '   return (' },
-                { line: 42, code: '      <LoginForm onSubmit={handleLogin} />' },
-                { line: 43, code: '   );' },
-                { line: 44, code: '}' }
-            ],
-            'LoginForm.tsx': [
-                { line: 85, code: 'const handleSubmit = (e) => {' },
-                { line: 86, code: '   e.preventDefault();' },
-                { line: 87, code: '   useLogin.executeLogin(data);' },
-                { line: 88, code: '}' }
-            ]
-        };
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+        }
 
-        function renderizarCodigo(fileName) {
-            const codeBody = document.getElementById('codeBody');
-            codeBody.innerHTML = '';
-            
-            const lines = mockCodeSnippets[fileName] || [
-                { line: 1, code: `// Conteúdo do arquivo ${fileName}` },
-                { line: 2, code: `function exemplo() { return true; }` }
-            ];
+        function filtrarTabela() {
+            const fOrigem = document.getElementById('filterOrigem').value.toLowerCase();
+            const fDesc = document.getElementById('filterDescricao').value.toLowerCase();
+            const linhas = document.querySelectorAll('#rastreamentoTableBody tr');
 
-            lines.forEach(item => {
-                const row = document.createElement('div');
-                row.className = `code-line ${item.error ? 'highlight-error' : ''}`;
-                row.innerHTML = `<span class="line-num">${item.line}</span><span class="line-text">${item.code}</span>`;
-                codeBody.appendChild(row);
+            linhas.forEach(linha => {
+                const origem = linha.querySelector('td:nth-child(2)').innerText.toLowerCase();
+                const desc = linha.querySelector('td:nth-child(3)').innerText.toLowerCase();
+
+                if (origem.includes(fOrigem) && desc.includes(fDesc)) {
+                    linha.style.display = '';
+                } else {
+                    linha.style.display = 'none';
+                }
             });
         }
 
-        function alternarTab(tabName, evt) {
-            document.querySelectorAll('.tab-btn, .tab-content').forEach(el => el.classList.remove('active'));
-            if (evt) evt.target.classList.add('active');
-            document.getElementById(`tab-${tabName}`).classList.add('active');
+        function abrirModalRastreamento(origem) {
+            const titulo = document.getElementById('rastreamentoModalTitle');
+            const conteudo = document.getElementById('rastreamentoModalContent');
+            
+            titulo.innerText = `Rastreamento Técnico - ${origem}`;
+
+            if (origem === 'API') {
+                conteudo.innerHTML = `
+                    <p style="font-size: 13px; color: #555; margin-bottom: 6px;">Mapeamento de Artefatos de Back-end:</p>
+                    
+                    <div class="section-box-modal">
+                        <h4>1. Controllers (Controladores)</h4>
+                        <div class="field-tag">src/controllers/AuthController.ts</div>
+                        <div class="field-tag">src/controllers/UserController.ts</div>
+                        <div class="code-box-modal">AuthController.login(req, res) -> linha 42</div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>2. Routes (Rotas)</h4>
+                        <div class="field-tag">POST /api/v1/auth/login</div>
+                        <div class="field-tag">GET /api/v1/user/profile</div>
+                        <div class="code-box-modal">auth.routes.ts -> router.post('/login', AuthController.login)</div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>3. Models (Modelos / Entidades)</h4>
+                        <div class="field-tag">src/models/User.ts</div>
+                        <div class="field-tag">src/models/TokenSchema.ts</div>
+                        <div class="code-box-modal">UserSchema -> { id, email, passwordHash, status }</div>
+                    </div>
+                `;
+            } else {
+                conteudo.innerHTML = `
+                    <p style="font-size: 13px; color: #555; margin-bottom: 6px;">Mapeamento de Artefatos de Front-end (${origem}):</p>
+                    
+                    <div class="section-box-modal">
+                        <h4>1. Pages / Screens (Telas)</h4>
+                        <div class="field-tag">src/pages/DashboardPage.tsx</div>
+                        <div class="field-tag">src/pages/CheckoutPage.tsx</div>
+                        <div class="code-box-modal"><DashboardPage /> -> Renderização e gerenciamento de estado da página</div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>2. Hooks (Ganchos de Estado)</h4>
+                        <div class="field-tag">src/hooks/useAuth.ts</div>
+                        <div class="field-tag">src/hooks/useFetchData.ts</div>
+                        <div class="code-box-modal">const { user, login } = useAuth(); -> linha 18</div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>3. Services (Integração e API)</h4>
+                        <div class="field-tag">src/services/apiService.ts</div>
+                        <div class="field-tag">src/services/storageService.ts</div>
+                        <div class="code-box-modal">apiService.post('/auth/login', payload) -> Axios Instance</div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalRastreamento').style.display = 'flex';
         }
 
-        function carregarCodigo(fileName, line, func) {
-            alternarTab('codigo');
-            document.getElementById('codeFileName').innerText = `src/services/${fileName}`;
-            document.getElementById('codeMetaInfo').innerText = `Linha ${line} — ${func}`;
-            document.getElementById('origFile').innerText = `src/services/${fileName}`;
-            document.getElementById('origLine').innerText = line;
-            document.getElementById('origFunc').innerText = func;
-            renderizarCodigo(fileName);
+        function abrirModalNovoRastreamento() {
+            document.getElementById('novaOrigem').value = '';
+            document.getElementById('novaDescricao').value = '';
+            document.getElementById('modalNovoRastreamento').style.display = 'flex';
         }
 
-        function iniciarRastreamento() {
-            document.getElementById('rastreamentoAlert').style.display = 'inline';
-            alert('Simulação de rastreamento determinístico iniciada!');
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
-        function atualizarRastreamento() { alert('Dados de rastreamento atualizados.'); }
-        
-        function pararRastreamento() {
-            document.getElementById('rastreamentoAlert').style.display = 'none';
-            alert('Rastreamento interrompido.');
+        function salvarNovoRastreamento(e) {
+            e.preventDefault();
+            const origem = document.getElementById('novaOrigem').value;
+            alert(`Novo rastreamento de "${origem}" criado com sucesso!`);
+            fecharModal('modalNovoRastreamento');
         }
 
-        function exportarRastreamento() {
-            const data = {
-                executionId: "#EXE-000184",
-                status: "FAILED",
-                correlationId: "REQ-8F3A92D1",
-                scenario: "Login com credenciais inválidas",
-                pontoDeFalha: "AuthService.ts:118",
-                eventsCount: 47,
-                timestamp: new Date().toISOString()
-            };
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-            a.download = `rastreamento_EXE-000184.json`;
-            a.click();
+        function excluirLinha(btn) {
+            const tr = btn.closest('tr');
+            const origem = tr.querySelector('td:nth-child(2)').innerText;
+            if (confirm(`Deseja mover o registro de "${origem}" para a lixeira?`)) {
+                tr.remove();
+            }
         }
 
-        function abrirDrawerDetalhes() { document.getElementById('eventDrawer').classList.add('open'); }
-        function fecharDrawer() { document.getElementById('eventDrawer').classList.remove('open'); }
+        function excluirSelecionados() {
+            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            const ids = Array.from(checkboxes).map(cb => cb.value);
+            if (ids.length === 0) {
+                alert('Nenhum item selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${ids.length} itens selecionados para a lixeira?`)) {
+                checkboxes.forEach(cb => cb.closest('tr').remove());
+                alert(`Itens movidos para a lixeira.`);
+            }
+        }
 
         function encerrarSessao(e) {
             e.preventDefault();
@@ -614,8 +343,6 @@
             localStorage.removeItem('MENU_usuario');
             window.location.href = 'login.html';
         }
-
-        window.onload = () => renderizarCodigo('AuthService.ts');
     </script>
 </body>
 </html>
