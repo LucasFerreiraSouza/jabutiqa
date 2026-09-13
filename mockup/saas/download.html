@@ -3,8 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Downloads (.EXE) - <h2>MENU</h2></title>
+    <title>Downloads - MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .download-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .download-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: #0f172a;
+        }
+
+        .download-card p {
+            margin: 0 0 15px 0;
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        .download-card .meta-info {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .download-card .btn-action {
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,10 +58,9 @@
             <div class="brand">
                 <h2>MENU</h2>
 
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
-        <div class="banner-painel">
-            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
-        </div>
+                <div class="banner-painel">
+                    <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+                </div>
 
                 <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
             </div>
@@ -27,7 +70,8 @@
                 <li><a href="gestao.html">Gestão de Usuários</a></li>
                 <li><a href="download.html" class="active">Downloads (.EXE)</a></li>
                 <li><a href="suporte.html">Suporte & FAQ</a></li>
-<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+                <li><a href="#" style="margin-top: 25px;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>
+            </ul>
         </aside>
 
         <!-- Área Principal -->
@@ -35,40 +79,70 @@
             <div class="header-bar">
                 <div>
                     <h1 style="margin: 0; color: #000000;">Central de Downloads</h1>
-                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Baixe o aplicativo cliente MENU Executável e obtenha suas credenciais de vinculação.</p>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Baixe o aplicativo cliente MENU Executável para sua plataforma e obtenha suas credenciais de vinculação.</p>
                 </div>
                 <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
             </div>
 
-            <!-- Card de Instalação Principal -->
-            <div class="panel-card" style="margin-bottom: 20px;">
-                <h3>MENU Client para Windows (64-bit)</h3>
-                <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">Instalador oficial contendo todas as ferramentas de observabilidade, execução de cenários e envio de mensagens para testes de carga e integração.</p>
-                
-                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                    <button class="btn-action" style="padding: 12px 24px; font-size: 1rem;" onclick="simularDownload()">⬇ Baixar MENU_v2.4.1_Setup.exe</button>
-                    <span style="font-size: 0.85rem; color: #666;">Versão 2.4.1 • Lançada em Fev/2026 • Windows 10/11</span>
+            <!-- Opções de Download por Plataforma -->
+            <div class="download-grid">
+                <!-- Windows -->
+                <div class="download-card">
+                    <div>
+                        <h4>Windows</h4>
+                        <p>Instalador oficial de 64-bit para execução de automações e testes locais no Windows.</p>
+                        <div class="meta-info">Versão 2.4.1 • .exe (85 MB) • Windows 10/11</div>
+                    </div>
+                    <button class="btn-action" onclick="simularDownload('MENU_v2.4.1_Setup.exe')">Baixar para Windows</button>
+                </div>
+
+                <!-- macOS -->
+                <div class="download-card">
+                    <div>
+                        <h4>macOS</h4>
+                        <p>Pacote universal compatível com chips Apple Silicon (M1/M2/M3) e Intel.</p>
+                        <div class="meta-info">Versão 2.4.1 • .dmg (92 MB) • macOS 12+</div>
+                    </div>
+                    <button class="btn-action" onclick="simularDownload('MENU_v2.4.1_macOS.dmg')">Baixar para macOS</button>
+                </div>
+
+                <!-- Linux -->
+                <div class="download-card">
+                    <div>
+                        <h4>Linux</h4>
+                        <p>Binários empacotados em AppImage e pacotes Debian/Ubuntu para distribuições 64-bit.</p>
+                        <div class="meta-info">Versão 2.4.1 • .AppImage / .deb (78 MB)</div>
+                    </div>
+                    <button class="btn-action" onclick="simularDownload('MENU_v2.4.1_Linux.AppImage')">Baixar para Linux</button>
+                </div>
+
+                <!-- iOS -->
+                <div class="download-card">
+                    <div>
+                        <h4>iOS (iPhone / iPad)</h4>
+                        <p>Aplicativo mobile para acompanhamento em tempo real de execuções e métricas.</p>
+                        <div class="meta-info">Versão 1.8.0 • Apple App Store • iOS 15+</div>
+                    </div>
+                    <button class="btn-action btn-secondary" onclick="simularDownload('App Store')">Obter na App Store</button>
+                </div>
+
+                <!-- Android -->
+                <div class="download-card">
+                    <div>
+                        <h4>Android</h4>
+                        <p>Aplicativo móvel e arquivo APK direto para dispositivos Android.</p>
+                        <div class="meta-info">Versão 1.8.0 • Play Store / .apk • Android 8.0+</div>
+                    </div>
+                    <button class="btn-action btn-secondary" onclick="simularDownload('Google Play Store')">Obter na Play Store</button>
                 </div>
             </div>
 
-            <!-- Instalação e Chave de Licença -->
-            <div class="panel-card" style="margin-bottom: 20px;">
-                <h3>Chave de Licenciamento da Organização</h3>
-                <p style="font-size: 0.9rem; color: #555;">Copie a chave abaixo e cole na tela de <strong>Autenticação</strong> (`autenticacao.html`) após abrir o aplicativo `.EXE` instalado em sua máquina local.</p>
-
-                <div style="display: flex; gap: 10px; margin-top: 15px; max-width: 600px;">
-                    <input type="text" id="tokenLicencaInput" value="JABUTI-ORG-88F9-2026-SECURE-KEY-X9" readonly style="flex: 1; padding: 10px; font-family: monospace; border: 1px solid #ccc; background: #ffffff; border-radius: 4px;">
-                    <button class="btn-action btn-secondary" onclick="copiarToken()">Copiar Chave</button>
-                </div>
-            </div>
-
-            <!-- Requisitos do <h2>SISTEMA</h2> -->
+            <!-- Requisitos do Sistema -->
             <div class="panel-card">
-                <h3>Requisitos Mínimos do <h2>SISTEMA</h2></h3>
-                <ul style="font-size: 0.9rem; color: #555; line-height: 1.8; padding-left: 20px; margin: 10px 0 0;">
-                    <li><strong><h2>SISTEMA</h2> Operacional:</strong> Windows 10 ou Windows 11 (64-bit)</li>
-                    <li><strong>Memória RAM:</strong> Mínimo de 4 GB (8 GB recomendado)</li>
-                    <li><strong>Rede:</strong> Acesso à internet via HTTPS (porta 443) para validação de créditos e sincronização.</li>
+                <h3 style="margin-top: 0; margin-bottom: 10px;">Requisitos Mínimos por Plataforma</h3>
+                <ul style="font-size: 0.875rem; color: #475569; line-height: 1.8; padding-left: 20px; margin: 0;">
+                    <li><strong>Desktop (Windows / macOS / Linux):</strong> Processador Dual-Core 2.0GHz, 4 GB RAM e conexão HTTPS (porta 443).</li>
+                    <li><strong>Dispositivos Móveis (iOS / Android):</strong> Conexão ativa com a internet para sincronização com o painel SaaS.</li>
                 </ul>
             </div>
         </main>
@@ -83,7 +157,7 @@
         function carregarDadosSessao() {
             const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
             const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
-            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'JabutiQA Soluções';
 
             if (sessaoAtiva !== 'true') {
                 window.location.href = 'login.html';
@@ -94,16 +168,8 @@
             document.getElementById('displayOrgSidebar').innerText = org;
         }
 
-        function copiarToken() {
-            const copyText = document.getElementById("tokenLicencaInput");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
-            alert("Chave de licenciamento copiada com sucesso!");
-        }
-
-        function simularDownload() {
-            alert("Iniciando o download do executável MENU_v2.4.1_Setup.exe...");
+        function simularDownload(arquivo) {
+            alert("Iniciando o download/redirecionamento do pacote: " + arquivo);
         }
 
         function encerrarSessaoSaaS(e) {

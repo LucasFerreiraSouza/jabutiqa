@@ -3,8 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Usuários e Dispositivos - <h2>MENU</h2></title>
+    <title>Gestão de Usuários - MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .user-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .user-info-item label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .user-info-item input, .user-info-item select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #1e293b;
+            background-color: #f8fafc;
+            box-sizing: border-box;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .user-info-item input:disabled, .user-info-item select:disabled {
+            background-color: #e2e8f0;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+        .user-info-item input:focus, .user-info-item select:focus {
+            outline: none;
+            border-color: #000000;
+            background-color: #ffffff;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 0.875rem;
+            color: #1e293b;
+            font-weight: 500;
+        }
+        .checkbox-container input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .invite-form-container {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+            margin-top: 10px;
+        }
+        .custom-table th {
+            padding: 12px 10px;
+            border-bottom: 2px solid #e2e8f0;
+            color: #475569;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .custom-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #1e293b;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .btn-danger-link {
+            background: none;
+            border: none;
+            color: #dc2626;
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0;
+            font-size: 0.85rem;
+        }
+        .btn-danger-link:hover {
+            text-decoration: underline;
+        }
+
+        .token-code {
+            font-family: monospace;
+            background-color: #f1f5f9;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            border: 1px solid #cbd5e1;
+            display: inline-block;
+            letter-spacing: -0.2px;
+        }
+
+        .input-copy-group {
+            display: flex;
+            gap: 8px;
+        }
+        .input-copy-group input {
+            font-family: monospace;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,10 +140,9 @@
             <div class="brand">
                 <h2>MENU</h2>
 
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
-        <div class="banner-painel">
-            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
-        </div>
+                <div class="banner-painel">
+                    <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+                </div>
 
                 <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
             </div>
@@ -27,87 +152,225 @@
                 <li><a href="gestao.html" class="active">Gestão de Usuários</a></li>
                 <li><a href="download.html">Downloads (.EXE)</a></li>
                 <li><a href="suporte.html">Suporte & FAQ</a></li>
-<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+                <li><a href="#" style="margin-top: 25px;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>
+            </ul>
         </aside>
 
         <!-- Área Principal -->
         <main class="saas-main">
             <div class="header-bar">
                 <div>
-                    <h1 style="margin: 0; color: #000000;">Gestão de Usuários e Licenças</h1>
-                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Gerencie quem pode acessar a organização e os computadores autorizados a rodar o cliente .EXE.</p>
+                    <h1 style="margin: 0; color: #000000;">Gestão de Usuários</h1>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Consulte seus dados de acesso e gerencie os membros e dispositivos da sua equipe.</p>
                 </div>
                 <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
             </div>
 
-            <!-- Formulário Convite de Usuário -->
-            <div class="panel-card invite-card">
-                <h3>Convidar Novo Usuário</h3>
-                <form class="invite-form" onsubmit="adicionarUsuario(event)">
-                    <input type="email" id="novoEmail" placeholder="email@empresa.com.br" required class="invite-input">
-                    <select id="novoPerfil" class="invite-select">
-                        <option value="Operador">Operador (Usa .EXE)</option>
-                        <option value="Administrador">Administrador</option>
-                    </select>
-                    <button type="submit" class="btn-action">Enviar Convite</button>
+            <!-- CONTAINER 1: MEU USUÁRIO (EDITÁVEL) -->
+            <div class="panel-card" style="margin-bottom: 25px;">
+                <h3 style="margin-top: 0; margin-bottom: 5px;">Meu Usuário</h3>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0; margin-bottom: 15px;">Atualize suas informações pessoais e consulte sua credencial de acesso ao .EXE.</p>
+                
+                <form onsubmit="salvarMeuUsuario(event)">
+                    <div class="user-info-grid">
+                        <div class="user-info-item">
+                            <label for="meuEmail">E-mail</label>
+                            <input type="email" id="meuEmail" value="lucasferreirasouza22@gmail.com" required>
+                        </div>
+                        <div class="user-info-item">
+                            <label for="meuNome">Nome</label>
+                            <input type="text" id="meuNome" value="Lucas Silva" required>
+                        </div>
+                        <div class="user-info-item">
+                            <label for="meuCargo">Cargo</label>
+                            <input type="text" id="meuCargo" value="Engenheiro de QA Lead" required>
+                        </div>
+                        <div class="user-info-item">
+                            <label for="meuSetor">Setor</label>
+                            <input type="text" id="meuSetor" value="Garantia de Qualidade" required>
+                        </div>
+                        <div class="user-info-item">
+                            <label for="minhaEmpresa">Empresa</label>
+                            <input type="text" id="minhaEmpresa" value="JabutiQA Soluções" required>
+                        </div>
+                        <div class="user-info-item">
+                            <label for="minhaCredencial">Sua Credencial (.EXE)</label>
+                            <div class="input-copy-group">
+                                <input type="text" id="minhaCredencial" value="KEY-LUCAS-88F9-2026" readonly disabled>
+                                <button type="button" class="btn-action" style="padding: 0 15px; font-size: 0.8rem; background-color: #475569;" onclick="copiarMinhaCredencial()">Copiar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button type="submit" class="btn-action">Salvar Alterações</button>
+                    </div>
                 </form>
             </div>
-            <!-- Tabela de Usuários -->
-            <div class="panel-card" style="margin-bottom: 20px;">
-                <h3>Usuários Cadastrados</h3>
-                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; margin-top: 10px;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid #eee;">
-                            <th style="padding: 10px 0;">E-mail</th>
-                            <th>Perfil</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelaUsuarios">
-                        <tr style="border-bottom: 1px solid #f0f0f0;">
-                            <td style="padding: 10px 0;">lucas@qajabuti.com.br</td>
-                            <td>Administrador</td>
-                            <td><span class="metric-status status-active">Ativo</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #f0f0f0;">
-                            <td style="padding: 10px 0;">qa.lab01@empresa.com.br</td>
-                            <td>Operador</td>
-                            <td><span class="metric-status status-active">Ativo</span></td>
-                            <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Remover</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <!-- CONTAINER 2: CONVIDAR OUTROS USUÁRIOS -->
+            <div class="panel-card" style="margin-bottom: 25px;">
+                <h3 style="margin-top: 0; margin-bottom: 5px;">Convidar Outros Usuários</h3>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0; margin-bottom: 15px;">Adicione novos membros preenchendo as informações de cadastro.</p>
+                
+                <div class="invite-form-container">
+                    <form onsubmit="adicionarUsuario(event)">
+                        <div class="user-info-grid" style="margin-top: 0;">
+                            <div class="user-info-item">
+                                <label for="novoEmail">E-mail *</label>
+                                <input type="email" id="novoEmail" placeholder="email@empresa.com.br" required>
+                            </div>
+                            <div class="user-info-item">
+                                <label for="novoNome">Nome *</label>
+                                <input type="text" id="novoNome" placeholder="Nome Completo" required>
+                            </div>
+                            <div class="user-info-item">
+                                <label for="novoCargo">Cargo *</label>
+                                <input type="text" id="novoCargo" placeholder="Ex: Analista de QA" required>
+                            </div>
+                            <div class="user-info-item">
+                                <label for="novoSetor">Setor *</label>
+                                <input type="text" id="novoSetor" placeholder="Ex: Tecnologia" required>
+                            </div>
+                            <div class="user-info-item">
+                                <label for="novaEmpresa">Empresa *</label>
+                                <input type="text" id="novaEmpresa" placeholder="Ex: JabutiQA Soluções" required>
+                            </div>
+                            <div class="user-info-item">
+                                <label for="novoPerfil">Perfil *</label>
+                                <input type="text" id="novoPerfil" value="Operador (Usa .EXE)" disabled>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="permissaoSaas">
+                            <label for="permissaoSaas">Permitir acesso também ao painel web (SaaS)</label>
+                        </div>
+
+                        <div style="margin-top: 15px; text-align: right;">
+                            <button type="submit" class="btn-action">Enviar Convite</button>
+                        </div>
+                    </form>
+                </div>
+
+                <h3 style="margin-top: 25px; margin-bottom: 10px; font-size: 1.1rem;">Membros Cadastrados</h3>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>E-mail</th>
+                                <th>Nome</th>
+                                <th>Cargo</th>
+                                <th>Credencial (.EXE)</th>
+                                <th>Perfil</th>
+                                <th style="text-align: center;">Acesso SaaS</th>
+                                <th>Status</th>
+                                <th style="text-align: right; padding-right: 10px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaUsuarios">
+                            <tr>
+                                <td>ana.souza@qajabuti.com.br</td>
+                                <td>Ana Souza</td>
+                                <td>Coordenadora de QA</td>
+                                <td><span class="token-code">KEY-ANA-88F9</span></td>
+                                <td>Operador (Usa .EXE)</td>
+                                <td style="text-align: center;">
+                                    <input type="checkbox" checked onchange="alterarPermissaoSaas(this, 'Ana Souza')">
+                                </td>
+                                <td><span class="metric-status status-active">Ativo</span></td>
+                                <td style="text-align: right; padding-right: 10px;">
+                                    <button class="btn-danger-link" onclick="removerLinha(this)">Remover</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>carlos.oliveira@empresa.com.br</td>
+                                <td>Carlos Oliveira</td>
+                                <td>Analista de Testes Sr.</td>
+                                <td><span class="token-code">KEY-CARLOS-77X2</span></td>
+                                <td>Operador (Usa .EXE)</td>
+                                <td style="text-align: center;">
+                                    <input type="checkbox" onchange="alterarPermissaoSaas(this, 'Carlos Oliveira')">
+                                </td>
+                                <td><span class="metric-status status-active">Ativo</span></td>
+                                <td style="text-align: right; padding-right: 10px;">
+                                    <button class="btn-danger-link" onclick="removerLinha(this)">Remover</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>mariana.lima@empresa.com.br</td>
+                                <td>Mariana Lima</td>
+                                <td>Desenvolvedora Fullstack</td>
+                                <td><span class="token-code">KEY-MARI-33L9</span></td>
+                                <td>Operador (Usa .EXE)</td>
+                                <td style="text-align: center;">
+                                    <input type="checkbox" onchange="alterarPermissaoSaas(this, 'Mariana Lima')">
+                                </td>
+                                <td><span class="metric-status status-active">Ativo</span></td>
+                                <td style="text-align: right; padding-right: 10px;">
+                                    <button class="btn-danger-link" onclick="removerLinha(this)">Remover</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>roberto.alves@empresa.com.br</td>
+                                <td>Roberto Alves</td>
+                                <td>DevOps Engineer</td>
+                                <td><span style="color: #94a3b8; font-style: italic; font-size: 0.8rem;">Pendente</span></td>
+                                <td>Operador (Usa .EXE)</td>
+                                <td style="text-align: center;">
+                                    <input type="checkbox" checked onchange="alterarPermissaoSaas(this, 'Roberto Alves')">
+                                </td>
+                                <td><span class="metric-status status-pending" style="background-color: #fef3c7; color: #d97706; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">Pendente</span></td>
+                                <td style="text-align: right; padding-right: 10px;">
+                                    <button class="btn-danger-link" onclick="removerLinha(this)">Cancelar Convite</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Tabela de Dispositivos .EXE Autorizados -->
+            <!-- CONTAINER 3: LICENÇAS E DISPOSITIVOS -->
             <div class="panel-card">
-                <h3>Dispositivos .EXE Autorizados (2 de 5 em uso)</h3>
-                <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; margin-top: 10px;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid #eee;">
-                            <th style="padding: 10px 0;">Nome da Máquina</th>
-                            <th>ID da Licença / Token</th>
-                            <th>Último Acesso</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #f0f0f0;">
-                            <td style="padding: 10px 0;">DESKTOP-QA-LAB01</td>
-                            <code>LIC-88F9-2026-QA</code>
-                            <td>Hoje, 14:32</td>
-                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Revogar</button></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #f0f0f0;">
-                            <td style="padding: 10px 0;">DEV-MACHINE-LUCAS</td>
-                            <code>LIC-11B3-2026-QA</code>
-                            <td>Ontem, 09:15</td>
-                            <td><button onclick="revogarLicenca(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Revogar</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h3 style="margin-top: 0; margin-bottom: 5px;">Licenças e Dispositivos</h3>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0; margin-bottom: 15px;">Gerencie os dispositivos atualmente vinculados às credenciais dos usuários da organização.</p>
+                
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>Dispositivo / OS</th>
+                                <th>IP de Conexão</th>
+                                <th>Último Acesso</th>
+                                <th>Status Vinculação</th>
+                                <th style="text-align: right; padding-right: 10px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ana Souza</td>
+                                <td>DESKTOP-QA-01 (Windows 11)</td>
+                                <td>192.168.1.45</td>
+                                <td>Hoje às 14:32</td>
+                                <td><span class="metric-status status-active">Conectado</span></td>
+                                <td style="text-align: right; padding-right: 10px;">
+                                    <button class="btn-danger-link" onclick="revogarDispositivo(this, 'DESKTOP-QA-01')">Desvincular</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Carlos Oliveira</td>
+                                <td>MacBook-Pro-Carlos (macOS)</td>
+                                <td>177.32.109.12</td>
+                                <td>Ontem às 18:10</td>
+                                <td><span class="metric-status status-active">Conectado</span></td>
+                                <td style="text-align: right; padding-right: 10px;">
+                                    <button class="btn-danger-link" onclick="revogarDispositivo(this, 'MacBook-Pro-Carlos')">Desvincular</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
@@ -120,8 +383,8 @@
 
         function carregarDadosSessao() {
             const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
-            const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
-            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+            const email = localStorage.getItem('saas_usuario_email') || 'lucasferreirasouza22@gmail.com';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'JabutiQA Soluções';
 
             if (sessaoAtiva !== 'true') {
                 window.location.href = 'login.html';
@@ -130,35 +393,72 @@
 
             document.getElementById('displayUsuarioBadge').innerText = email;
             document.getElementById('displayOrgSidebar').innerText = org;
+            document.getElementById('meuEmail').value = email;
+            document.getElementById('minhaEmpresa').value = org;
+            document.getElementById('novaEmpresa').value = org;
+        }
+
+        function salvarMeuUsuario(e) {
+            e.preventDefault();
+            const novoEmail = document.getElementById('meuEmail').value;
+            localStorage.setItem('saas_usuario_email', novoEmail);
+            document.getElementById('displayUsuarioBadge').innerText = novoEmail;
+            alert('Perfil atualizado com sucesso!');
+        }
+
+        function copiarMinhaCredencial() {
+            const input = document.getElementById('minhaCredencial');
+            navigator.clipboard.writeText(input.value);
+            alert('Sua credencial (.EXE) foi copiada!');
         }
 
         function adicionarUsuario(e) {
             e.preventDefault();
             const email = document.getElementById('novoEmail').value;
-            const perfil = document.getElementById('novoPerfil').value;
+            const nome = document.getElementById('novoNome').value;
+            const cargo = document.getElementById('novoCargo').value;
+            const temAcessoSaas = document.getElementById('permissaoSaas').checked;
 
             const tbody = document.getElementById('tabelaUsuarios');
             const tr = document.createElement('tr');
-            tr.style.borderBottom = '1px solid #f0f0f0';
             tr.innerHTML = `
-                <td style="padding: 10px 0;">${email}</td>
-                <td>${perfil}</td>
-                <td><span class="metric-status status-active">Pendente</span></td>
-                <td><button onclick="removerLinha(this)" style="background: none; border: none; color: #000000; cursor: pointer;">Remover</button></td>
+                <td>${email}</td>
+                <td>${nome}</td>
+                <td>${cargo}</td>
+                <td><span style="color: #94a3b8; font-style: italic; font-size: 0.8rem;">Pendente</span></td>
+                <td>Operador (Usa .EXE)</td>
+                <td style="text-align: center;">
+                    <input type="checkbox" ${temAcessoSaas ? 'checked' : ''} onchange="alterarPermissaoSaas(this, '${nome}')">
+                </td>
+                <td><span class="metric-status status-pending" style="background-color: #fef3c7; color: #d97706; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">Pendente</span></td>
+                <td style="text-align: right; padding-right: 10px;">
+                    <button class="btn-danger-link" onclick="removerLinha(this)">Cancelar Convite</button>
+                </td>
             `;
             tbody.appendChild(tr);
+
             document.getElementById('novoEmail').value = '';
+            document.getElementById('novoNome').value = '';
+            document.getElementById('novoCargo').value = '';
+            document.getElementById('novoSetor').value = '';
+            document.getElementById('permissaoSaas').checked = false;
+            
             alert('Convite enviado com sucesso!');
         }
 
+        function alterarPermissaoSaas(checkbox, nomeUsuario) {
+            const estado = checkbox.checked ? 'concedido' : 'revogado';
+            alert(`Acesso ao painel SaaS ${estado} para o usuário: ${nomeUsuario}`);
+        }
+
         function removerLinha(btn) {
-            if (confirm('Deseja realmente remover este acesso?')) {
+            if (confirm('Deseja realmente remover este usuário e revogar sua credencial?')) {
                 btn.closest('tr').remove();
             }
         }
 
-        function revogarLicenca(btn) {
-            if (confirm('Revogar esta licença desconectará o aplicativo .EXE da máquina. Continuar?')) {
+        function revogarDispositivo(btn, nomeDispositivo) {
+            if (confirm(`Deseja desvincular o dispositivo ${nomeDispositivo}? O usuário precisará reautenticar no cliente.`)) {
                 btn.closest('tr').remove();
             }
         }

@@ -3,8 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planos & Assinatura - <h2>MENU</h2></title>
+    <title>Planos & Assinatura - MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .single-plan-container {
+            max-width: 500px;
+            margin: 40px auto;
+        }
+        .metric-card-single {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-top: 4px solid #0078d4;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .badge-plano-atual {
+            display: inline-block;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* --- ESTILOS DO MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            position: relative;
+            animation: fadeIn 0.2s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+        .mp-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #009ee3;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .summary-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            color: #475569;
+        }
+        .summary-row.total {
+            border-top: 1px solid #cbd5e1;
+            padding-top: 8px;
+            margin-top: 8px;
+            font-weight: bold;
+            color: #0f172a;
+            font-size: 1rem;
+        }
+        .btn-mp {
+            width: 100%;
+            background-color: #009ee3;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-mp:hover {
+            background-color: #008ac7;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,10 +134,9 @@
             <div class="brand">
                 <h2>MENU</h2>
 
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
-        <div class="banner-painel">
-            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
-        </div>
+                <div class="banner-painel">
+                    <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+                </div>
 
                 <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
             </div>
@@ -27,7 +146,8 @@
                 <li><a href="gestao.html">Gestão de Usuários</a></li>
                 <li><a href="download.html">Downloads (.EXE)</a></li>
                 <li><a href="suporte.html">Suporte & FAQ</a></li>
-<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+                <li><a href="#" style="margin-top: 25px;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>
+            </ul>
         </aside>
 
         <!-- Área Principal -->
@@ -35,77 +155,76 @@
             <div class="header-bar">
                 <div>
                     <h1 style="margin: 0; color: #000000;">Planos & Assinatura</h1>
-                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Gerencie suas assinaturas, escolha planos e recarregue seus créditos de execução.</p>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Gerencie os detalhes da assinatura da sua organização.</p>
                 </div>
                 <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
             </div>
 
-            <!-- Seleção de Planos -->
-            <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-                <div class="metric-card">
-                    <h3>Plano Starter</h3>
-                    <div class="metric-value">R$ 199<span style="font-size: 1rem; color: #666;">/mês</span></div>
-                    <ul style="list-style: none; padding: 0; margin: 15px 0; font-size: 0.9rem; color: #444; line-height: 1.8;">
-                        <li>✓ 1 Licença .EXE</li>
-                        <li>✓ 500 Minutos inclusos</li>
-                        <li>✓ Suporte via Ticket</li>
-                    </ul>
-                    <button class="btn-action btn-secondary" style="width: 100%; text-align: center;" onclick="alert('Entre em contato com o suporte para trocar de plano.')">Migrar para Starter</button>
-                </div>
-
-                <div class="metric-card" style="border-top-color: #000000; background: #ffffff;">
-                    <div style="font-size: 0.75rem; text-transform: uppercase; color: #000000; font-weight: bold;">Plano Atual</div>
-                    <h3>Plano Pro</h3>
-                    <div class="metric-value">R$ 499<span style="font-size: 1rem; color: #666;">/mês</span></div>
-                    <ul style="list-style: none; padding: 0; margin: 15px 0; font-size: 0.9rem; color: #444; line-height: 1.8;">
-                        <li>✓ 5 Licenças .EXE</li>
-                        <li>✓ 2.500 Minutos inclusos</li>
-                        <li>✓ Suporte Prioritário</li>
-                    </ul>
-                    <span class="metric-status status-active" style="display: block; text-align: center;">Assinatura Ativa</span>
-                </div>
-
-                <div class="metric-card" style="border-top-color: #000000;">
-                    <h3>Plano Enterprise</h3>
-                    <div class="metric-value">Sob Consulta</div>
-                    <ul style="list-style: none; padding: 0; margin: 15px 0; font-size: 0.9rem; color: #444; line-height: 1.8;">
-                        <li>✓ Licenças Ilimitadas</li>
-                        <li>✓ Tarifa customizada</li>
-                        <li>✓ Gerente de Conta Dedicado</li>
-                    </ul>
-                    <a href="mailto:comercial@qajabuti.com.br" class="btn-action" style="display: block; text-align: center;">Falar com Consultor</a>
-                </div>
-            </div>
-
-            <!-- Recarga de Créditos -->
-            <div class="panel-card" style="margin-top: 20px;">
-                <h3>Recarga Avulsa de Créditos (Minutos)</h3>
-                <p style="font-size: 0.9rem; color: #666;">Adicione saldo extra para execução de testes mantendo a tarifa do seu plano vigente.</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
-                    <div style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 15px; text-align: center;">
-                        <h4 style="margin: 0 0 10px;">+ 500 Minutos</h4>
-                        <div style="font-size: 1.2rem; font-weight: bold; color: #000000;">R$ 50,00</div>
-                        <button class="btn-action" style="margin-top: 10px; width: 100%;" onclick="comprarCreditos(500, 50)">Comprar</button>
+            <!-- Exibição Única do Plano Mensal -->
+            <div class="single-plan-container">
+                <div class="metric-card-single">
+                    <span class="badge-plano-atual">Plano Atual</span>
+                    <h2 style="margin: 8px 0; font-size: 1.5rem; color: #111;">Plano Mensal</h2>
+                    
+                    <div class="metric-value" style="font-size: 2.5rem; font-weight: bold; margin: 15px 0; color: #000;">
+                        R$ 10<span style="font-size: 1rem; color: #666; font-weight: normal;"> / usuário / mês</span>
                     </div>
 
-                    <div style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 15px; text-align: center;">
-                        <h4 style="margin: 0 0 10px;">+ 1.500 Minutos</h4>
-                        <div style="font-size: 1.2rem; font-weight: bold; color: #000000;">R$ 135,00</div>
-                        <button class="btn-action" style="margin-top: 10px; width: 100%;" onclick="comprarCreditos(1500, 135)">Comprar</button>
-                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 20px 0; font-size: 0.95rem; color: #444; line-height: 2; text-align: left;">
+                        <li style="border-bottom: 1px dashed #eee; padding-bottom: 6px;">Cobrança flexível baseada na quantidade de usuários ativos</li>
+                        <li style="border-bottom: 1px dashed #eee; padding-bottom: 6px;">Acesso completo às ferramentas e execuções do sistema</li>
+                        <li style="border-bottom: 1px dashed #eee; padding-bottom: 6px;">Suporte técnico e atualizações inclusas</li>
+                    </ul>
 
-                    <div style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 15px; text-align: center;">
-                        <h4 style="margin: 0 0 10px;">+ 5.000 Minutos</h4>
-                        <div style="font-size: 1.2rem; font-weight: bold; color: #000000;">R$ 400,00</div>
-                        <button class="btn-action" style="margin-top: 10px; width: 100%;" onclick="comprarCreditos(5000, 400)">Comprar</button>
-                    </div>
+                    <button class="btn-action" style="width: 100%; text-align: center; margin-top: 10px;" onclick="abrirModalPagamento()">Assinatura Ativa</button>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- SCRIPT DE INICIALIZAÇÃO -->
+    <!-- MODAL DE PAGAMENTO MERCADO PAGO -->
+    <div class="modal-overlay" id="modalPagamento">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharModalPagamento()">&times;</button>
+            
+            <div class="mp-badge">
+                <span>Pagamento via Mercado Pago</span>
+            </div>
+
+            <h3 style="margin: 0 0 5px 0; color: #0f172a; text-align: center;">Renovar Assinatura</h3>
+            <p style="margin: 0 0 15px 0; font-size: 0.85rem; color: #64748b; text-align: center;">Confirme o resumo da sua cobrança mensal para prosseguir.</p>
+
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span>Organização:</span>
+                    <strong id="modalOrgNome">JabutiQA Soluções</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Usuários Ativos no Mês:</span>
+                    <strong>3 membros</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Valor por Licença:</span>
+                    <span>R$ 10,00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total da Fatura:</span>
+                    <span style="color: #009ee3;">R$ 30,00</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px; font-size: 0.85rem; color: #64748b; text-align: left;">
+                <p style="margin: 5px 0;">✔ Pague via <strong>PIX</strong> (aprovação instantânea)</p>
+                <p style="margin: 5px 0;">✔ Ou <strong>Cartão de Crédito</strong> com renovação automática</p>
+            </div>
+
+            <button class="btn-mp" onclick="iniciarCheckoutMercadoPago()">
+                Pagar R$ 30,00 com Mercado Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE INICIALIZAÇÃO E MODAL -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             carregarDadosSessao();
@@ -114,7 +233,7 @@
         function carregarDadosSessao() {
             const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
             const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
-            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'JabutiQA Soluções';
 
             if (sessaoAtiva !== 'true') {
                 window.location.href = 'login.html';
@@ -123,10 +242,21 @@
 
             document.getElementById('displayUsuarioBadge').innerText = email;
             document.getElementById('displayOrgSidebar').innerText = org;
+            document.getElementById('modalOrgNome').innerText = org;
         }
 
-        function comprarCreditos(minutos, valor) {
-            alert(`Solicitação de recarga de ${minutos} minutos (R$ ${valor},00) enviada para faturamento!`);
+        function abrirModalPagamento() {
+            document.getElementById('modalPagamento').style.display = 'flex';
+        }
+
+        function fecharModalPagamento() {
+            document.getElementById('modalPagamento').style.display = 'none';
+        }
+
+        function iniciarCheckoutMercadoPago() {
+            alert("Redirecionando para a página de checkout seguro do Mercado Pago...");
+            // Em produção, redireciona para a init_point da Preference API do Mercado Pago
+            // window.location.href = "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=...";
         }
 
         function encerrarSessaoSaaS(e) {

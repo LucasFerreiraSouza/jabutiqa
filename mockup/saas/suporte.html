@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suporte & FAQ - <h2>MENU</h2></title>
+    <title>Suporte & FAQ - MENU</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -14,10 +14,9 @@
             <div class="brand">
                 <h2>MENU</h2>
 
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
-        <div class="banner-painel">
-            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
-        </div>
+                <div class="banner-painel">
+                    <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+                </div>
 
                 <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
             </div>
@@ -27,7 +26,8 @@
                 <li><a href="gestao.html">Gestão de Usuários</a></li>
                 <li><a href="download.html">Downloads (.EXE)</a></li>
                 <li><a href="suporte.html" class="active">Suporte & FAQ</a></li>
-<li><a href="#" style="margin-top: 25px; ;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>            </ul>
+                <li><a href="#" style="margin-top: 25px;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>
+            </ul>
         </aside>
 
         <!-- Área Principal -->
@@ -35,22 +35,24 @@
             <div class="header-bar">
                 <div>
                     <h1 style="margin: 0; color: #000000;">Suporte & Central de Ajuda</h1>
-                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Encontre respostas rápidas para dúvidas frequentes ou abra um chamado técnico.</p>
+                    <p style="margin: 5px 0 0; color: #666; font-size: 0.9rem;">Encontre respostas rápidas sobre credenciais, autenticação e uso do cliente .EXE.</p>
                 </div>
                 <div class="user-badge" id="displayUsuarioBadge">Usuário: ...</div>
             </div>
 
             <!-- Abrir Chamado -->
             <div class="panel-card" style="margin-bottom: 20px;">
-                <h3>Abrir Chamado Técnico</h3>
+                <h3 style="margin-top: 0; margin-bottom: 5px;">Abrir Chamado Técnico</h3>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 0; margin-bottom: 15px;">Dúvidas ou problemas com o cliente desktop? Envie uma mensagem para o nosso time de suporte.</p>
+
                 <form onsubmit="enviarTicket(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
                     <div>
                         <label style="display: block; font-size: 0.85rem; color: #555; margin-bottom: 4px;">Assunto</label>
-                        <input type="text" required placeholder="Ex: Problema de sincronização no cliente .EXE" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                        <input type="text" required placeholder="Ex: Erro de autenticação ao conectar o .EXE" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                     </div>
                     <div>
                         <label style="display: block; font-size: 0.85rem; color: #555; margin-bottom: 4px;">Descrição detalhada</label>
-                        <textarea rows="4" required placeholder="Descreva os passos para reproduzir o problema..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"></textarea>
+                        <textarea rows="4" required placeholder="Descreva o comportamento ou erro exibido pelo cliente local..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"></textarea>
                     </div>
                     <div>
                         <button type="submit" class="btn-action">Enviar Ticket</button>
@@ -60,22 +62,51 @@
 
             <!-- Perguntas Frequentes (FAQ) -->
             <div class="panel-card">
-                <h3>Perguntas Frequentes (FAQ)</h3>
-                <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 15px;">
+                <h3 style="margin-top: 0; margin-bottom: 15px;">Perguntas Frequentes (FAQ)</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    
                     <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">Como vinculo o aplicativo .EXE com minha conta do SaaS?</summary>
-                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555;">Acesse a página de <strong>Downloads</strong>, copie a Chave de Licenciamento da sua organização e informe-a na tela inicial de Autenticação do aplicativo local.</p>
+                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">Como autentico o aplicativo cliente (.EXE) no meu computador?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">
+                            Ao abrir o <strong>.EXE</strong> pela primeira vez, informe seu <strong>E-mail</strong>, <strong>Senha</strong> e a sua <strong>Credencial (.EXE)</strong> pessoal. A API validará esses dados com a assinatura ativa da sua organização e gerará um token seguro de acesso (JWT) para vincular o seu dispositivo.
+                        </p>
                     </details>
 
                     <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">Como é feita a contagem de créditos (minutos)?</summary>
-                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555;">Os créditos são descontados com base no tempo total em que as suítes de testes ou execuções de mensageria permanecem em execução no cliente `.EXE`.</p>
+                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">Onde encontro minha Credencial (.EXE)?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">
+                            Sua credencial individual fica disponível na página de <strong>Gestão de Usuários</strong> (no painel "Meu Usuário") ou na central de <strong>Downloads (.EXE)</strong>. Copie o código gerado e cole diretamente na tela inicial do executável.
+                        </p>
                     </details>
 
                     <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">O que acontece se minhas licenças .EXE esgotarem?</summary>
-                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555;">Uma terceira tentativa de login em um novo dispositivo será recusada até que você revogue uma licença antiga na página de <strong>Gestão de Usuários</strong> ou faça um upgrade de plano.</p>
+                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">Com que frequência preciso renovar a minha Credencial?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">
+                            A credencial de licenciamento renova a cada ciclo mensal de faturamento (R$ 10/mês da organização). Quando o ciclo virar, o aplicativo solicitará automaticamente a nova credencial exibida no seu painel web para renovar o token JWT de autorização.
+                        </p>
                     </details>
+
+                    <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">O que acontece se um funcionário for desligado da empresa?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">
+                            O Administrador basta acessar a aba <strong>Gestão de Usuários</strong> e clicar em <strong>Remover</strong> no usuário desejado. A API invalidará imediatamente a credencial e o token JWT associados, impedindo que o .EXE daquele usuário continue se comunicando com o servidor — sem afetar os demais membros da equipe.
+                        </p>
+                    </details>
+
+                    <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">Posso usar minha credencial em múltiplos computadores?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">
+                            Cada credencial é vinculada ao hardware do primeiro dispositivo autorizado. Se você precisar trocar de máquina, o Administrador pode desvincular o dispositivo antigo na tabela de <strong>Licenças e Dispositivos</strong> para permitir um novo vínculo.
+                        </p>
+                    </details>
+
+                    <details style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <summary style="font-weight: bold; cursor: pointer; color: #000000;">O processamento do Playwright e das suítes consome recursos do servidor SaaS?</summary>
+                        <p style="margin: 8px 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">
+                            Não. Todo o processamento pesado (Chromium, execuções de testes, scripts e captura de evidências) roda 100% localmente na máquina do cliente. A API do SaaS é responsável apenas pela autenticação, autorização de segurança, telemetria e sincronização de relatórios.
+                        </p>
+                    </details>
+
                 </div>
             </div>
         </main>
@@ -89,8 +120,8 @@
 
         function carregarDadosSessao() {
             const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
-            const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
-            const org = localStorage.getItem('saas_organizacao_nome') || 'Minha Organização';
+            const email = localStorage.getItem('saas_usuario_email') || 'lucasferreirasouza22@gmail.com';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'JabutiQA Soluções';
 
             if (sessaoAtiva !== 'true') {
                 window.location.href = 'login.html';
