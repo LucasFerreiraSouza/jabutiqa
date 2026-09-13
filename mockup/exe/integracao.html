@@ -5,21 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Integração Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
-            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="inicio.html">Início</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,20 +36,16 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html" class="active">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
-            <!-- Sair / Encerrar Sessão -->
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                 <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
@@ -53,26 +55,29 @@
     <main class="main-content">
         <section class="card">
             <h1>Integrações Externas</h1>
-            <p>Conecte o MENU a sistemas externos como Azure DevOps, Microsoft Teams, APIs HTTP/REST e plataformas corporativas para automação e notificações.</p>
+            <p>Conecte o MENU a sistemas externos para automação, sincronização de tarefas, inteligência artificial e notificações.</p>
 
-            <!-- Barra de Ações Principais (CRUD) e Filtros -->
-            <div class="toolbar">
+            <!-- Barra de Ferramentas Superior com Filtros por Tipo, Origem e Descrição -->
+            <div class="toolbar" style="margin-top: 20px;">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="abrirModalNovaIntegracao()">+ Novo</button>
-                    <button class="btn btn-danger" onclick="excluirSelecionados('integracaoTableBody')">Excluir Selecionados</button>
+                    <button class="btn" onclick="abrirModalFormulário('nova')">+ Novo</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
                 </div>
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="inputBusca" placeholder="Buscar por Nome, Serviço ou Projeto..." class="input-min-250" onkeyup="filtrarTabela()">
+                        <select id="filterTipo" onchange="filtrarTabela()" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="">Todos os Tipos</option>
+                            <option value="Desenvolvimento">Desenvolvimento</option>
+                            <option value="Gestão">Gestão</option>
+                            <option value="Inteligência Artificial">Inteligência Artificial</option>
+                            <option value="Comunicação">Comunicação</option>
+                        </select>
                     </div>
                     <div class="form-group margin-none">
-                        <select id="selectTipoServico" onchange="filtrarTabela()">
-                            <option value="">Todos os Serviços</option>
-                            <option value="Azure DevOps">Azure DevOps</option>
-                            <option value="Microsoft Teams">Microsoft Teams</option>
-                            <option value="API REST / Webhook">API REST / Webhook</option>
-                            <option value="<h2>SISTEMA</h2> Corporativo"><h2>SISTEMA</h2> Corporativo</option>
-                        </select>
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search" oninput="filtrarTabela()">
+                    </div>
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search" oninput="filtrarTabela()">
                     </div>
                 </div>
             </div>
@@ -83,62 +88,149 @@
                     <thead>
                         <tr>
                             <th class="th-checkbox">
-                                <input type="checkbox" onclick="toggleSelectAll(this, 'integracaoTableBody')">
+                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>Nome da Integração</th>
-                            <th>Serviço / Provedor</th>
-                            <th>Parâmetros Conectados (URL / Projeto / Org)</th>
-                            <th>Segredos Cadastrados</th>
-                            <th>Status</th>
+                            <th>Tipo</th>
+                            <th>Origem</th>
+                            <th>Descrição</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="integracaoTableBody">
+                        <!-- 1. Desenvolvimento -->
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-101"></td>
-                            <td><strong>Azure DevOps - Board QA</strong></td>
-                            <td><span class="badge-categoria">Azure DevOps</span></td>
-                            <td>Org: <em>Enterprise-QA</em> | Proj: <em>Core-API</em></td>
-                            <td><code class="secret-code">PAT: ••••••••••••a4f9</code></td>
-                            <td><span class="status-active font-bold">● Ativo</span></td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-001"></td>
+                            <td><span class="badge-categoria">Desenvolvimento</span></td>
+                            <td><strong>GitHub</strong></td>
+                            <td>Repositórios, commits, branches, PRs e rastreabilidade de correções.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm" onclick="testarConexao('INT-101', 'Azure DevOps - Board QA')">Testar Conexão</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="alternarStatus('INT-101', false)">Desativar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="editarIntegracao('INT-101')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('INT-101', 'Azure DevOps - Board QA')">Excluir</button>
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('GitHub')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-102"></td>
-                            <td><strong>Notificações Teams - General</strong></td>
-                            <td><span class="badge-categoria">Microsoft Teams</span></td>
-                            <td>URL: <em>https://outlook.office.com/webhook/...</em></td>
-                            <td><code class="secret-code">Secret: ••••••••••••88bc</code></td>
-                            <td><span class="status-active font-bold">● Ativo</span></td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-002"></td>
+                            <td><span class="badge-categoria">Desenvolvimento</span></td>
+                            <td><strong>GitHub Actions</strong></td>
+                            <td>Disparar testes/regressões automaticamente em pipelines.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm" onclick="testarConexao('INT-102', 'Notificações Teams - General')">Testar Conexão</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="alternarStatus('INT-102', false)">Desativar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="editarIntegracao('INT-102')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('INT-102', 'Notificações Teams - General')">Excluir</button>
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('GitHub Actions')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-103"></td>
-                            <td><strong>Webhook Corporativo de Execução</strong></td>
-                            <td><span class="badge-categoria">API REST / Webhook</span></td>
-                            <td>URL: <em>https://api.empresa.com.br/v1/qa-events</em></td>
-                            <td><code class="secret-code">API Key: ••••••••••••11a0</code></td>
-                            <td><span class="status-inactive font-bold">○ Inativo</span></td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-003"></td>
+                            <td><span class="badge-categoria">Desenvolvimento</span></td>
+                            <td><strong>Sentry</strong></td>
+                            <td>Conectar erros reais da aplicação às evidências e execuções do QA.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm" onclick="testarConexao('INT-103', 'Webhook Corporativo de Execução')">Testar Conexão</button>
-                                    <button class="btn btn-sm btn-auth" onclick="alternarStatus('INT-103', true)">Ativar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="editarIntegracao('INT-103')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('INT-103', 'Webhook Corporativo de Execução')">Excluir</button>
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Sentry')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- 2. Gestão -->
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-004"></td>
+                            <td><span class="badge-categoria">Gestão</span></td>
+                            <td><strong>Jira</strong></td>
+                            <td>Importar requisitos, criar bugs e vincular execuções/evidências.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Jira')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-005"></td>
+                            <td><span class="badge-categoria">Gestão</span></td>
+                            <td><strong>Azure DevOps</strong></td>
+                            <td>Boards, Work Items, Test Plans, pipelines e bugs.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Azure DevOps')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- 3. Inteligência Artificial -->
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-006"></td>
+                            <td><span class="badge-categoria">Inteligência Artificial</span></td>
+                            <td><strong>Gemini API</strong></td>
+                            <td>Geração de cenários, casos de teste, análise e assistência de QA.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Gemini API')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-007"></td>
+                            <td><span class="badge-categoria">Inteligência Artificial</span></td>
+                            <td><strong>OpenAI API</strong></td>
+                            <td>Geração, análise e comparação entre modelos.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('OpenAI API')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-008"></td>
+                            <td><span class="badge-categoria">Inteligência Artificial</span></td>
+                            <td><strong>Claude API</strong></td>
+                            <td>Geração e análise com outro provedor de IA.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Claude API')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- 4. Comunicação -->
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-009"></td>
+                            <td><span class="badge-categoria">Comunicação</span></td>
+                            <td><strong>Microsoft Teams</strong></td>
+                            <td>Notificações de execução, regressão, segurança e deploy.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Microsoft Teams')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-010"></td>
+                            <td><span class="badge-categoria">Comunicação</span></td>
+                            <td><strong>Discord</strong></td>
+                            <td>Notificações via webhook e acompanhamento de execuções.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Discord')">Conectar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
                                 </div>
                             </td>
                         </tr>
@@ -147,8 +239,8 @@
             </div>
 
             <!-- Paginação -->
-            <div class="pagination">
-                <span class="pagination-info text-primary-dark">Exibindo 3 registros.</span>
+            <div class="pagination margin-top-20">
+                <span class="pagination-info">Exibindo 1-10 de 10 registros</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -158,187 +250,139 @@
         </section>
     </main>
 
-    <!-- Modal para Cadastro/Edição de Integração -->
-    <div id="modalIntegracao" class="modal">
-        <div class="modal-content">
-            <h2 id="modalTitulo" class="modal-header-title">Nova Integração Externa</h2>
+    <!-- Modal para Formulário (Nova / Editar Integração) -->
+    <div id="modalFormulario" class="modal">
+        <div class="modal-content modal-lg">
+            <h2 id="modalTitle">Cadastrar Integração</h2>
             <form onsubmit="salvarIntegracao(event)">
-                <input type="hidden" id="integracaoId">
-
-                <div class="form-group">
-                    <label for="nomeIntegracao">Nome de Identificação *</label>
-                    <input type="text" id="nomeIntegracao" required placeholder="Ex: Azure DevOps Pipeline CI/CD">
-                </div>
-
-                <div class="form-group">
-                    <label for="tipoServico">Provedor / Tipo de Serviço *</label>
-                    <select id="tipoServico" onchange="atualizarCamposDinamicos(this.value)" required>
-                        <option value="Azure DevOps">Azure DevOps</option>
-                        <option value="Microsoft Teams">Microsoft Teams</option>
-                        <option value="API REST / Webhook">API REST / Webhook</option>
-                        <option value="<h2>SISTEMA</h2> Corporativo"><h2>SISTEMA</h2> Corporativo (OAuth2 / Custom)</option>
+                <div class="form-group margin-top-15">
+                    <label for="formTipo"><strong>Tipo:</strong></label>
+                    <select id="formTipo" required style="width: 100%; padding: 8px;">
+                        <option value="Desenvolvimento">Desenvolvimento</option>
+                        <option value="Gestão">Gestão</option>
+                        <option value="Inteligência Artificial">Inteligência Artificial</option>
+                        <option value="Comunicação">Comunicação</option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label for="urlEndpoint">URL / Endpoint do Serviço *</label>
-                    <input type="text" id="urlEndpoint" required placeholder="Ex: https://dev.azure.com/SuaOrganizacao">
+                <div class="form-group margin-top-15">
+                    <label for="formOrigem"><strong>Origem:</strong></label>
+                    <input type="text" id="formOrigem" required placeholder="Ex: GitHub, Jira, Gemini API..." style="width: 100%; padding: 8px;">
                 </div>
-
-                <!-- Campos Dinâmicos segundo o provedor -->
-                <div id="camposAzureDevOps">
-                    <div class="info-grid">
-                        <div class="form-group">
-                            <label for="organizacaoAzure">Organização / Workspace</label>
-                            <input type="text" id="organizacaoAzure" placeholder="SuaOrganizacao">
-                        </div>
-                        <div class="form-group">
-                            <label for="projetoAzure">Projeto</label>
-                            <input type="text" id="projetoAzure" placeholder="MeuProjetoQA">
-                        </div>
-                    </div>
+                <div class="form-group margin-top-15">
+                    <label for="formDescricao"><strong>Descrição:</strong></label>
+                    <textarea id="formDescricao" required style="width: 100%; height: 100px; padding: 8px;" placeholder="Descreva os detalhes da integração..."></textarea>
                 </div>
-
-                <!-- Gestão de Segredos com Ocultamento Seguro -->
-                <div class="card secrets-card margin-top-10">
-                    <h3 class="font-size-sm margin-bottom-8">Credenciais e Segredos de Acesso</h3>
-                    <p class="font-size-xs margin-bottom-12 text-teal-dark">
-                        Segurança MENU: Os segredos não são exibidos integralmente após o salvamento. Para alterar um valor salvo, insira um novo segredo no campo correspondente.
-                    </p>
-
-                    <div class="info-grid">
-                        <div class="form-group">
-                            <label for="apiKey">API Key / Token / PAT</label>
-                            <input type="password" id="apiKey" placeholder="Cole o token ou PAT aqui...">
-                        </div>
-                        <div class="form-group">
-                            <label for="clientSecret">Client ID / Secret (Se aplicável)</label>
-                            <input type="password" id="clientSecret" placeholder="Cole o Secret/Client Secret...">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex-between-center margin-top-20">
-                    <button type="button" class="btn btn-secondary" onclick="testarConexaoModal()">Testar Conexão</button>
-                    <div class="flex-end-gap-10">
-                        <button type="button" class="btn btn-secondary" onclick="fecharModalIntegracao()">Cancelar</button>
-                        <button type="submit" class="btn">Salvar Integração</button>
-                    </div>
+                <div class="modal-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalFormulário()">Cancelar</button>
+                    <button type="submit" class="btn">Salvar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Scripts de Interatividade e CRUD -->
+    <!-- Script de Funcionalidades e Filtros -->
     <script>
-        function toggleSelectAll(master, targetId) {
-            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox`);
+        let trEdicaoAtual = null;
+
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('#integracaoTableBody .item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
         }
 
-        function abrirModalNovaIntegracao() {
-            document.getElementById('modalTitulo').innerText = 'Nova Integração Externa';
-            document.getElementById('integracaoId').value = '';
-            document.getElementById('nomeIntegracao').value = '';
-            document.getElementById('tipoServico').value = 'Azure DevOps';
-            document.getElementById('urlEndpoint').value = '';
-            document.getElementById('apiKey').value = '';
-            document.getElementById('clientSecret').value = '';
-            atualizarCamposDinamicos('Azure DevOps');
-            document.getElementById('modalIntegracao').style.display = 'flex';
-        }
-
-        function fecharModalIntegracao() {
-            document.getElementById('modalIntegracao').style.display = 'none';
-        }
-
-        function atualizarCamposDinamicos(provedor) {
-            const divAzure = document.getElementById('camposAzureDevOps');
-            if (provedor === 'Azure DevOps') {
-                divAzure.style.display = 'block';
-            } else {
-                divAzure.style.display = 'none';
-            }
-        }
-
-        function salvarIntegracao(e) {
-            e.preventDefault();
-            const id = document.getElementById('integracaoId').value;
-            const nome = document.getElementById('nomeIntegracao').value;
-            if (id) {
-                alert(`Integração "${nome}" (ID: ${id}) atualizada com sucesso!\nOs segredos foram re-encriptados e armazenados com segurança.`);
-            } else {
-                alert(`Integração "${nome}" criada com sucesso!`);
-            }
-            fecharModalIntegracao();
-        }
-
-        function editarIntegracao(id) {
-            document.getElementById('modalTitulo').innerText = `Editar Integração #${id}`;
-            document.getElementById('integracaoId').value = id;
-            document.getElementById('nomeIntegracao').value = 'Azure DevOps - Board QA';
-            document.getElementById('tipoServico').value = 'Azure DevOps';
-            document.getElementById('urlEndpoint').value = 'https://dev.azure.com/Enterprise-QA';
-            document.getElementById('organizacaoAzure').value = 'Enterprise-QA';
-            document.getElementById('projetoAzure').value = 'Core-API';
-            document.getElementById('apiKey').value = ''; // Oculto por segurança
-            document.getElementById('clientSecret').value = '';
-            atualizarCamposDinamicos('Azure DevOps');
-            document.getElementById('modalIntegracao').style.display = 'flex';
-        }
-
-        function testarConexao(id, nome) {
-            alert(`Iniciando teste de conectividade com "${nome}" (#${id})...\n\n[OK] Resposta HTTP 200 OK\n[OK] Autenticação com Token/PAT bem-sucedida.\n[OK] Permissões de escrita e leitura validadas.`);
-        }
-
-        function testarConexaoModal() {
-            const url = document.getElementById('urlEndpoint').value;
-            if (!url) {
-                alert('Informe a URL / Endpoint antes de testar a conexão.');
-                return;
-            }
-            alert(`Testando conexão com: ${url}...\n\nConexão estabelecida com sucesso!`);
-        }
-
-        function alternarStatus(id, novoStatusAtivo) {
-            const acao = novoStatusAtivo ? 'ativada' : 'desativada';
-            alert(`Integração #${id} foi ${acao} com sucesso.`);
-        }
-
-        function excluirItem(id, nome) {
-            if (confirm(`Deseja mover a integração "${nome}" (#${id}) para a lixeira?`)) {
-                alert(`Integração #${id} movida para a lixeira.`);
-            }
-        }
-
-        function excluirSelecionados(targetId) {
-            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox:checked`);
-            const ids = Array.from(checkboxes).map(cb => cb.value);
-            if (ids.length === 0) {
-                alert('Nenhuma integração selecionada.');
-                return;
-            }
-            if (confirm(`Deseja mover as ${ids.length} integrações selecionadas para a lixeira?`)) {
-                alert(`Integrações [${ids.join(', ')}] movidas para a lixeira.`);
-            }
-        }
-
         function filtrarTabela() {
-            const busca = document.getElementById('inputBusca').value.toLowerCase();
-            const tipo = document.getElementById('selectTipoServico').value.toLowerCase();
+            const fTipo = document.getElementById('filterTipo').value.toLowerCase();
+            const fOrigem = document.getElementById('filterOrigem').value.toLowerCase();
+            const fDescricao = document.getElementById('filterDescricao').value.toLowerCase();
             const linhas = document.querySelectorAll('#integracaoTableBody tr');
 
             linhas.forEach(linha => {
-                const texto = linha.innerText.toLowerCase();
-                const correspondeBusca = texto.includes(busca);
-                const correspondeTipo = !tipo || texto.includes(tipo);
+                const tipo = linha.querySelector('td:nth-child(2)').innerText.toLowerCase();
+                const origem = linha.querySelector('td:nth-child(3)').innerText.toLowerCase();
+                const descricao = linha.querySelector('td:nth-child(4)').innerText.toLowerCase();
 
-                if (correspondeBusca && correspondeTipo) {
+                const matchTipo = !fTipo || tipo.includes(fTipo);
+                const matchOrigem = origem.includes(fOrigem);
+                const matchDescricao = descricao.includes(fDescricao);
+
+                if (matchTipo && matchOrigem && matchDescricao) {
                     linha.style.display = '';
                 } else {
                     linha.style.display = 'none';
                 }
             });
+        }
+
+        function conectarIntegracao(origem) {
+            alert(`Testando e estabelecendo conexão com ${origem}...\n\nConexão realizada com sucesso!`);
+        }
+
+        function abrirModalFormulário(modo, btn = null) {
+            const modal = document.getElementById('modalFormulario');
+            const titulo = document.getElementById('modalTitle');
+            const tipoInput = document.getElementById('formTipo');
+            const origemInput = document.getElementById('formOrigem');
+            const descInput = document.getElementById('formDescricao');
+
+            if (modo === 'nova') {
+                trEdicaoAtual = null;
+                titulo.innerText = 'Nova Integração';
+                tipoInput.value = 'Desenvolvimento';
+                origemInput.value = '';
+                descInput.value = '';
+            } else {
+                trEdicaoAtual = btn.closest('tr');
+                const tipoAtual = trEdicaoAtual.querySelector('td:nth-child(2)').innerText.trim();
+                const origemAtual = trEdicaoAtual.querySelector('td:nth-child(3)').innerText.trim();
+                const descAtual = trEdicaoAtual.querySelector('td:nth-child(4)').innerText.trim();
+
+                titulo.innerText = `Editar Integração — ${origemAtual}`;
+                tipoInput.value = tipoAtual;
+                origemInput.value = origemAtual;
+                descInput.value = descAtual;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function fecharModalFormulário() {
+            document.getElementById('modalFormulario').style.display = 'none';
+        }
+
+        function salvarIntegracao(e) {
+            e.preventDefault();
+            const tipoVal = document.getElementById('formTipo').value;
+            const origemVal = document.getElementById('formOrigem').value;
+            const descVal = document.getElementById('formDescricao').value;
+
+            if (trEdicaoAtual) {
+                trEdicaoAtual.querySelector('td:nth-child(2)').innerHTML = `<span class="badge-categoria">${tipoVal}</span>`;
+                trEdicaoAtual.querySelector('td:nth-child(3)').innerHTML = `<strong>${origemVal}</strong>`;
+                trEdicaoAtual.querySelector('td:nth-child(4)').innerText = descVal;
+                alert('Integração atualizada com sucesso!');
+            } else {
+                alert('Nova integração cadastrada com sucesso!');
+            }
+
+            fecharModalFormulário();
+        }
+
+        function excluirLinha(btn) {
+            const tr = btn.closest('tr');
+            if (confirm('Deseja mover esta integração para a lixeira?')) {
+                tr.remove();
+            }
+        }
+
+        function excluirSelecionados() {
+            const checkboxes = document.querySelectorAll('#integracaoTableBody .item-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('Nenhum item selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${checkboxes.length} itens selecionados para a lixeira?`)) {
+                checkboxes.forEach(cb => cb.closest('tr').remove());
+                alert('Itens selecionados movidos para a lixeira.');
+            }
         }
 
         function encerrarSessao(e) {

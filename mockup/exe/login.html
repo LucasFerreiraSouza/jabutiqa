@@ -20,7 +20,7 @@
             </div>
             <ul class="nav-links">
                 <li class="nav-category">SISTEMA</li>
-                <li><a href="sobre.html" class="active">Sobre</a></li>
+                <li><a href="inicio.html" class="active">Início</a></li>
                 <li><a href="lixeira.html">Lixeira</a></li>
 
                 <li class="nav-category">NÚCLEO</li>
@@ -114,9 +114,9 @@
             const sessaoAtiva = localStorage.getItem('MENU_sessao_ativa');
             const usuario = localStorage.getItem('MENU_usuario');
 
-            // Se o usuário já estiver logado nesta página, envia direto para sobre.html
+            // Se o usuário já estiver logado nesta página, envia direto para inicio.html
             if (sessaoAtiva === 'true' && usuario) {
-                window.location.href = 'sobre.html';
+                window.location.href = 'inicio.html';
             }
         }
 
@@ -138,9 +138,9 @@
                     localStorage.setItem('MENU_usuario', usuario);
                     localStorage.setItem('MENU_sessao_ativa', 'true');
 
-                    // Redireciona para sobre.html após 600ms
+                    // Redireciona para inicio.html após 600ms
                     setTimeout(() => {
-                        window.location.href = 'sobre.html';
+                        window.location.href = 'inicio.html';
                     }, 600);
                 } else {
                     btn.disabled = false;

@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Observabilidade Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .radio-integracao-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #eef2f7;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
@@ -14,7 +33,7 @@
         </div>
         <ul class="nav-links">
             <li class="nav-category"><h2>SISTEMA</h2></li>
-            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="inicio.html">Início</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
             <li class="nav-category"><h2>NÚCLEO</h2></li>
@@ -46,22 +65,24 @@
     <main class="main-content">
         <section class="card">
             <h1>Central de Observabilidade e Telemetria</h1>
-            <p>Diagnóstico técnico detalhado sobre o que aconteceu durante a execução: análise de tráfego de rede, console, tempos, mídias e artefatos gerados.</p>
+            <p>Diagnóstico técnico detalhado Início o que aconteceu durante a execução: análise de tráfego de rede, console, tempos, mídias e artefatos gerados.</p>
 
-            <!-- 1. Barra de Ferramentas com Filtros por Origem e Descrição (campos de texto) -->
+            <!-- 1. Barra de Ferramentas com o Botão Gerar Relatório no Lado Esquerdo dos Filtros -->
             <div class="toolbar">
                 <div class="toolbar-group">
+                    <button class="btn btn-secondary" onclick="abrirModalRelatorio()">Gerar Relatório</button>
+
                     <div class="form-group margin-none">
-                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220" oninput="filtrarTabela()">
                     </div>
 
                     <div class="form-group margin-none">
-                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="min-width-220">
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="min-width-220" oninput="filtrarTabela()">
                     </div>
                 </div>
             </div>
 
-            <!-- 0 & 2. Tabela de Dados (Origem, Descrição, Ações com botão Visualizar) -->
+            <!-- 2. Tabela de Dados -->
             <div class="table-responsive">
                 <table class="data-table">
                     <thead>
@@ -131,6 +152,60 @@
         </section>
     </main>
 
+    <!-- Modal Gerar Relatório -->
+    <div class="modal" id="modalRelatorio" style="display: none;">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2>Gerar Relatório de Observabilidade</h2>
+            
+            <div class="margin-top-15">
+                <button type="button" class="btn" style="width: 100%; padding: 10px; font-weight: bold;" onclick="baixarPDF()">Baixar PDF com base em todos registros abaixo</button>
+            </div>
+
+            <form onsubmit="salvarRelatorio(event)" class="margin-top-15">
+                <!-- Radio Button: Usar integração configurada? -->
+                <div class="form-group margin-top-15">
+                    <label><strong>Usar integração configurada?</strong></label>
+                    <div class="radio-integracao-group margin-top-5">
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="nao" checked onchange="toggleModoIntegracao()">
+                            Não (Copiar prompt e colar resposta manualmente)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="sim" onchange="toggleModoIntegracao()">
+                            Sim (Gerar automaticamente via API de IA)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- MODO COM INTEGRACAO: Botão Gerar com IA -->
+                <div id="containerModoIntegrado" class="margin-top-15" style="display: none;">
+                    <button type="button" class="btn btn-auth" style="width: 100%; padding: 12px; font-size: 15px;" onclick="gerarComIA()">Gerar com IA</button>
+                </div>
+
+                <!-- MODO MANUAL: Exibido apenas quando "Usar integração configurada?" for NÃO -->
+                <div id="containerModoManual">
+                    <!-- Prompt da Análise -->
+                    <div class="form-group margin-top-15">
+                        <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão (Copie e envie para a IA):</strong></label>
+                        <textarea id="formPromptGerado" readonly style="height: 120px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
+                        <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
+                    </div>
+
+                    <!-- Campo para Colar a Resposta da IA -->
+                    <div class="form-group margin-top-15">
+                        <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
+                        <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA após a execução do prompt..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modalRelatorio')">Fechar</button>
+                    <button type="submit" class="btn">Salvar Relatório</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Script de Interatividade -->
     <script>
         function toggleSelectAll(master) {
@@ -138,9 +213,97 @@
             checkboxes.forEach(cb => cb.checked = master.checked);
         }
 
-        // Redireciona para a tela de comparação abrindo o modal de edição
         function visualizarItem(id) {
             window.location.href = `comparacao.html?openModal=edit&id=${id}`;
+        }
+
+        function filtrarTabela() {
+            const fOrigem = document.getElementById('filterOrigem').value.toLowerCase();
+            const fDesc = document.getElementById('filterDescricao').value.toLowerCase();
+            const linhas = document.querySelectorAll('#obsTableBody tr');
+
+            linhas.forEach(linha => {
+                const origem = linha.querySelector('td:nth-child(2)').innerText.toLowerCase();
+                const desc = linha.querySelector('td:nth-child(3)').innerText.toLowerCase();
+                if (origem.includes(fOrigem) && desc.includes(fDesc)) {
+                    linha.style.display = '';
+                } else {
+                    linha.style.display = 'none';
+                }
+            });
+        }
+
+        function abrirModalRelatorio() {
+            document.querySelector('input[name="usarIntegracao"][value="nao"]').checked = true;
+            toggleModoIntegracao();
+            gerarPromptObservabilidade();
+            document.getElementById('modalRelatorio').style.display = 'flex';
+        }
+
+        function toggleModoIntegracao() {
+            const valor = document.querySelector('input[name="usarIntegracao"]:checked').value;
+            const containerManual = document.getElementById('containerModoManual');
+            const containerIntegrado = document.getElementById('containerModoIntegrado');
+
+            if (valor === 'sim') {
+                containerManual.style.display = 'none';
+                containerIntegrado.style.display = 'block';
+            } else {
+                containerManual.style.display = 'block';
+                containerIntegrado.style.display = 'none';
+            }
+        }
+
+        function gerarPromptObservabilidade() {
+            const linhas = document.querySelectorAll('#obsTableBody tr');
+            let registrosTexto = "";
+
+            linhas.forEach((linha, idx) => {
+                if (linha.style.display !== 'none') {
+                    const origem = linha.querySelector('td:nth-child(2)').innerText.trim();
+                    const desc = linha.querySelector('td:nth-child(3)').innerText.trim();
+                    registrosTexto += `${idx + 1}. [${origem}] - ${desc}\n`;
+                }
+            });
+
+            const prompt = `PROMPT DE ANÁLISE DE OBSERVABILIDADE E APTIDÃO DE REGISTROS
+
+Atue como Engenheiro de Observabilidade e QA Sênior. Avalie os registros abaixo e consolide um diagnóstico detalhado:
+
+REGISTROS DE TELEMETRIA:
+${registrosTexto}
+
+INSTRUÇÕES DE RESPOSTA:
+1. Resumo do status de integridade dos registros monitorados.
+2. Identificação de potenciais riscos de performance ou falhas operacionais.
+3. Parecer final sobre a aptidão técnica do ambiente para prosseguir com os testes.`;
+
+            document.getElementById('formPromptGerado').value = prompt;
+        }
+
+        function copiarPromptModal() {
+            const promptText = document.getElementById('formPromptGerado').value;
+            navigator.clipboard.writeText(promptText).then(() => {
+                alert('Prompt de Análise copiado com sucesso!');
+            });
+        }
+
+        function gerarComIA() {
+            alert('Conectando à API de IA cadastrada...\nRelatório sintético de Observabilidade gerado com sucesso!');
+        }
+
+        function baixarPDF() {
+            alert('Gerando e baixando PDF consolidado dos registros de observabilidade...');
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function salvarRelatorio(e) {
+            e.preventDefault();
+            alert('Relatório de observabilidade salvo com sucesso!');
+            fecharModal('modalRelatorio');
         }
 
         function encerrarSessao(e) {

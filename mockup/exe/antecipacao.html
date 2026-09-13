@@ -41,6 +41,25 @@
         .score-success { background-color: #d1e7dd; color: #0f5132; }
         .score-warning { background-color: #fff3cd; color: #664d03; }
         .score-danger { background-color: #f8d7da; color: #842029; }
+        
+        /* Estilos para o Seletor de Integração */
+        .radio-integracao-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #eef2f7;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +70,7 @@
         </div>
         <ul class="nav-links">
             <li class="nav-category"><h2>SISTEMA</h2></li>
-            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="inicio.html">Início</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
             <li class="nav-category"><h2>NÚCLEO</h2></li>
@@ -174,20 +193,43 @@
                 <!-- 1. Descrição do Card -->
                 <div class="form-group margin-top-15">
                     <label for="formCardDevOps"><strong>Cole aqui o Card / User Story do Azure DevOps ou Jira:</strong></label>
-                    <textarea id="formCardDevOps" required style="height: 140px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Title: US1024 - Realizar login de usuários no sistema&#10;&#10;Description:&#10;Como um usuário cadastrado,&#10;Quero realizar autenticação informando e-mail e senha,&#10;Para acessar o painel administrativo.&#10;&#10;Acceptance Criteria:&#10;1. Dado que o usuário informa e-mail e senha válidos, então o sistema redireciona para a home.&#10;2. Dado que a senha esteja incorreta, exibe mensagem 'Usuário ou senha inválidos'." oninput="atualizarPromptEmTempoReal()"></textarea>
+                    <textarea id="formCardDevOps" required style="height: 120px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Title: US1024 - Realizar login de usuários no sistema..." oninput="atualizarPromptEmTempoReal()"></textarea>
                 </div>
 
-                <!-- 2. Prompt da Análise -->
+                <!-- Radio Button: Usar integração configurada? -->
                 <div class="form-group margin-top-15">
-                    <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão (Copie e envie para a IA):</strong></label>
-                    <textarea id="formPromptGerado" readonly style="height: 110px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
-                    <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
+                    <label><strong>Usar integração configurada?</strong></label>
+                    <div class="radio-integracao-group margin-top-5">
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="nao" checked onchange="toggleModoIntegracao()">
+                            Não (Copiar prompt e colar resposta manualmente)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="sim" onchange="toggleModoIntegracao()">
+                            Sim (Gerar automaticamente via API de IA)
+                        </label>
+                    </div>
                 </div>
 
-                <!-- 3. Campo para Colar a Resposta da IA -->
-                <div class="form-group margin-top-15">
-                    <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
-                    <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA após a execução do prompt..."></textarea>
+                <!-- MODO COM INTEGRACAO: Botão Gerar com IA -->
+                <div id="containerModoIntegrado" class="margin-top-15" style="display: none;">
+                    <button type="button" class="btn btn-auth" style="width: 100%; padding: 12px; font-size: 15px;" onclick="gerarComIA()">Gerar com IA</button>
+                </div>
+
+                <!-- MODO MANUAL: Exibido apenas quando "Usar integração configurada?" for NÃO -->
+                <div id="containerModoManual">
+                    <!-- 2. Prompt da Análise -->
+                    <div class="form-group margin-top-15">
+                        <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão (Copie e envie para a IA):</strong></label>
+                        <textarea id="formPromptGerado" readonly style="height: 110px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
+                        <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
+                    </div>
+
+                    <!-- 3. Campo para Colar a Resposta da IA -->
+                    <div class="form-group margin-top-15">
+                        <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
+                        <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA após a execução do prompt..."></textarea>
+                    </div>
                 </div>
 
                 <!-- 4. Tabela de Pontuação (0 a 10) -->
@@ -290,10 +332,28 @@ INSTRUÇÃO DE RESPOSTA:
             });
         }
 
+        function toggleModoIntegracao() {
+            const valor = document.querySelector('input[name="usarIntegracao"]:checked').value;
+            const containerManual = document.getElementById('containerModoManual');
+            const containerIntegrado = document.getElementById('containerModoIntegrado');
+
+            if (valor === 'sim') {
+                containerManual.style.display = 'none';
+                containerIntegrado.style.display = 'block';
+            } else {
+                containerManual.style.display = 'block';
+                containerIntegrado.style.display = 'none';
+            }
+        }
+
         function abrirModalFormulário(modo, btn = null) {
             const titulo = document.getElementById('modalFormTitle');
             const cardInput = document.getElementById('formCardDevOps');
             const respostaIA = document.getElementById('formRespostaIA');
+
+            // Resetar radios para 'Não' como padrão ao abrir
+            document.querySelector('input[name="usarIntegracao"][value="nao"]').checked = true;
+            toggleModoIntegracao();
 
             respostaIA.value = '';
 
@@ -325,6 +385,10 @@ INSTRUÇÃO DE RESPOSTA:
             navigator.clipboard.writeText(promptText).then(() => {
                 alert('Prompt de Análise copiado com sucesso!');
             });
+        }
+
+        function gerarComIA() {
+            alert('Conectando à API cadastrada...\nAnálise e critérios gerados com sucesso pela IA!');
         }
 
         function fecharModal(modalId) {
