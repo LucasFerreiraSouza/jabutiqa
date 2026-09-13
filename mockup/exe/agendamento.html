@@ -5,22 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
-    
 </head>
 <body>
     <aside class="sidebar">
         <h2>MENU</h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li> 
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> (MÓDULO) -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -31,20 +27,16 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html" class="active">Agendamento</a></li>
 
-            <!-- Sair / Encerrar Sessão -->
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                 <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
@@ -54,32 +46,35 @@
     <main class="main-content">
         <section class="card">
             <h1>Agendamentos de Execução Automática</h1>
-            <p>Programe execuções recorrentes orquestradas invocando os fluxos nativos de Regressão, Comparação, Segurança e Geração Automática de Cartões com deduplicação de ocorrências.</p>
+            <p>Programe execuções recorrentes orquestradas invocando os fluxos nativos de Regressão, Comparação, Segurança e Geração Automática com deduplicação de ocorrências.</p>
 
-            <!-- Barra de Ações (CRUD) e Filtros -->
+            <!-- Barra de Ações e Filtros -->
             <div class="toolbar">
                 <div class="toolbar-group">
                     <button class="btn" onclick="abrirModalNovoAgendamento()">+ Novo Agendamento</button>
-                    <button class="btn btn-auth" onclick="executarAgoraSelecionados()">Executar Agora</button>
                     <button class="btn btn-danger" onclick="excluirSelecionados('agendamentoTableBody')">Excluir Selecionados</button>
                 </div>
                 <div class="toolbar-group">
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <input type="text" id="inputBusca" placeholder="Buscar por Nome, Grupo ou Ambiente..." style="min-width: 220px;" onkeyup="filtrarTabela()">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <select id="selectAmbiente" onchange="filtrarTabela()">
-                            <option value="">Todos os Ambientes</option>
-                            <option value="HML">Homologação (HML)</option>
-                            <option value="PRD">Produção (PRD)</option>
-                            <option value="DEV">Desenvolvimento (DEV)</option>
+                    <!-- Filtro por Origem -->
+                    <div class="form-group margin-none">
+                        <select id="selectOrigem" onchange="filtrarTabela()">
+                            <option value="">Todas as Origens</option>
+                            <option value="API">API</option>
+                            <option value="Web">Web</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="Desktop">Desktop</option>
                         </select>
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <select id="selectStatus" onchange="filtrarTabela()">
-                            <option value="">Todos os Status</option>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
+                    <!-- Filtro por Descrição -->
+                    <div class="form-group margin-none">
+                        <input type="text" id="inputDescricao" placeholder="Filtrar por Descrição..." class="input-search" onkeyup="filtrarTabela()">
+                    </div>
+                    <!-- Filtro por Ações -->
+                    <div class="form-group margin-none">
+                        <select id="selectAcao" onchange="filtrarTabela()">
+                            <option value="">Todas as Ações</option>
+                            <option value="Editar">Permite Editar</option>
+                            <option value="Excluir">Permite Excluir</option>
                         </select>
                     </div>
                 </div>
@@ -90,112 +85,60 @@
                 <table class="data-table" id="tabelaAgendamentos">
                     <thead>
                         <tr>
-                            <th style="width: 40px; text-align: center;">
+                            <th class="th-checkbox">
                                 <input type="checkbox" onclick="toggleSelectAll(this, 'agendamentoTableBody')">
                             </th>
-                            <th>Agendamento / Grupo</th>
-                            <th>Frequência & Ambiente</th>
-                            <th>Tolerâncias (Pixels / ms)</th>
-                            <th>Segurança & Cartão Auto</th>
-                            <th>Última / Próxima Execução</th>
-                            <th>Status</th>
-                            <th style="text-align: center;">Ações</th>
+                            <th>Origem</th>
+                            <th>Descrição</th>
+                            <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="agendamentoTableBody">
+                        <!-- Linha 1: API -->
                         <tr>
-                            <td style="text-align: center;"><input type="checkbox" class="item-checkbox" value="AGE-201"></td>
-                            <td>
-                                <strong>Regressão Diária E-commerce</strong><br>
-                                <small >Grupo: E-commerce (5 cenários)</small>
-                            </td>
-                            <td>
-                                <span class="badge-categoria">Diário às 02:00</span><br>
-                                <small>Ambiente: <strong>HML</strong> | Conc: 3</small>
-                            </td>
-                            <td>
-                                <span style="font-size: 0.85rem;">Pixels: <strong>5px</strong></span><br>
-                                <span style="font-size: 0.85rem;">Tempo: <strong>300ms</strong></span>
-                            </td>
-                            <td>
-                                <span  #8CC63F; font-size: 0.85rem;">✔ Vasculhar Segurança</span><br>
-                                <span  #8CC63F; font-size: 0.85rem;">✔ Cartão Auto (Deduplicado)</span>
-                            </td>
-                            <td>
-                                <small  #555;">Últ: 30/08/2026 02:00</small><br>
-                                <small  #8CC63F; font-weight: bold;">Próx: 31/08/2026 02:00</small>
-                            </td>
-                            <td><span  #8CC63F; font-weight: bold;">● Ativo</span></td>
-                            <td style="text-align: center;">
-                                <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
-                                    <button class="btn btn-sm btn-auth" onclick="executarAgora('AGE-201', 'Regressão Diária E-commerce')">Executar Agora</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="alternarStatus('AGE-201', false)">Desativar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="editarAgendamento('AGE-201')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('AGE-201', 'Regressão Diária E-commerce')">Excluir</button>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="API"></td>
+                            <td><span class="badge-categoria">API</span></td>
+                            <td>Execução agendada diária para testes de carga e validação dos endpoints da API REST.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-warning" onclick="editarAgendamento('API')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('API')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
+                        <!-- Linha 2: Web -->
                         <tr>
-                            <td style="text-align: center;"><input type="checkbox" class="item-checkbox" value="AGE-202"></td>
-                            <td>
-                                <strong>Sanity Check de Login & API</strong><br>
-                                <small >Grupo: Autenticação (2 cenários)</small>
-                            </td>
-                            <td>
-                                <span class="badge-categoria">A cada 1 hora</span><br>
-                                <small  #333;">Ambiente: <strong>PRD</strong> | Conc: 1</small>
-                            </td>
-                            <td>
-                                <span style="font-size: 0.85rem;">Pixels: <strong>0px</strong></span><br>
-                                <span style="font-size: 0.85rem;">Tempo: <strong>150ms</strong></span>
-                            </td>
-                            <td>
-                                <span  #c62828; font-size: 0.85rem;">✖ Sem Segurança</span><br>
-                                <span  #8CC63F; font-size: 0.85rem;">✔ Cartão Auto</span>
-                            </td>
-                            <td>
-                                <small  #555;">Últ: 30/08/2026 18:00</small><br>
-                                <small  #8CC63F; font-weight: bold;">Próx: 30/08/2026 19:00</small>
-                            </td>
-                            <td><span  #8CC63F; font-weight: bold;">● Ativo</span></td>
-                            <td style="text-align: center;">
-                                <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
-                                    <button class="btn btn-sm btn-auth" onclick="executarAgora('AGE-202', 'Sanity Check de Login & API')">Executar Agora</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="alternarStatus('AGE-202', false)">Desativar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="editarAgendamento('AGE-202')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('AGE-202', 'Sanity Check de Login & API')">Excluir</button>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="Web"></td>
+                            <td><span class="badge-categoria">Web</span></td>
+                            <td>Agendamento de regressão de interface visual nos navegadores para o portal Web.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-warning" onclick="editarAgendamento('Web')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('Web')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
+                        <!-- Linha 3: Mobile -->
                         <tr>
-                            <td style="text-align: center;"><input type="checkbox" class="item-checkbox" value="AGE-203"></td>
-                            <td>
-                                <strong>Varredura Semanal de Vulnerabilidades</strong><br>
-                                <small >Grupo: Módulo de Pagamentos (8 cenários)</small>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="Mobile"></td>
+                            <td><span class="badge-categoria badge-seguranca">Mobile</span></td>
+                            <td>Rotina semanal de testes automatizados de usabilidade e compatibilidade para dispositivos Mobile.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-warning" onclick="editarAgendamento('Mobile')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('Mobile')">Excluir</button>
+                                </div>
                             </td>
-                            <td>
-                                <span class="badge-categoria">Domingo às 23:00</span><br>
-                                <small  #333;">Ambiente: <strong>DEV</strong> | Conc: 5</small>
-                            </td>
-                            <td>
-                                <span style="font-size: 0.85rem;">Pixels: <strong>10px</strong></span><br>
-                                <span style="font-size: 0.85rem;">Tempo: <strong>500ms</strong></span>
-                            </td>
-                            <td>
-                                <span  #8CC63F; font-size: 0.85rem;">✔ Vasculhar Segurança</span><br>
-                                <span  #c62828; font-size: 0.85rem;">✖ Cartão Manual</span>
-                            </td>
-                            <td>
-                                <small  #555;">Últ: 23/08/2026 23:00</small><br>
-                                <small  #8CC63F; font-weight: bold;">Próx: 30/08/2026 23:00</small>
-                            </td>
-                            <td><span  #c62828; font-weight: bold;">○ Inativo</span></td>
-                            <td style="text-align: center;">
-                                <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
-                                    <button class="btn btn-sm btn-auth" onclick="executarAgora('AGE-203', 'Varredura Semanal')">Executar Agora</button>
-                                    <button class="btn btn-sm btn-auth" onclick="alternarStatus('AGE-203', true)">Ativar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="editarAgendamento('AGE-203')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('AGE-203', 'Varredura Semanal')">Excluir</button>
+                        </tr>
+                        <!-- Linha 4: Desktop -->
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="Desktop"></td>
+                            <td><span class="badge-categoria">Desktop</span></td>
+                            <td>Verificação periódica de desempenho e uso de recursos para o aplicativo Desktop.</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group">
+                                    <button class="btn btn-sm btn-warning" onclick="editarAgendamento('Desktop')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('Desktop')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
@@ -205,7 +148,7 @@
 
             <!-- Paginação -->
             <div class="pagination">
-                <span style="font-size: 0.9rem; ">Exibindo 3 agendamentos programados.</span>
+                <span class="pagination-info">Exibindo 4 registros.</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -217,87 +160,27 @@
 
     <!-- Modal para Cadastro / Edição de Agendamento -->
     <div id="modalAgendamento" class="modal">
-        <div class="modal-content" style="max-width: 700px;">
-            <h2 id="modalTitulo">Novo Agendamento de Execução</h2>
+        <div class="modal-content">
+            <h2 id="modalTitulo" class="modal-title">Novo Agendamento</h2>
             <form onsubmit="salvarAgendamento(event)">
                 <input type="hidden" id="agendamentoId">
 
                 <div class="form-group">
-                    <label for="nomeAgendamento">Nome da Programação *</label>
-                    <input type="text" id="nomeAgendamento" required placeholder="Ex: Regressão Noturna - Checkout">
+                    <label for="origemAgendamento">Origem *</label>
+                    <select id="origemAgendamento" required>
+                        <option value="API">API</option>
+                        <option value="Web">Web</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Desktop">Desktop</option>
+                    </select>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="grupoAgendamento">Grupo Alvo *</label>
-                        <select id="grupoAgendamento" required>
-                            <option value="E-commerce">E-commerce</option>
-                            <option value="Autenticação">Autenticação</option>
-                            <option value="Módulo de Pagamentos">Módulo de Pagamentos</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ambienteAgendamento">Ambiente de Execução *</label>
-                        <select id="ambienteAgendamento" required>
-                            <option value="HML">Homologação (HML)</option>
-                            <option value="PRD">Produção (PRD)</option>
-                            <option value="DEV">Desenvolvimento (DEV)</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="descricaoAgendamento">Descrição *</label>
+                    <textarea id="descricaoAgendamento" rows="4" required class="input-inline" style="max-width: 100%; width: 100%;" placeholder="Descreva os detalhes do agendamento..."></textarea>
                 </div>
 
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="diaAgendamento">Dias de Execução</label>
-                        <select id="diaAgendamento">
-                            <option value="Diário">Todos os Dias (Diário)</option>
-                            <option value="Dias Uteis">Dias Úteis (Seg-Sex)</option>
-                            <option value="Finais de Semana">Sábados e Domingos</option>
-                            <option value="Semanal">Semanal (Customizado)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="horarioAgendamento">Horário de Disparo *</label>
-                        <input type="time" id="horarioAgendamento" required value="02:00">
-                    </div>
-                </div>
-
-                <!-- Configuração de Tolerâncias e Concorrência -->
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="toleranciaPixels">Tolerância Visual (Pixels)</label>
-                        <input type="number" id="toleranciaPixels" value="5" min="0" placeholder="Ex: 5">
-                    </div>
-                    <div class="form-group">
-                        <label for="toleranciaMs">Tolerância de Tempo (ms)</label>
-                        <input type="number" id="toleranciaMs" value="300" min="0" placeholder="Ex: 300">
-                    </div>
-                    <div class="form-group">
-                        <label for="concorrenciaMax">Concorrência Máxima</label>
-                        <input type="number" id="concorrenciaMax" value="3" min="1" max="10">
-                    </div>
-                </div>
-
-                <!-- Orquestração e Integração Automática -->
-                <div class="card" style="border: 1px solid #80cbd2; padding: 15px; background: #f2fbfb; margin-top: 10px;">
-                    <h3 style="font-size: 0.95rem; margin-bottom: 10px;">Regras de Orquestração & Ações de Falha</h3>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox" id="chkExecutarSeguranca" checked>
-                            <strong>Executar Vasculhar de Segurança</strong> (Após Comparação / Regressão)
-                        </label>
-                        <label style="font-weight: normal; cursor: pointer;">
-                            <input type="checkbox" id="chkCriarCartaoAuto" checked>
-                            <strong>Criar cartão automaticamente em caso de insucesso</strong>
-                        </label>
-                        <label style="font-weight: normal; cursor: pointer; margin-left: 22px;">
-                            <input type="checkbox" id="chkDeduplicar" checked>
-                            <small  #000000;">Habilitar política de deduplicação (impede cartões repetidos para a mesma ocorrência)</small>
-                        </label>
-                    </div>
-                </div>
-
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="fecharModalAgendamento()">Cancelar</button>
                     <button type="submit" class="btn">Salvar Agendamento</button>
                 </div>
@@ -331,12 +214,10 @@
         }
 
         function abrirModalNovoAgendamento() {
-            document.getElementById('modalTitulo').innerText = 'Novo Agendamento de Execução';
+            document.getElementById('modalTitulo').innerText = 'Novo Agendamento';
             document.getElementById('agendamentoId').value = '';
-            document.getElementById('nomeAgendamento').value = '';
-            document.getElementById('toleranciaPixels').value = 5;
-            document.getElementById('toleranciaMs').value = 300;
-            document.getElementById('concorrenciaMax').value = 3;
+            document.getElementById('origemAgendamento').value = 'API';
+            document.getElementById('descricaoAgendamento').value = '';
             document.getElementById('modalAgendamento').style.display = 'flex';
         }
 
@@ -347,78 +228,64 @@
         function salvarAgendamento(e) {
             e.preventDefault();
             const id = document.getElementById('agendamentoId').value;
-            const nome = document.getElementById('nomeAgendamento').value;
             if (id) {
-                alert(`Agendamento "${nome}" (#${id}) atualizado com sucesso!`);
+                alert(`Agendamento da origem ${id} atualizado com sucesso!`);
             } else {
-                alert(`Agendamento "${nome}" criado e inserido na fila de orquestração!`);
+                alert('Novo agendamento criado com sucesso!');
             }
             fecharModalAgendamento();
         }
 
-        function editarAgendamento(id) {
-            document.getElementById('modalTitulo').innerText = `Editar Agendamento #${id}`;
-            document.getElementById('agendamentoId').value = id;
-            document.getElementById('nomeAgendamento').value = 'Regressão Diária E-commerce';
-            document.getElementById('grupoAgendamento').value = 'E-commerce';
-            document.getElementById('ambienteAgendamento').value = 'HML';
-            document.getElementById('horarioAgendamento').value = '02:00';
-            document.getElementById('toleranciaPixels').value = 5;
-            document.getElementById('toleranciaMs').value = 300;
-            document.getElementById('concorrenciaMax').value = 3;
+        function editarAgendamento(origem) {
+            document.getElementById('modalTitulo').innerText = `Editar Agendamento - ${origem}`;
+            document.getElementById('agendamentoId').value = origem;
+            document.getElementById('origemAgendamento').value = origem;
+
+            const descricoes = {
+                'API': 'Execução agendada diária para testes de carga e validação dos endpoints da API REST.',
+                'Web': 'Agendamento de regressão de interface visual nos navegadores para o portal Web.',
+                'Mobile': 'Rotina semanal de testes automatizados de usabilidade e compatibilidade para dispositivos Mobile.',
+                'Desktop': 'Verificação periódica de desempenho e uso de recursos para o aplicativo Desktop.'
+            };
+
+            document.getElementById('descricaoAgendamento').value = descricoes[origem] || '';
             document.getElementById('modalAgendamento').style.display = 'flex';
         }
 
-        function executarAgora(id, nome) {
-            alert(`Iniciando orquestração manual do agendamento "${nome}" (#${id})...\n\nFluxo encadeado:\n1. REGRESSÃO (Validação de saldo/licença OK)\n2. RECEBIDO\n3. COMPARAÇÃO (Respeitando tolerâncias)\n4. VASCULHAR SEGURANÇA (Ativo)\n5. GERAÇÃO DE CARTÃO (Se insucesso)`);
-        }
-
-        function executarAgoraSelecionados() {
-            const checkboxes = document.querySelectorAll('#agendamentoTableBody .item-checkbox:checked');
-            const ids = Array.from(checkboxes).map(cb => cb.value);
-            if (ids.length === 0) {
-                alert('Selecione ao menos um agendamento para executar.');
-                return;
-            }
-            alert(`Iniciando execução em lote dos agendamentos: [${ids.join(', ')}].`);
-        }
-
-        function alternarStatus(id, novoStatusAtivo) {
-            const acao = novoStatusAtivo ? 'ativado' : 'desativado';
-            alert(`Agendamento #${id} foi ${acao} com sucesso.`);
-        }
-
-        function excluirItem(id, nome) {
-            if (confirm(`Deseja mover o agendamento "${nome}" (#${id}) para a lixeira?`)) {
-                alert(`Agendamento #${id} movido para a lixeira.`);
+        function excluirItem(origem) {
+            if (confirm(`Deseja mover o agendamento de origem "${origem}" para a lixeira?`)) {
+                alert(`Agendamento da origem "${origem}" movido para a lixeira.`);
             }
         }
 
         function excluirSelecionados(targetId) {
             const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox:checked`);
-            const ids = Array.from(checkboxes).map(cb => cb.value);
-            if (ids.length === 0) {
+            const origens = Array.from(checkboxes).map(cb => cb.value);
+            if (origens.length === 0) {
                 alert('Nenhum agendamento selecionado.');
                 return;
             }
-            if (confirm(`Deseja mover os ${ids.length} agendamentos selecionados para a lixeira?`)) {
-                alert(`Agendamentos [${ids.join(', ')}] movidos para a lixeira.`);
+            if (confirm(`Deseja mover os ${origens.length} agendamentos selecionados para a lixeira?`)) {
+                alert(`Agendamentos das origens [${origens.join(', ')}] movidos para a lixeira.`);
             }
         }
 
         function filtrarTabela() {
-            const busca = document.getElementById('inputBusca').value.toLowerCase();
-            const ambiente = document.getElementById('selectAmbiente').value.toLowerCase();
-            const status = document.getElementById('selectStatus').value.toLowerCase();
+            const origemFiltro = document.getElementById('selectOrigem').value.toLowerCase();
+            const descricaoFiltro = document.getElementById('inputDescricao').value.toLowerCase();
+            const acaoFiltro = document.getElementById('selectAcao').value.toLowerCase();
             const linhas = document.querySelectorAll('#agendamentoTableBody tr');
 
             linhas.forEach(linha => {
-                const texto = linha.innerText.toLowerCase();
-                const correspondeBusca = texto.includes(busca);
-                const correspondeAmbiente = !ambiente || texto.includes(ambiente);
-                const correspondeStatus = !status || texto.includes(status);
+                const colOrigem = linha.cells[1].innerText.toLowerCase();
+                const colDescricao = linha.cells[2].innerText.toLowerCase();
+                const colAcoes = linha.cells[3].innerText.toLowerCase();
 
-                if (correspondeBusca && correspondeAmbiente && correspondeStatus) {
+                const correspondeOrigem = !origemFiltro || colOrigem.includes(origemFiltro);
+                const correspondeDescricao = !descricaoFiltro || colDescricao.includes(descricaoFiltro);
+                const correspondeAcao = !acaoFiltro || colAcoes.includes(acaoFiltro);
+
+                if (correspondeOrigem && correspondeDescricao && correspondeAcao) {
                     linha.style.display = '';
                 } else {
                     linha.style.display = 'none';

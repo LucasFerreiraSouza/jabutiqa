@@ -8,18 +8,15 @@
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,20 +27,16 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html" class="active">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
-            <!-- Sair / Encerrar Sessão -->
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                 <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
@@ -55,31 +48,20 @@
             <h1>Central de Observabilidade e Telemetria</h1>
             <p>Diagnóstico técnico detalhado sobre o que aconteceu durante a execução: análise de tráfego de rede, console, tempos, mídias e artefatos gerados.</p>
 
-            <!-- Toolbar Principal -->
+            <!-- 1. Barra de Ferramentas com Filtros por Origem e Descrição (campos de texto) -->
             <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="abrirModalLog('novo')">+ Novo Registro Técnico</button>
-                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
-                </div>
-
-                <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar por erro, request ou log..." class="min-width-200">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220">
                     </div>
 
                     <div class="form-group margin-none">
-                        <select id="filterCategory">
-                            <option value="">Todos os Tipos de Artefato</option>
-                            <option value="Network">Network (Requests/Responses)</option>
-                            <option value="Console">Console & Logs</option>
-                            <option value="Mídia">Mídia (Screenshots/Vídeos/Áudios)</option>
-                            <option value="Arquivos">Arquivos (PDF/CSV/XLSX/XML)</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="min-width-220">
                     </div>
                 </div>
             </div>
 
-            <!-- Tabela de Diagnóstico Técnico -->
+            <!-- 0 & 2. Tabela de Dados (Origem, Descrição, Ações com botão Visualizar) -->
             <div class="table-responsive">
                 <table class="data-table">
                     <thead>
@@ -87,64 +69,49 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID Evento</th>
-                            <th>Tráfego Network / Status</th>
-                            <th>Console & Erros</th>
-                            <th>Mídia & Evidências</th>
-                            <th>Documentos / Downloads</th>
-                            <th>Tempo Exec.</th>
-                            <th class="text-center">Ações</th>
+                            <th>ORIGEM</th>
+                            <th>DESCRIÇÃO</th>
+                            <th class="text-center">AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody id="obsTableBody">
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                            <td>#OBS-1001</td>
-                            <td><code>POST /api/v1/auth</code> <span class="status-success-text font-bold">(200 OK)</span></td>
-                            <td>0 warnings, 0 erros</td>
-                            <td>Screenshot, Video_Exec.mp4</td>
-                            <td>Payload_Response.json</td>
-                            <td>320 ms</td>
+                            <td><strong>API</strong></td>
+                            <td>Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="inspecionarTecnico('1001')">Analisar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarRegistro('1001')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalLog('editar', '1001')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirRegistro('1001')">Excluir</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('1')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                            <td>#OBS-1002</td>
-                            <td><code>GET /api/v1/relatorio</code> <span class="status-error-text font-bold">(500 Server Error)</span></td>
-                            <td><span class="status-error-text">Uncaught TypeError: Null Pointer</span></td>
-                            <td>Screenshot_Error.png</td>
-                            <td>Erro_Traceback.xml, Export.csv</td>
-                            <td>1.450 ms</td>
+                            <td><strong>Web</strong></td>
+                            <td>Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="inspecionarTecnico('1002')">Analisar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarRegistro('1002')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalLog('editar', '1002')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirRegistro('1002')">Excluir</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('2')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
-                            <td>#OBS-1003</td>
-                            <td><code>GET /downloads/fatura.pdf</code> <span class="status-success-text font-bold">(200 OK)</span></td>
-                            <td>Event: DownloadCompleted</td>
-                            <td>Gravacao_Audio.wav</td>
-                            <td>Fatura_Final.pdf, Dados.xlsx</td>
-                            <td>2.100 ms</td>
+                            <td><strong>Mobile</strong></td>
+                            <td>Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="inspecionarTecnico('1003')">Analisar</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarRegistro('1003')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalLog('editar', '1003')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirRegistro('1003')">Excluir</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('3')">VISUALIZAR</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td><strong>Desktop</strong></td>
+                            <td>Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('4')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -154,7 +121,7 @@
 
             <!-- Paginação -->
             <div class="pagination">
-                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-3 de 3 rastreamentos técnicos</span>
+                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-4 de 4 registros</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -164,124 +131,16 @@
         </section>
     </main>
 
-    <!-- Modal Form (Observabilidade / Telemetria) -->
-    <div class="modal" id="obsModal">
-        <div class="modal-content max-width-800">
-            <h2 id="modalTitle" class="modal-header-title">Registro de Telemetria e Logs</h2>
-            <form onsubmit="salvarLog(event)">
-                <input type="hidden" id="obsId">
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="obsNetwork">Network (URL / Method / Status)</label>
-                        <input type="text" id="obsNetwork" required placeholder="Ex: POST https://api.dom.com/v1 - Status 200 OK">
-                    </div>
-                    <div class="form-group">
-                        <label for="obsTempo">Tempo de Execução (ms)</label>
-                        <input type="text" id="obsTempo" placeholder="Ex: 450 ms">
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="obsRequests">Request Payload / Headers</label>
-                        <textarea id="obsRequests" placeholder="Detalhes dos cabeçalhos e payload enviados..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="obsResponses">Response Body / Headers</label>
-                        <textarea id="obsResponses" placeholder="Respostas retornos pelo servidor..."></textarea>
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="obsConsole">Console Logs, Eventos e Erros</label>
-                        <textarea id="obsConsole" placeholder="Stacktraces, mensagens do console do navegador ou logs de aplicação..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="obsMidia">Mídias (Screenshots, Vídeos, Áudios)</label>
-                        <textarea id="obsMidia" placeholder="URLs ou caminhos das capturas de tela e áudio/vídeo registrados..."></textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="obsArquivos">Downloads e Arquivos Gerados (PDF, CSV, XLSX, XML)</label>
-                    <input type="text" id="obsArquivos" placeholder="Anexar ou registrar documentos gerados durante a execução...">
-                </div>
-
-                <div class="flex-end-gap-10 margin-top-20">
-                    <button type="button" class="btn btn-secondary" onclick="fecharModal('obsModal')">Cancelar</button>
-                    <button type="submit" class="btn">Salvar Diagnóstico</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Scripts de Interatividade -->
+    <!-- Script de Interatividade -->
     <script>
         function toggleSelectAll(master) {
             const checkboxes = document.querySelectorAll('.item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
         }
 
-        function getSelecionados() {
-            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
-            return Array.from(checkboxes).map(cb => cb.value);
-        }
-
-        function abrirModalLog(modo, id = '') {
-            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Novo Registro de Telemetria' : 'Editar Registro Técnico';
-            document.getElementById('obsId').value = id;
-            if (modo === 'novo') {
-                document.getElementById('obsNetwork').value = '';
-                document.getElementById('obsTempo').value = '';
-                document.getElementById('obsRequests').value = '';
-                document.getElementById('obsResponses').value = '';
-                document.getElementById('obsConsole').value = '';
-                document.getElementById('obsMidia').value = '';
-                document.getElementById('obsArquivos').value = '';
-            }
-            document.getElementById('obsModal').style.display = 'flex';
-        }
-
-        function fecharModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        function salvarLog(e) {
-            e.preventDefault();
-            const id = document.getElementById('obsId').value;
-            if (id) {
-                alert(`Registro de observabilidade #${id} atualizado com sucesso!`);
-            } else {
-                alert(`Registro de observabilidade salvo com sucesso!`);
-            }
-            fecharModal('obsModal');
-        }
-
-        function inspecionarTecnico(id) {
-            alert(`Abrindo console de inspeção técnica para o Evento #${id}...\n\n- Timeline de requisições Network\n- Leitor de logs de Erro e Stacktrace\n- Player de mídia/vídeo de execução`);
-        }
-
-        function duplicarRegistro(id) {
-            alert(`Registro técnico "#${id}" duplicado com sucesso!`);
-        }
-
-        function excluirRegistro(id) {
-            if (confirm(`Deseja mover o registro de observabilidade #${id} para a lixeira?`)) {
-                alert(`Registro #${id} enviado para a lixeira.`);
-            }
-        }
-
-        function excluirSelecionados() {
-            const ids = getSelecionados();
-            if (ids.length === 0) {
-                alert('Nenhum registro selecionado.');
-                return;
-            }
-            if (confirm(`Deseja mover os ${ids.length} registros selecionados para a lixeira?`)) {
-                alert(`Registros [${ids.join(', ')}] movidos para a lixeira.`);
-            }
+        // Redireciona para a tela de comparação abrindo o modal de edição
+        function visualizarItem(id) {
+            window.location.href = `comparacao.html?openModal=edit&id=${id}`;
         }
 
         function encerrarSessao(e) {

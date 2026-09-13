@@ -8,18 +8,15 @@
 </head>
 <body>
     <aside class="sidebar">
-                <h2><h2>MENU</h2></h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
+        <h2>MENU</h2>
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,19 +27,16 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html" class="active">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
-            <!-- Sair / Encerrar Sessão -->
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                 <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
@@ -54,31 +48,20 @@
             <h1>Segurança e Vulnerabilidades</h1>
             <p>Verificações de segurança executadas sobre os cenários cadastrados, com rastreabilidade da versão de referência utilizada (ex: OWASP Top 10 2021).</p>
 
-            <!-- Toolbar Principal -->
+            <!-- 1. Barra de Ferramentas com Filtros por Origem e Descrição (campos de texto) -->
             <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="abrirModalSeguranca('novo')">+ Nova Ocorrência de Segurança</button>
-                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
-                </div>
-
-                <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar por vulnerabilidade ou cenário..." class="min-width-200">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220">
                     </div>
 
                     <div class="form-group margin-none">
-                        <select id="filterSeverity">
-                            <option value="">Todas as Severidades</option>
-                            <option value="Crítica">Crítica</option>
-                            <option value="Alta">Alta</option>
-                            <option value="Média">Média</option>
-                            <option value="Baixa">Baixa / Info</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="min-width-220">
                     </div>
                 </div>
             </div>
 
-            <!-- Tabela de Ocorrências de Segurança -->
+            <!-- 0 & 2. Tabela de Dados (Origem, Descrição, Ações com botão Visualizar) -->
             <div class="table-responsive">
                 <table class="data-table">
                     <thead>
@@ -86,64 +69,49 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID Ocorrência</th>
-                            <th>Cenário Avaliado</th>
-                            <th>Referência / Versão</th>
-                            <th>Categoria / Falha</th>
-                            <th>Severidade</th>
-                            <th>Status</th>
-                            <th class="text-center">Ações</th>
+                            <th>ORIGEM</th>
+                            <th>DESCRIÇÃO</th>
+                            <th class="text-center">AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody id="segurancaTableBody">
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
-                            <td>#SEC-2001</td>
-                            <td>Login e Checkout PIX</td>
-                            <td>OWASP Top 10 (2021)</td>
-                            <td>A03:2021 - Injection (SQLi)</td>
-                            <td><span class="status-error-text font-bold">Crítica</span></td>
-                            <td>Aberto</td>
+                            <td><strong>API</strong></td>
+                            <td>Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="verDetalhesSec('2001')">Detalhes</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarSeguranca('2001')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalSeguranca('editar', '2001')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirSeguranca('2001')">Excluir</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('1')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
-                            <td>#SEC-2002</td>
-                            <td>Consulta Saldo API Rest</td>
-                            <td>OWASP Top 10 (2021)</td>
-                            <td>A01:2021 - Broken Access Control</td>
-                            <td><span class="status-warning-text font-bold">Alta</span></td>
-                            <td>Em Análise</td>
+                            <td><strong>Web</strong></td>
+                            <td>Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="verDetalhesSec('2002')">Detalhes</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarSeguranca('2002')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalSeguranca('editar', '2002')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirSeguranca('2002')">Excluir</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('2')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
-                            <td>#SEC-2003</td>
-                            <td>Emissão de NF-e Desktop</td>
-                            <td>OWASP Top 10 (2021)</td>
-                            <td>A02:2021 - Cryptographic Failures</td>
-                            <td><span class="status-medium-text font-bold">Média</span></td>
-                            <td>Corrigido</td>
+                            <td><strong>Mobile</strong></td>
+                            <td>Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="verDetalhesSec('2003')">Detalhes</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="duplicarSeguranca('2003')">Duplicar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalSeguranca('editar', '2003')">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirSeguranca('2003')">Excluir</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('3')">VISUALIZAR</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td><strong>Desktop</strong></td>
+                            <td>Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('4')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -153,7 +121,7 @@
 
             <!-- Paginação -->
             <div class="pagination">
-                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-3 de 3 ocorrências registradas</span>
+                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-4 de 4 registros</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -163,136 +131,16 @@
         </section>
     </main>
 
-    <!-- Modal Form (Segurança / Ocorrência) -->
-    <div class="modal" id="segurancaModal">
-        <div class="modal-content max-width-800">
-            <h2 id="modalTitle" class="modal-header-title">Cadastrar Ocorrência de Segurança</h2>
-            <form onsubmit="salvarSeguranca(event)">
-                <input type="hidden" id="segurancaId">
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="secCenario">Cenário de Teste / Aplicação</label>
-                        <select id="secCenario" required>
-                            <option value="">Selecione o cenário...</option>
-                            <option value="1">Login e Checkout PIX</option>
-                            <option value="2">Consulta Saldo API Rest</option>
-                            <option value="3">Emissão de NF-e Desktop</option>
-                            <option value="4">Fluxo Biometria App</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="secReferencia">Referência / Framework Utilizado</label>
-                        <select id="secReferencia" required>
-                            <option value="OWASP Top 10 (2021)">OWASP Top 10 (2021)</option>
-                            <option value="OWASP API Security Top 10 (2023)">OWASP API Security Top 10 (2023)</option>
-                            <option value="CWE Top 25 (2023)">CWE Top 25 (2023)</option>
-                            <option value="ISO 27001">ISO/IEC 27001</option>
-                            <option value="NIST SP 800-53">NIST SP 800-53</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="secCategoria">Categoria / Item da Referência</label>
-                        <input type="text" id="secCategoria" placeholder="Ex: A03:2021 - Injection" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="secSeveridade">Severidade do Risco</label>
-                        <select id="secSeveridade" required>
-                            <option value="Crítica">Crítica</option>
-                            <option value="Alta">Alta</option>
-                            <option value="Média">Média</option>
-                            <option value="Baixa">Baixa</option>
-                            <option value="Informativa">Informativa</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="form-group">
-                        <label for="secVulnerabilidade">Descrição do Achado / Vulnerabilidade</label>
-                        <textarea id="secVulnerabilidade" placeholder="Descreva os detalhes da vulnerabilidade identificada..." required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="secRemediacao">Sugestão de Mitigação / Correção</label>
-                        <textarea id="secRemediacao" placeholder="Instruções para correção ou parametrização de segurança..."></textarea>
-                    </div>
-                </div>
-
-                <div class="flex-end-gap-10 margin-top-20">
-                    <button type="button" class="btn btn-secondary" onclick="fecharModal('segurancaModal')">Cancelar</button>
-                    <button type="submit" class="btn">Salvar Ocorrência</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Scripts de Interatividade -->
+    <!-- Script de Interatividade -->
     <script>
         function toggleSelectAll(master) {
             const checkboxes = document.querySelectorAll('.item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
         }
 
-        function getSelecionados() {
-            const checkboxes = document.querySelectorAll('.item-checkbox:checked');
-            return Array.from(checkboxes).map(cb => cb.value);
-        }
-
-        function abrirModalSeguranca(modo, id = '') {
-            document.getElementById('modalTitle').innerText = modo === 'novo' ? 'Cadastrar Ocorrência de Segurança' : 'Editar Ocorrência de Segurança';
-            document.getElementById('segurancaId').value = id;
-            if (modo === 'novo') {
-                document.getElementById('secCenario').value = '';
-                document.getElementById('secReferencia').value = 'OWASP Top 10 (2021)';
-                document.getElementById('secCategoria').value = '';
-                document.getElementById('secSeveridade').value = 'Média';
-                document.getElementById('secVulnerabilidade').value = '';
-                document.getElementById('secRemediacao').value = '';
-            }
-            document.getElementById('segurancaModal').style.display = 'flex';
-        }
-
-        function fecharModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        function salvarSeguranca(e) {
-            e.preventDefault();
-            const id = document.getElementById('segurancaId').value;
-            if (id) {
-                alert(`Ocorrência de segurança #${id} atualizada com sucesso!`);
-            } else {
-                alert(`Nova ocorrência de segurança registrada com a versão do framework vinculada!`);
-            }
-            fecharModal('segurancaModal');
-        }
-
-        function verDetalhesSec(id) {
-            alert(`Exibindo relatório técnico de segurança para a Ocorrência #${id}:\n\n- Versão do Padrão Registrada\n- Payloads de Teste\n- Recomendações de Mitigação`);
-        }
-
-        function duplicarSeguranca(id) {
-            alert(`Ocorrência de segurança "#${id}" duplicada com sucesso!`);
-        }
-
-        function excluirSeguranca(id) {
-            if (confirm(`Deseja mover a ocorrência #${id} para a lixeira?`)) {
-                alert(`Ocorrência #${id} enviada para a lixeira.`);
-            }
-        }
-
-        function excluirSelecionados() {
-            const ids = getSelecionados();
-            if (ids.length === 0) {
-                alert('Nenhuma ocorrência selecionada.');
-                return;
-            }
-            if (confirm(`Deseja mover as ${ids.length} ocorrências selecionadas para a lixeira?`)) {
-                alert(`Ocorrências [${ids.join(', ')}] movidas para a lixeira.`);
-            }
+        // Redireciona para a tela de comparação abrindo o modal de edição
+        function visualizarItem(id) {
+            window.location.href = `comparacao.html?openModal=edit&id=${id}`;
         }
 
         function encerrarSessao(e) {

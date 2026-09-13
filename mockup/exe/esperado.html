@@ -180,6 +180,16 @@
         .badge-web { background-color: #d1fae5; color: #065f46; }
         .badge-mobile { background-color: #ede9fe; color: #6d28d9; }
         .badge-desktop { background-color: #ffee99; color: #854d0e; }
+
+        .score-badge {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .score-success { background-color: #d1e7dd; color: #0f5132; }
+        .score-warning { background-color: #fff3cd; color: #664d03; }
+        .score-danger { background-color: #f8d7da; color: #842029; }
     </style>
 </head>
 <body>
@@ -268,7 +278,7 @@
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
                             <td><strong>API</strong></td>
                             <td>Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
-                            <td><span class="badge badge-success" id="situacao-1">Aprovado</span></td>
+                            <td><span class="score-badge score-success">APROVADO</span></td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
                                     <button class="btn btn-sm btn-success" onclick="aprovarItem('1')">Aprovar</button>
@@ -281,7 +291,8 @@
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
                             <td><strong>Web</strong></td>
                             <td>Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).</td>
-                            <td><span class="badge badge-warning" id="situacao-2">Pendente</span></td>
+                            <td><span class="score-badge score-warning">PENDENTE</span></td>
+
                             <td class="text-center">
                                 <div class="action-buttons-group">
                                     <button class="btn btn-sm btn-success" onclick="aprovarItem('2')">Aprovar</button>
@@ -294,7 +305,7 @@
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
                             <td><strong>Mobile</strong></td>
                             <td>Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).</td>
-                            <td><span class="badge badge-success" id="situacao-3">Aprovado</span></td>
+                            <td><span class="score-badge score-success">APROVADO</span></td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
                                     <button class="btn btn-sm btn-success" onclick="aprovarItem('3')">Aprovar</button>
@@ -307,7 +318,7 @@
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
                             <td><strong>Desktop</strong></td>
                             <td>Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).</td>
-                            <td><span class="badge badge-warning" id="situacao-4">Pendente</span></td>
+                            <td><span class="score-badge score-warning">PENDENTE</span></td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
                                     <button class="btn btn-sm btn-success" onclick="aprovarItem('4')">Aprovar</button>
@@ -322,7 +333,7 @@
 
             <!-- Paginação -->
             <div class="pagination margin-top-20">
-                <span class="pagination-info text-primary-dark">Exibindo 1-4 de 4 esperados</span>
+                <span class="pagination-info text-primary-dark">Exibindo 1-4 de 4 registros</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>

@@ -9,17 +9,14 @@
 <body>
     <aside class="sidebar">
         <h2>MENU</h2>
-        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
         <div class="banner-painel">
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <!-- Categoria: <h2>SISTEMA</h2> -->
             <li class="nav-category"><h2>SISTEMA</h2></li>
             <li><a href="sobre.html">Sobre</a></li>
             <li><a href="lixeira.html" class="active">Lixeira</a></li>
 
-            <!-- Categoria: <h2>NÚCLEO</h2> -->
             <li class="nav-category"><h2>NÚCLEO</h2></li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
@@ -30,20 +27,16 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-
-            <!-- Categoria: <h2>MÉTRICA</h2> -->
             <li class="nav-category"><h2>MÉTRICA</h2></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <!-- Categoria: <h2>EXTENSÃO</h2> -->
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
-            <!-- Sair / Encerrar Sessão -->
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                 <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
@@ -53,42 +46,28 @@
     <main class="main-content">
         <section class="card">
             <h1>Lixeira do Sistema</h1>
-            <p>Gerenciamento de entidades excluídas logicamente. Aqui você pode visualizar, restaurar ou excluir permanentemente os registros.</p>
+            <p>Gerenciamento de entidades excluídas logicamente. Aqui você pode visualizar, restaurar ou excluir permanentemente os registros, após 30 dias são removidos do sistema.</p>
 
-            <!-- Barra de Ferramentas: Busca, Filtros, Ordenação e Ações em Massa -->
+            <!-- Barra de Ferramentas com Filtros Pesquisáveis (Inputs de Texto) -->
             <div class="toolbar">
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <input type="text" id="searchInput" placeholder="Buscar por entidade ou ID..." class="min-width-220">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220">
                     </div>
 
                     <div class="form-group margin-none">
-                        <select id="filterType">
-                            <option value="">Todos os Tipos</option>
-                            <option value="Usuario">Usuários</option>
-                            <option value="Grupo">Grupos</option>
-                            <option value="Cenario">Cenários</option>
-                            <option value="Agendamento">Agendamentos</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group margin-none">
-                        <select id="sortBy">
-                            <option value="date_desc">Exclusão: Mais Recente</option>
-                            <option value="date_asc">Exclusão: Mais Antigo</option>
-                            <option value="name_asc">Nome (A-Z)</option>
-                        </select>
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="min-width-220">
                     </div>
                 </div>
 
                 <!-- Ações em Massa -->
                 <div class="toolbar-group">
-                    <button class="btn btn-sm" onclick="restaurarSelecionados()">Restaurar Selecionados</button>
-                    <button class="btn btn-sm btn-danger" onclick="excluirSelecionados()">Apagar Selecionados</button>
+                    <button class="btn btn-sm" onclick="restaurarSelecionados()">RESTAURAR SELECIONADOS</button>
+                    <button class="btn btn-sm btn-danger" onclick="excluirSelecionados()">APAGAR SELECIONADOS</button>
                 </div>
             </div>
 
-            <!-- Tabela de Dados com Seleção Individual e em Massa -->
+            <!-- Tabela com Origem, Descrição e Ações em Linha -->
             <div class="table-responsive">
                 <table class="data-table">
                     <thead>
@@ -96,57 +75,53 @@
                             <th class="th-checkbox">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
-                            <th>ID</th>
-                            <th>Tipo de Entidade</th>
-                            <th>Identificador / Nome</th>
-                            <th>Data de Exclusão</th>
-                            <th>Excluído por</th>
-                            <th class="text-center">Ações</th>
+                            <th>ORIGEM</th>
+                            <th>DESCRIÇÃO</th>
+                            <th class="text-center">AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody id="trashTableBody">
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="101"></td>
-                            <td>#101</td>
-                            <td>Usuário</td>
-                            <td>Carlos Eduardo (carlos@lab.com)</td>
-                            <td>28/08/2026 14:20</td>
-                            <td>Admin SaaS</td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
+                            <td><strong>API</strong></td>
+                            <td>Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('101', 'Usuário', 'Carlos Eduardo', '28/08/2026 14:20', 'Admin SaaS')">Visualizar</button>
-                                    <button class="btn btn-sm" onclick="restaurarItem('101')">Restaurar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('101')">Apagar</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm" onclick="restaurarItem('1')">RESTAURAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('1')">APAGAR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="102"></td>
-                            <td>#102</td>
-                            <td>Cenário</td>
-                            <td>Simulação Financeira Q3 2026</td>
-                            <td>25/08/2026 09:15</td>
-                            <td>Gestor Financeiro</td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
+                            <td><strong>Web</strong></td>
+                            <td>Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('102', 'Cenário', 'Simulação Financeira Q3 2026', '25/08/2026 09:15', 'Gestor Financeiro')">Visualizar</button>
-                                    <button class="btn btn-sm" onclick="restaurarItem('102')">Restaurar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('102')">Apagar</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm" onclick="restaurarItem('2')">RESTAURAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('2')">APAGAR</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="103"></td>
-                            <td>#103</td>
-                            <td>Agendamento</td>
-                            <td>Sincronização Noturna de Dados</td>
-                            <td>20/08/2026 18:00</td>
-                            <td>Auto Sistema</td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
+                            <td><strong>Mobile</strong></td>
+                            <td>Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).</td>
                             <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('103', 'Agendamento', 'Sincronização Noturna', '20/08/2026 18:00', '<h2>SISTEMA</h2> (Auto)')">Visualizar</button>
-                                    <button class="btn btn-sm" onclick="restaurarItem('103')">Restaurar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('103')">Apagar</button>
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm" onclick="restaurarItem('3')">RESTAURAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('3')">APAGAR</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
+                            <td><strong>Desktop</strong></td>
+                            <td>Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).</td>
+                            <td class="text-center">
+                                <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
+                                    <button class="btn btn-sm" onclick="restaurarItem('4')">RESTAURAR</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('4')">APAGAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -156,7 +131,7 @@
 
             <!-- Paginação -->
             <div class="pagination">
-                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-3 de 3 registros</span>
+                <span class="pagination-info text-teal-dark font-size-sm">Exibindo 1-4 de 4 registros</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -166,24 +141,7 @@
         </section>
     </main>
 
-    <!-- Modal para Visualização de Detalhes -->
-    <div class="modal" id="viewModal">
-        <div class="modal-content">
-            <h2 class="modal-header-title text-teal-dark border-bottom-teal">Detalhes do Registro Excluído</h2>
-            <div class="info-grid grid-1-col gap-10">
-                <div class="info-item"><label>ID</label><span id="modalId">-</span></div>
-                <div class="info-item"><label>Tipo de Entidade</label><span id="modalType">-</span></div>
-                <div class="info-item"><label>Nome / Identificador</label><span id="modalName">-</span></div>
-                <div class="info-item"><label>Data da Exclusão Lógica</label><span id="modalDate">-</span></div>
-                <div class="info-item"><label>Responsável pela Exclusão</label><span id="modalUser">-</span></div>
-            </div>
-            <div class="text-right margin-top-15">
-                <button class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Script de Interatividade da Lixeira -->
+    <!-- Script de Interatividade -->
     <script>
         function toggleSelectAll(master) {
             const checkboxes = document.querySelectorAll('.item-checkbox');
@@ -196,8 +154,8 @@
         }
 
         function restaurarItem(id) {
-            if(confirm(`Deseja restaurar a entidade ID #${id}?`)) {
-                alert(`Entidade #${id} restaurada com sucesso!`);
+            if(confirm(`Deseja restaurar o item selecionado?`)) {
+                alert(`Item restaurado com sucesso!`);
             }
         }
 
@@ -208,13 +166,13 @@
                 return;
             }
             if(confirm(`Deseja restaurar os ${ids.length} itens selecionados?`)) {
-                alert(`Itens [${ids.join(', ')}] restaurados com sucesso!`);
+                alert(`Itens restaurados com sucesso!`);
             }
         }
 
         function excluirItem(id) {
-            if(confirm(`ATENÇÃO: Deseja apagar PERMANENTEMENTE a entidade ID #${id}? Esta ação não pode ser desfeita.`)) {
-                alert(`Entidade #${id} removida permanentemente do banco de dados.`);
+            if(confirm(`ATENÇÃO: Deseja apagar PERMANENTEMENTE o item selecionado? Esta ação não pode ser desfeita.`)) {
+                alert(`Item removido permanentemente.`);
             }
         }
 
@@ -225,21 +183,8 @@
                 return;
             }
             if(confirm(`ATENÇÃO: Deseja apagar PERMANENTEMENTE os ${ids.length} itens selecionados? Esta ação é irreversível.`)) {
-                alert(`Itens [${ids.join(', ')}] excluídos permanentemente.`);
+                alert(`Itens excluídos permanentemente.`);
             }
-        }
-
-        function visualizarItem(id, tipo, nome, data, usuario) {
-            document.getElementById('modalId').innerText = '#' + id;
-            document.getElementById('modalType').innerText = tipo;
-            document.getElementById('modalName').innerText = nome;
-            document.getElementById('modalDate').innerText = data;
-            document.getElementById('modalUser').innerText = usuario;
-            document.getElementById('viewModal').style.display = 'flex';
-        }
-
-        function fecharModal() {
-            document.getElementById('viewModal').style.display = 'none';
         }
 
         function encerrarSessao(e) {
