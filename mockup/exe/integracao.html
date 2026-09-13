@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Integração Sistema de Gestão MENU</title>
+    <title>Cartão Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
     <style>
         .action-buttons-group {
@@ -12,6 +12,270 @@
             justify-content: center;
             gap: 6px;
             flex-wrap: nowrap;
+        }
+        .diff-modal-body {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .diff-pane {
+            flex: 1;
+            background: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        .diff-pane h4 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        .json-viewer {
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            background: #fff;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+        .curl-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: monospace;
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .curl-box span {
+            color: #4ec9b0;
+        }
+        .diff-added { background-color: #d1fae5; color: #065f46; }
+        .diff-ignored { background-color: #e2e8f0; color: #64748b; text-decoration: line-through; }
+        .alert-box {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .visual-grid {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .visual-item {
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+            flex: 1;
+            position: relative;
+        }
+        .img-container {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #555;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .visual-item img {
+            max-width: 100%;
+            height: 90px;
+            object-fit: cover;
+            display: block;
+        }
+        .ignore-overlay {
+            position: absolute;
+            background: rgba(239, 68, 68, 0.4);
+            border: 1px dashed #ef4444;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-list {
+            font-size: 12px;
+            background: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-top: 6px;
+            max-height: 105px;
+            overflow-y: auto;
+        }
+        .step-list ol {
+            margin-left: 18px;
+            margin-bottom: 0;
+        }
+        .video-placeholder {
+            background: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 6px;
+            border: 1px solid #444;
+        }
+        .section-box-modal {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+        .section-box-modal h4 {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .transcription-box {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #3b82f6;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #334155;
+            font-style: italic;
+            margin-top: 6px;
+        }
+        .ignored-fields-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .field-tag {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-family: monospace;
+        }
+        .document-download-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+        .audio-player-custom {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+
+        /* ESTILOS AZURE DEVOPS BOARD CARD MODAL */
+        .ado-card {
+            background: #f5f5f5;
+            border: 1px solid #d6d6d6;
+            border-radius: 4px;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #252525;
+        }
+        .ado-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .ado-type-badge {
+            background: #cc293d;
+            color: #fff;
+            font-weight: bold;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+        .ado-id {
+            color: #0078d4;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .ado-title-input {
+            font-size: 15px;
+            font-weight: 600;
+            color: #111;
+            flex: 1;
+        }
+        .ado-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .ado-meta-item strong {
+            display: block;
+            color: #666;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+        .ado-section {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .ado-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0078d4;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px dashed #e0e0e0;
+            padding-bottom: 4px;
+        }
+        .ado-tag-list {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .ado-tag {
+            background: #e1dfdd;
+            color: #323130;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -42,8 +306,8 @@
             <li><a href="ganho.html">Ganho</a></li>
 
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
-            <li><a href="integracao.html" class="active">Integração</a></li>
-            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html" class="active">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
 
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
@@ -54,183 +318,108 @@
 
     <main class="main-content">
         <section class="card">
-            <h1>Integrações Externas</h1>
-            <p>Conecte o MENU a sistemas externos para automação, sincronização de tarefas, inteligência artificial e notificações.</p>
+            <h1>Cartões de Insucesso (Unidades de Trabalho)</h1>
+            <p>Gerencie falhas e vulnerabilidades oriundas das plataformas de execução e sincronize-as com sistemas externos.</p>
 
-            <!-- Barra de Ferramentas Superior com Filtros por Tipo, Origem e Descrição -->
-            <div class="toolbar" style="margin-top: 20px;">
+            <!-- Barra de Ferramentas e Filtros -->
+            <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn" onclick="abrirModalFormulário('nova')">+ Novo</button>
-                    <button class="btn btn-danger" onclick="excluirSelecionados()">Excluir Selecionados</button>
+                    <button class="btn" onclick="abrirModalNovoCartao()">+ Novo Cartão</button>
+                    <button class="btn btn-auth" onclick="enviarSelecionadosParaIntegracao()">Enviar Selecionados</button>
+                    <button class="btn btn-danger" onclick="excluirSelecionados('cartaoTableBody')">Excluir Selecionados</button>
                 </div>
                 <div class="toolbar-group">
                     <div class="form-group margin-none">
-                        <select id="filterTipo" onchange="filtrarTabela()" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                            <option value="">Todos os Tipos</option>
-                            <option value="Desenvolvimento">Desenvolvimento</option>
-                            <option value="Gestão">Gestão</option>
-                            <option value="Inteligência Artificial">Inteligência Artificial</option>
-                            <option value="Comunicação">Comunicação</option>
+                        <select id="selectOrigem" onchange="filtrarTabela()">
+                            <option value="">Todas as Origens</option>
+                            <option value="API">API</option>
+                            <option value="Web">Web</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="Desktop">Desktop</option>
                         </select>
                     </div>
                     <div class="form-group margin-none">
-                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search" oninput="filtrarTabela()">
+                        <input type="text" id="inputDescricao" placeholder="Filtrar por Descrição..." class="input-search" onkeyup="filtrarTabela()">
                     </div>
                     <div class="form-group margin-none">
-                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search" oninput="filtrarTabela()">
+                        <select id="selectAcao" onchange="filtrarTabela()">
+                            <option value="">Todas as Ações</option>
+                            <option value="Visualizar">Permite Visualizar</option>
+                            <option value="Enviar">Permite Enviar</option>
+                            <option value="Editar">Permite Editar</option>
+                            <option value="Excluir">Permite Excluir</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
-            <!-- Tabela de Integrações Cadastradas -->
+            <!-- Tabela de Cartões Cadastrados -->
             <div class="table-responsive">
-                <table class="data-table" id="tabelaIntegracoes">
+                <table class="data-table" id="tabelaCartoes">
                     <thead>
                         <tr>
                             <th class="th-checkbox">
-                                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                                <input type="checkbox" onclick="toggleSelectAll(this, 'cartaoTableBody')">
                             </th>
-                            <th>Tipo</th>
                             <th>Origem</th>
                             <th>Descrição</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="integracaoTableBody">
-                        <!-- 1. Desenvolvimento -->
+                    <tbody id="cartaoTableBody">
+                        <!-- Linha 1: API -->
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-001"></td>
-                            <td><span class="badge-categoria">Desenvolvimento</span></td>
-                            <td><strong>GitHub</strong></td>
-                            <td>Repositórios, commits, branches, PRs e rastreabilidade de correções.</td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="API"></td>
+                            <td><span class="badge-categoria">API</span></td>
+                            <td>Falha na autenticação via OAuth2 ao realizar requisição no endpoint de pagamentos.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('GitHub')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('API')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalEnvio('API')">Enviar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="editarCartao('API')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('API')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
+                        <!-- Linha 2: Web -->
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-002"></td>
-                            <td><span class="badge-categoria">Desenvolvimento</span></td>
-                            <td><strong>GitHub Actions</strong></td>
-                            <td>Disparar testes/regressões automaticamente em pipelines.</td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="Web"></td>
+                            <td><span class="badge-categoria">Web</span></td>
+                            <td>Erro de renderização e quebra de layout no checkout em navegadores baseados em Chromium.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('GitHub Actions')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('Web')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalEnvio('Web')">Enviar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="editarCartao('Web')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('Web')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
+                        <!-- Linha 3: Mobile -->
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-003"></td>
-                            <td><span class="badge-categoria">Desenvolvimento</span></td>
-                            <td><strong>Sentry</strong></td>
-                            <td>Conectar erros reais da aplicação às evidências e execuções do QA.</td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="Mobile"></td>
+                            <td><span class="badge-categoria badge-seguranca">Mobile</span></td>
+                            <td>Crash inesperado na tela de biometria ao abrir o aplicativo no Android 14.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Sentry')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('Mobile')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalEnvio('Mobile')">Enviar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="editarCartao('Mobile')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('Mobile')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- 2. Gestão -->
+                        <!-- Linha 4: Desktop -->
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-004"></td>
-                            <td><span class="badge-categoria">Gestão</span></td>
-                            <td><strong>Jira</strong></td>
-                            <td>Importar requisitos, criar bugs e vincular execuções/evidências.</td>
+                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="Desktop"></td>
+                            <td><span class="badge-categoria">Desktop</span></td>
+                            <td>Vazamento de memória durante o processamento em lote de relatórios pesados no Windows 11.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Jira')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-005"></td>
-                            <td><span class="badge-categoria">Gestão</span></td>
-                            <td><strong>Azure DevOps</strong></td>
-                            <td>Boards, Work Items, Test Plans, pipelines e bugs.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Azure DevOps')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- 3. Inteligência Artificial -->
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-006"></td>
-                            <td><span class="badge-categoria">Inteligência Artificial</span></td>
-                            <td><strong>Gemini API</strong></td>
-                            <td>Geração de cenários, casos de teste, análise e assistência de QA.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Gemini API')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-007"></td>
-                            <td><span class="badge-categoria">Inteligência Artificial</span></td>
-                            <td><strong>OpenAI API</strong></td>
-                            <td>Geração, análise e comparação entre modelos.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('OpenAI API')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-008"></td>
-                            <td><span class="badge-categoria">Inteligência Artificial</span></td>
-                            <td><strong>Claude API</strong></td>
-                            <td>Geração e análise com outro provedor de IA.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Claude API')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- 4. Comunicação -->
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-009"></td>
-                            <td><span class="badge-categoria">Comunicação</span></td>
-                            <td><strong>Microsoft Teams</strong></td>
-                            <td>Notificações de execução, regressão, segurança e deploy.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Microsoft Teams')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="item-checkbox" value="INT-010"></td>
-                            <td><span class="badge-categoria">Comunicação</span></td>
-                            <td><strong>Discord</strong></td>
-                            <td>Notificações via webhook e acompanhamento de execuções.</td>
-                            <td class="text-center">
-                                <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="conectarIntegracao('Discord')">Conectar</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalFormulário('editar', this)">Editar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalDiff('Desktop')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalEnvio('Desktop')">Enviar</button>
+                                    <button class="btn btn-sm btn-warning" onclick="editarCartao('Desktop')">Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="excluirItem('Desktop')">Excluir</button>
                                 </div>
                             </td>
                         </tr>
@@ -239,8 +428,8 @@
             </div>
 
             <!-- Paginação -->
-            <div class="pagination margin-top-20">
-                <span class="pagination-info">Exibindo 1-10 de 10 registros</span>
+            <div class="pagination">
+                <span class="pagination-info">Exibindo 4 registros.</span>
                 <div class="page-buttons">
                     <button class="page-btn" disabled>&laquo;</button>
                     <button class="page-btn active">1</button>
@@ -250,139 +439,527 @@
         </section>
     </main>
 
-    <!-- Modal para Formulário (Nova / Editar Integração) -->
-    <div id="modalFormulario" class="modal">
-        <div class="modal-content modal-lg">
-            <h2 id="modalTitle">Cadastrar Integração</h2>
-            <form onsubmit="salvarIntegracao(event)">
-                <div class="form-group margin-top-15">
-                    <label for="formTipo"><strong>Tipo:</strong></label>
-                    <select id="formTipo" required style="width: 100%; padding: 8px;">
-                        <option value="Desenvolvimento">Desenvolvimento</option>
-                        <option value="Gestão">Gestão</option>
-                        <option value="Inteligência Artificial">Inteligência Artificial</option>
-                        <option value="Comunicação">Comunicação</option>
+    <!-- Modal de Visualização Diff (Integrado) -->
+    <div class="modal" id="modalDiff" style="display: none;">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 id="diffModalTitle">Relatório de Comparação / Diff</h2>
+            <div id="diffModalContent"></div>
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button type="button" class="btn btn-secondary" onclick="fecharModal('modalDiff')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro / Edição de Cartão -->
+    <div id="modalCartao" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="modalTitulo" class="modal-title">Novo Cartão de Insucesso</h2>
+            <form onsubmit="salvarCartao(event)">
+                <input type="hidden" id="cartaoId">
+
+                <div class="form-group">
+                    <label for="origemCartao">Origem *</label>
+                    <select id="origemCartao" required>
+                        <option value="API">API</option>
+                        <option value="Web">Web</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Desktop">Desktop</option>
                     </select>
                 </div>
-                <div class="form-group margin-top-15">
-                    <label for="formOrigem"><strong>Origem:</strong></label>
-                    <input type="text" id="formOrigem" required placeholder="Ex: GitHub, Jira, Gemini API..." style="width: 100%; padding: 8px;">
+
+                <div class="form-group">
+                    <label for="descricaoCartao">Descrição *</label>
+                    <textarea id="descricaoCartao" rows="4" required class="input-inline" style="max-width: 100%; width: 100%;" placeholder="Descreva a ocorrência ou falha..."></textarea>
                 </div>
-                <div class="form-group margin-top-15">
-                    <label for="formDescricao"><strong>Descrição:</strong></label>
-                    <textarea id="formDescricao" required style="width: 100%; height: 100px; padding: 8px;" placeholder="Descreva os detalhes da integração..."></textarea>
-                </div>
-                <div class="modal-actions" style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="fecharModalFormulário()">Cancelar</button>
-                    <button type="submit" class="btn">Salvar</button>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalCartao()">Cancelar</button>
+                    <button type="submit" class="btn">Salvar Cartão</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Script de Funcionalidades e Filtros -->
-    <script>
-        let trEdicaoAtual = null;
+    <!-- Modal de Envio Reestruturado como Azure DevOps Work Item / Bug Card -->
+    <div id="modalEnvio" class="modal" style="display: none;">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 class="modal-title" style="margin-bottom: 10px;">Enviar Cartão para Sistema Externo</h2>
+            <form onsubmit="executarEnvioIntegracao(event)">
+                <input type="hidden" id="envioCartaoId">
 
-        function toggleSelectAll(master) {
-            const checkboxes = document.querySelectorAll('#integracaoTableBody .item-checkbox');
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="selectIntegracaoDestino"><strong>Selecione o Destino da Integração *</strong></label>
+                    <select id="selectIntegracaoDestino" required>
+                        <option value="INT-101">Azure DevOps - Board QA (Work Item Bug)</option>
+                        <option value="INT-102">Notificações Teams - General</option>
+                        <option value="INT-103">Webhook Corporativo (API REST)</option>
+                    </select>
+                </div>
+
+                <!-- Preview Estruturado do Card do Azure DevOps -->
+                <div class="ado-card">
+                    <div class="ado-header">
+                        <span class="ado-type-badge">BUG</span>
+                        <span class="ado-id" id="adoWorkItemId">#84920</span>
+                        <span class="ado-title-input" id="adoTitle">[JabutiQA] Falha Detectada - Origem</span>
+                    </div>
+
+                    <div class="ado-meta-grid">
+                        <div class="ado-meta-item">
+                            <strong>State</strong>
+                            <span>New / Active</span>
+                        </div>
+                        <div class="ado-meta-item">
+                            <strong>Reason</strong>
+                            <span>Automated QA Failure</span>
+                        </div>
+                        <div class="ado-meta-item">
+                            <strong>Area Path</strong>
+                            <span id="adoAreaPath">JabutiQA\Origem</span>
+                        </div>
+                        <div class="ado-meta-item">
+                            <strong>Iteration</strong>
+                            <span>Sprint 2026.1</span>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo dinâmico com todas as informações do Visualizar -->
+                    <div id="adoCardDynamicBody"></div>
+
+                    <div class="ado-section">
+                        <div class="ado-section-title">💬 Discussion & Audit Trail</div>
+                        <p style="font-size: 11px; color: #555; margin: 0;">
+                            <strong>System Auto-Bot:</strong> Work item gerado a partir do relatório de regressão. Solicitante: <i>admin@empresa.com.br</i> | Tentativa #1.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalEnvio()">Cancelar</button>
+                    <button type="submit" class="btn btn-auth">Disparar Integração (Criar Bug no DevOps)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        function toggleSelectAll(master, targetId) {
+            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox`);
             checkboxes.forEach(cb => cb.checked = master.checked);
         }
 
+        function abrirModalNovoCartao() {
+            document.getElementById('modalTitulo').innerText = 'Novo Cartão de Insucesso';
+            document.getElementById('cartaoId').value = '';
+            document.getElementById('origemCartao').value = 'API';
+            document.getElementById('descricaoCartao').value = '';
+            document.getElementById('modalCartao').style.display = 'flex';
+        }
+
+        function fecharModalCartao() {
+            document.getElementById('modalCartao').style.display = 'none';
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function salvarCartao(e) {
+            e.preventDefault();
+            const id = document.getElementById('cartaoId').value;
+            if (id) {
+                alert(`Cartão da origem ${id} atualizado com sucesso!`);
+            } else {
+                alert('Novo Cartão cadastrado com sucesso!');
+            }
+            fecharModalCartao();
+        }
+
+        function editarCartao(origem) {
+            document.getElementById('modalTitulo').innerText = `Editar Cartão - ${origem}`;
+            document.getElementById('cartaoId').value = origem;
+            document.getElementById('origemCartao').value = origem;
+            
+            const descricoes = {
+                'API': 'Falha na autenticação via OAuth2 ao realizar requisição no endpoint de pagamentos.',
+                'Web': 'Erro de renderização e quebra de layout no checkout em navegadores baseados em Chromium.',
+                'Mobile': 'Crash inesperado na tela de biometria ao abrir o aplicativo no Android 14.',
+                'Desktop': 'Vazamento de memória durante o processamento em lote de relatórios pesados no Windows 11.'
+            };
+            
+            document.getElementById('descricaoCartao').value = descricoes[origem] || '';
+            document.getElementById('modalCartao').style.display = 'flex';
+        }
+
+        function abrirModalEnvio(origem) {
+            document.getElementById('envioCartaoId').value = origem;
+            document.getElementById('adoWorkItemId').innerText = `#${Math.floor(10000 + Math.random() * 90000)}`;
+            document.getElementById('adoTitle').innerText = `[JabutiQA Failure] Regressão Automática - Origem ${origem}`;
+            document.getElementById('adoAreaPath').innerText = `JabutiQA\\${origem}`;
+
+            const container = document.getElementById('adoCardDynamicBody');
+
+            if (origem === 'API') {
+                container.innerHTML = `
+                    <div class="ado-section">
+                        <div class="ado-section-title">📋 Repro Steps & cURL</div>
+                        <p style="font-size: 12px; color: #555; margin-bottom: 6px;">cURL do cenário gerador:</p>
+                        <div class="curl-box">curl -X <span>POST</span> "https://api.jabutiqa.com/v1/validacao" -H "Content-Type: application/json" -d '{"id": 1024, "validar": true}'</div>
+                    </div>
+
+                    <div class="ado-section">
+                        <div class="ado-section-title">🔍 System Diff (JSON Structure)</div>
+                        <p style="font-size: 12px; color: #555; margin-bottom: 6px;">Comparação Estrutural de JSON (JSON Diff) com campos ignorados aplicados:</p>
+                        <div class="diff-modal-body">
+                            <div class="diff-pane">
+                                <h4>Esperado (Oráculo)</h4>
+                                <div class="json-viewer">{
+  "status": 200,
+  "message": "Sucesso",
+  "data": {
+    "id": 1024,
+    "ativo": true,
+    <span class="diff-ignored">"data_emissao": "2026-03-30...",</span>
+    <span class="diff-ignored">"timestamp": 1711795200</span>
+  }
+}</div>
+                            </div>
+                            <div class="diff-pane">
+                                <h4>Recebido (Execução)</h4>
+                                <div class="json-viewer">{
+  "status": 200,
+  "message": "Sucesso",
+  "data": {
+    "id": 1024,
+    <span class="diff-added">"ativo": true,</span>
+    <span class="diff-added">"token": "abc123xyz",</span>
+    <span class="diff-ignored">"data_emissao": "2026-03-30...",</span>
+    <span class="diff-ignored">"timestamp": 1711795521</span>
+  }
+}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ado-section">
+                        <div class="ado-section-title">🏷️ Ignored Criteria & Tags</div>
+                        <div class="ado-tag-list">
+                            <span class="ado-tag">data_emissao</span>
+                            <span class="ado-tag">timestamp</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="ado-section">
+                        <div class="ado-section-title">🖼️ Visual Regression & Pixel Diff</div>
+                        <div class="visual-grid">
+                            <div class="visual-item">
+                                <p style="margin-bottom: 2px; color: #aaa;">Esperado</p>
+                                <div class="img-container">
+                                    <img src="../jabutiqa.jpg" alt="Esperado">
+                                    <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px;">IGNORAR</div>
+                                    <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px;">IGNORAR</div>
+                                </div>
+                            </div>
+                            <div class="visual-item">
+                                <p style="margin-bottom: 2px; color: #aaa;">Recebido</p>
+                                <div class="img-container">
+                                    <img src="../jabutiqa.jpg" alt="Recebido">
+                                    <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px;">IGNORAR</div>
+                                    <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px;">IGNORAR</div>
+                                </div>
+                            </div>
+                            <div class="visual-item">
+                                <p style="margin-bottom: 2px; color: #f87171;">Diferença (Diff)</p>
+                                <div class="img-container" style="border-color: #ef4444;">
+                                    <img src="../jabutiqa.jpg" alt="Diff" style="filter: invert(1) hue-rotate(90deg);">
+                                    <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px; background: rgba(100,100,100,0.5); border-color: #888;">IGNORAR</div>
+                                    <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px; background: rgba(100,100,100,0.5); border-color: #888;">IGNORAR</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 6px; font-size: 12px; color: #e74c3c;"><strong>Divergência detectada:</strong> Delta de 0.4% nos pixels da região superior (Regiões delimitadas em vermelho foram desconsideradas).</p>
+                    </div>
+
+                    <div class="ado-section">
+                        <div class="ado-section-title">📌 Repro Steps & Execution Video</div>
+                        <div style="display: flex; gap: 10px;">
+                            <div style="flex: 1;">
+                                <div class="step-list">
+                                    <ol>
+                                        <li>Acessar a página inicial do sistema ${origem}.</li>
+                                        <li>Navegar até o componente principal do Dashboard.</li>
+                                        <li>Acionar a captura de tela para validação visual.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div class="video-placeholder">
+                                    <strong>Vídeo + Áudio Integrado (${origem})</strong><br>
+                                    <div style="margin-top: 4px;">
+                                        <button type="button" class="btn btn-sm" style="font-size: 11px; padding: 2px 6px;" onclick="alert('Reproduzindo gravação...')">Play Recording</button>
+                                    </div>
+                                    <span style="font-size: 10px; color: #aaa; display: block; margin-top: 2px;">Duração: 00:12s | 30 FPS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ado-section">
+                        <div class="ado-section-title">🎙️ Audio Evidence & Transcription</div>
+                        <div class="audio-player-custom">
+                            <button type="button" class="btn btn-sm" onclick="alert('Reproduzindo áudio...')">Ouvir Áudio</button>
+                            <div style="flex: 1; font-size: 11px; color: #334155;">
+                                <span>Gravacao_Comando_Voz_${origem}.wav</span>
+                                <div style="background: #cbd5e1; height: 6px; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                                    <div style="background: #2563eb; width: 45%; height: 100%;"></div>
+                                </div>
+                            </div>
+                            <span style="font-size: 10px; color: #64748b;">00:05s / 00:12s</span>
+                        </div>
+                        <div class="transcription-box">
+                            "Confirmar a transação do usuário no painel principal e verificar a emissão do comprovante de validação."
+                        </div>
+                    </div>
+
+                    <div class="ado-section">
+                        <div class="ado-section-title">🏷️ Ignored Regions & Attachments</div>
+                        <div class="ado-tag-list" style="margin-bottom: 8px;">
+                            <span class="ado-tag">#header-banner-clock</span>
+                            <span class="ado-tag">#user-avatar-dynamic</span>
+                            <span class="ado-tag">{Data_Emissao_Relatorio}</span>
+                            <span class="ado-tag">{Hash_Transacao_Sessao}</span>
+                        </div>
+                        <div class="document-download-card">
+                            <div>
+                                <strong style="font-size: 12px; color: #1e293b;">Relatorio_Execucao_${origem}_2026.pdf</strong>
+                                <span style="display: block; font-size: 11px; color: #64748b;">Formato PDF | Anexo do Bug</span>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="alert('Download do documento PDF!')">Baixar PDF</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalEnvio').style.display = 'flex';
+        }
+
+        function fecharModalEnvio() {
+            document.getElementById('modalEnvio').style.display = 'none';
+        }
+
+        function executarEnvioIntegracao(e) {
+            e.preventDefault();
+            const origem = document.getElementById('envioCartaoId').value;
+            const idIntegracao = document.getElementById('selectIntegracaoDestino').value;
+            alert(`Card do Azure DevOps enviado com sucesso!\n\n- Origem: ${origem}\n- Destino: ${idIntegracao}\n- Status: Work Item Criado (HTTP 201 Created)`);
+            fecharModalEnvio();
+        }
+
+        function enviarSelecionadosParaIntegracao() {
+            const checkboxes = document.querySelectorAll('#cartaoTableBody .item-checkbox:checked');
+            const origens = Array.from(checkboxes).map(cb => cb.value);
+            if (origens.length === 0) {
+                alert('Selecione ao menos um cartão para enviar à integração.');
+                return;
+            }
+            if (confirm(`Deseja disparar o envio em lote de ${origens.length} cartão(ões) selecionado(s)?`)) {
+                alert(`Integração executada com sucesso para as origens: [${origens.join(', ')}].`);
+            }
+        }
+
+        function excluirItem(origem) {
+            if (confirm(`Deseja mover o cartão de origem ${origem} para a lixeira?`)) {
+                alert(`Cartão de origem ${origem} movido para a lixeira com sucesso.`);
+            }
+        }
+
+        function excluirSelecionados(targetId) {
+            const checkboxes = document.querySelectorAll(`#${targetId} .item-checkbox:checked`);
+            const origens = Array.from(checkboxes).map(cb => cb.value);
+            if (origens.length === 0) {
+                alert('Nenhum cartão selecionado.');
+                return;
+            }
+            if (confirm(`Deseja mover os ${origens.length} cartões selecionados para a lixeira?`)) {
+                alert(`Cartões de origem [${origens.join(', ')}] movidos para a lixeira.`);
+            }
+        }
+
+        function abrirModalDiff(origem) {
+            const titulo = document.getElementById('diffModalTitle');
+            const conteudo = document.getElementById('diffModalContent');
+            
+            titulo.innerText = `Relatório de Comparação - ${origem}`;
+
+            if (origem === 'API') {
+                conteudo.innerHTML = `
+                    <p style="font-size: 13px; color: #555; margin-bottom: 6px;">cURL do cenário gerador:</p>
+                    <div class="curl-box">curl -X <span>POST</span> "https://api.jabutiqa.com/v1/validacao" -H "Content-Type: application/json" -d '{"id": 1024, "validar": true}'</div>
+                    
+                    <p style="font-size: 13px; color: #555; margin-bottom: 6px;">Comparação Estrutural de JSON (JSON Diff) com campos ignorados aplicados:</p>
+                    <div class="diff-modal-body">
+                        <div class="diff-pane">
+                            <h4>Esperado (Oráculo)</h4>
+                            <div class="json-viewer">{
+  "status": 200,
+  "message": "Sucesso",
+  "data": {
+    "id": 1024,
+    "ativo": true,
+    <span class="diff-ignored">"data_emissao": "2026-03-30...",</span>
+    <span class="diff-ignored">"timestamp": 1711795200</span>
+  }
+}</div>
+                        </div>
+                        <div class="diff-pane">
+                            <h4>Recebido (Execução)</h4>
+                            <div class="json-viewer">{
+  "status": 200,
+  "message": "Sucesso",
+  "data": {
+    "id": 1024,
+    <span class="diff-added">"ativo": true,</span>
+    <span class="diff-added">"token": "abc123xyz",</span>
+    <span class="diff-ignored">"data_emissao": "2026-03-30...",</span>
+    <span class="diff-ignored">"timestamp": 1711795521</span>
+  }
+}</div>
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Campos Ignorados da API</h4>
+                        <p style="font-size: 12px; color: #64748b;">Chaves dinâmicas ou variáveis desconsideradas na validação estrutural:</p>
+                        <div class="ignored-fields-tag">
+                            <span class="field-tag">data_emissao</span>
+                            <span class="field-tag">timestamp</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                conteudo.innerHTML = `
+                    <p style="font-size: 13px; color: #555; margin-bottom: 4px;">Análise de Regressão Visual (Pixel Diff) com Regiões Ignoradas:</p>
+                    <div class="visual-grid">
+                        <div class="visual-item">
+                            <p style="margin-bottom: 2px; color: #aaa;">Esperado</p>
+                            <div class="img-container">
+                                <img src="../jabutiqa.jpg" alt="Esperado">
+                                <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px;">IGNORAR</div>
+                                <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px;">IGNORAR</div>
+                            </div>
+                        </div>
+                        <div class="visual-item">
+                            <p style="margin-bottom: 2px; color: #aaa;">Recebido</p>
+                            <div class="img-container">
+                                <img src="../jabutiqa.jpg" alt="Recebido">
+                                <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px;">IGNORAR</div>
+                                <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px;">IGNORAR</div>
+                            </div>
+                        </div>
+                        <div class="visual-item">
+                            <p style="margin-bottom: 2px; color: #f87171;">Diferença (Diff)</p>
+                            <div class="img-container" style="border-color: #ef4444;">
+                                <img src="../jabutiqa.jpg" alt="Diff" style="filter: invert(1) hue-rotate(90deg);">
+                                <div class="ignore-overlay" style="top: 25px; left: 35px; width: 45px; height: 25px; background: rgba(100,100,100,0.5); border-color: #888;">IGNORAR</div>
+                                <div class="ignore-overlay" style="top: 35px; left: 85px; width: 35px; height: 20px; background: rgba(100,100,100,0.5); border-color: #888;">IGNORAR</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 6px; font-size: 12px; color: #e74c3c;"><strong>Divergência detectada:</strong> Delta de 0.4% nos pixels da região superior (Regiões delimitadas em vermelho foram desconsideradas).</p>
+
+                    <div style="display: flex; gap: 10px; margin-top: 6px;">
+                        <div style="flex: 1;">
+                            <p style="font-size: 12px; font-weight: bold; color: #333; margin-bottom: 2px;">Passo a Passo Percorrido:</p>
+                            <div class="step-list">
+                                <ol>
+                                    <li>Acessar a página inicial do sistema ${origem}.</li>
+                                    <li>Navegar até o componente principal do Dashboard.</li>
+                                    <li>Acionar a captura de tela para validação visual.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div style="flex: 1;">
+                            <p style="font-size: 12px; font-weight: bold; color: #333; margin-bottom: 2px;">Vídeo do Cenário Executado (Áudio Sincronizado):</p>
+                            <div class="video-placeholder">
+                                <strong>Vídeo + Áudio Integrado (${origem})</strong><br>
+                                <div style="margin-top: 6px;">
+                                    <button class="btn btn-sm" style="font-size: 11px; padding: 4px 8px;" onclick="alert('Reproduzindo vídeo e áudio sincronizados da execução...')">Reproduzir Gravação</button>
+                                </div>
+                                <span style="font-size: 10px; color: #aaa; display: block; margin-top: 4px;">Duração: 00:12s | 30 FPS | Faixa de Áudio Stereo Ativa</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Áudio Importado da Execução</h4>
+                        <div class="audio-player-custom">
+                            <button type="button" class="btn btn-sm" onclick="alert('Reproduzindo áudio gravado...')">Ouvir Áudio</button>
+                            <div style="flex: 1; font-size: 11px; color: #334155;">
+                                <span>Gravacao_Comando_Voz_${origem}.wav</span>
+                                <div style="background: #cbd5e1; height: 6px; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                                    <div style="background: #2563eb; width: 45%; height: 100%;"></div>
+                                </div>
+                            </div>
+                            <span style="font-size: 10px; color: #64748b;">00:05s / 00:12s</span>
+                        </div>
+                        
+                        <p style="font-size: 12px; font-weight: bold; color: #333; margin-top: 8px; margin-bottom: 2px;">Transcrição do Áudio:</p>
+                        <div class="transcription-box">
+                            "Confirmar a transação do usuário no painel principal e verificar a emissão do comprovante de validação."
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Campos e Regiões do Documento Ignorados</h4>
+                        <p style="font-size: 12px; color: #64748b;">Regiões visuais e tags de documentos desconsideradas para evitar falsos positivos:</p>
+                        <div class="ignored-fields-tag">
+                            <span class="field-tag">Região Visual: #header-banner-clock</span>
+                            <span class="field-tag">Região Visual: #user-avatar-dynamic</span>
+                            <span class="field-tag">Tag Doc: {Data_Emissao_Relatorio}</span>
+                            <span class="field-tag">Tag Doc: {Hash_Transacao_Sessao}</span>
+                        </div>
+                    </div>
+
+                    <div class="section-box-modal">
+                        <h4>Documentos Capturados na Execução</h4>
+                        <div class="document-download-card">
+                            <div>
+                                <strong style="font-size: 12px; color: #1e293b;">Relatorio_Execucao_${origem}_2026.pdf</strong>
+                                <span style="display: block; font-size: 11px; color: #64748b;">Formato PDF | Gerado automaticamente durante a regressão</span>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="alert('Download do documento PDF capturado com sucesso!')">Baixar Documento (PDF)</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalDiff').style.display = 'flex';
+        }
+
         function filtrarTabela() {
-            const fTipo = document.getElementById('filterTipo').value.toLowerCase();
-            const fOrigem = document.getElementById('filterOrigem').value.toLowerCase();
-            const fDescricao = document.getElementById('filterDescricao').value.toLowerCase();
-            const linhas = document.querySelectorAll('#integracaoTableBody tr');
+            const origemFiltro = document.getElementById('selectOrigem').value.toLowerCase();
+            const descricaoFiltro = document.getElementById('inputDescricao').value.toLowerCase();
+            const acaoFiltro = document.getElementById('selectAcao').value.toLowerCase();
+            const linhas = document.querySelectorAll('#cartaoTableBody tr');
 
             linhas.forEach(linha => {
-                const tipo = linha.querySelector('td:nth-child(2)').innerText.toLowerCase();
-                const origem = linha.querySelector('td:nth-child(3)').innerText.toLowerCase();
-                const descricao = linha.querySelector('td:nth-child(4)').innerText.toLowerCase();
+                const colOrigem = linha.cells[1].innerText.toLowerCase();
+                const colDescricao = linha.cells[2].innerText.toLowerCase();
+                const colAcoes = linha.cells[3].innerText.toLowerCase();
 
-                const matchTipo = !fTipo || tipo.includes(fTipo);
-                const matchOrigem = origem.includes(fOrigem);
-                const matchDescricao = descricao.includes(fDescricao);
+                const correspondeOrigem = !origemFiltro || colOrigem.includes(origemFiltro);
+                const correspondeDescricao = !descricaoFiltro || colDescricao.includes(descricaoFiltro);
+                const correspondeAcao = !acaoFiltro || colAcoes.includes(acaoFiltro);
 
-                if (matchTipo && matchOrigem && matchDescricao) {
+                if (correspondeOrigem && correspondeDescricao && correspondeAcao) {
                     linha.style.display = '';
                 } else {
                     linha.style.display = 'none';
                 }
             });
-        }
-
-        function conectarIntegracao(origem) {
-            alert(`Testando e estabelecendo conexão com ${origem}...\n\nConexão realizada com sucesso!`);
-        }
-
-        function abrirModalFormulário(modo, btn = null) {
-            const modal = document.getElementById('modalFormulario');
-            const titulo = document.getElementById('modalTitle');
-            const tipoInput = document.getElementById('formTipo');
-            const origemInput = document.getElementById('formOrigem');
-            const descInput = document.getElementById('formDescricao');
-
-            if (modo === 'nova') {
-                trEdicaoAtual = null;
-                titulo.innerText = 'Nova Integração';
-                tipoInput.value = 'Desenvolvimento';
-                origemInput.value = '';
-                descInput.value = '';
-            } else {
-                trEdicaoAtual = btn.closest('tr');
-                const tipoAtual = trEdicaoAtual.querySelector('td:nth-child(2)').innerText.trim();
-                const origemAtual = trEdicaoAtual.querySelector('td:nth-child(3)').innerText.trim();
-                const descAtual = trEdicaoAtual.querySelector('td:nth-child(4)').innerText.trim();
-
-                titulo.innerText = `Editar Integração — ${origemAtual}`;
-                tipoInput.value = tipoAtual;
-                origemInput.value = origemAtual;
-                descInput.value = descAtual;
-            }
-
-            modal.style.display = 'flex';
-        }
-
-        function fecharModalFormulário() {
-            document.getElementById('modalFormulario').style.display = 'none';
-        }
-
-        function salvarIntegracao(e) {
-            e.preventDefault();
-            const tipoVal = document.getElementById('formTipo').value;
-            const origemVal = document.getElementById('formOrigem').value;
-            const descVal = document.getElementById('formDescricao').value;
-
-            if (trEdicaoAtual) {
-                trEdicaoAtual.querySelector('td:nth-child(2)').innerHTML = `<span class="badge-categoria">${tipoVal}</span>`;
-                trEdicaoAtual.querySelector('td:nth-child(3)').innerHTML = `<strong>${origemVal}</strong>`;
-                trEdicaoAtual.querySelector('td:nth-child(4)').innerText = descVal;
-                alert('Integração atualizada com sucesso!');
-            } else {
-                alert('Nova integração cadastrada com sucesso!');
-            }
-
-            fecharModalFormulário();
-        }
-
-        function excluirLinha(btn) {
-            const tr = btn.closest('tr');
-            if (confirm('Deseja mover esta integração para a lixeira?')) {
-                tr.remove();
-            }
-        }
-
-        function excluirSelecionados() {
-            const checkboxes = document.querySelectorAll('#integracaoTableBody .item-checkbox:checked');
-            if (checkboxes.length === 0) {
-                alert('Nenhum item selecionado.');
-                return;
-            }
-            if (confirm(`Deseja mover os ${checkboxes.length} itens selecionados para a lixeira?`)) {
-                checkboxes.forEach(cb => cb.closest('tr').remove());
-                alert('Itens selecionados movidos para a lixeira.');
-            }
         }
 
         function encerrarSessao(e) {

@@ -5,6 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .info-box-regressao {
+            background-color: #e0f2fe;
+            border-left: 4px solid #0284c7;
+            color: #0369a1;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
@@ -38,7 +64,7 @@
             <li><a href="agendamento.html" class="active">Agendamento</a></li>
 
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
-                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+                <a href="#" onclick="encerrarSessao(event)">Encerrar Sessão</a>
             </li>
         </ul>
     </aside>
@@ -159,28 +185,65 @@
     </main>
 
     <!-- Modal para Cadastro / Edição de Agendamento -->
-    <div id="modalAgendamento" class="modal">
-        <div class="modal-content">
+    <div id="modalAgendamento" class="modal" style="display: none;">
+        <div class="modal-content modal-lg">
             <h2 id="modalTitulo" class="modal-title">Novo Agendamento</h2>
+            
+            <div class="info-box-regressao">
+                <strong>Aviso do Sistema:</strong> Todo agendamento realiza automaticamente uma nova regressão capturando a tela de <em>Recebido</em> antes de efetuar a comparação completa dos dados.
+            </div>
+
             <form onsubmit="salvarAgendamento(event)">
                 <input type="hidden" id="agendamentoId">
 
-                <div class="form-group">
-                    <label for="origemAgendamento">Origem *</label>
-                    <select id="origemAgendamento" required>
-                        <option value="API">API</option>
-                        <option value="Web">Web</option>
-                        <option value="Mobile">Mobile</option>
-                        <option value="Desktop">Desktop</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="origemAgendamento">Origem *</label>
+                        <select id="origemAgendamento" required>
+                            <option value="API">API</option>
+                            <option value="Web">Web</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="Desktop">Desktop</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="diaSemanaAgendamento">Dia da Semana *</label>
+                        <select id="diaSemanaAgendamento" required>
+                            <option value="Segunda-feira">Segunda-feira</option>
+                            <option value="Terça-feira">Terça-feira</option>
+                            <option value="Quarta-feira">Quarta-feira</option>
+                            <option value="Quinta-feira">Quinta-feira</option>
+                            <option value="Sexta-feira">Sexta-feira</option>
+                            <option value="Sábado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="horarioAgendamento">Horário (Hora e Minuto) *</label>
+                        <input type="time" id="horarioAgendamento" required class="input-inline">
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="descricaoAgendamento">Descrição *</label>
-                    <textarea id="descricaoAgendamento" rows="4" required class="input-inline" style="max-width: 100%; width: 100%;" placeholder="Descreva os detalhes do agendamento..."></textarea>
+                    <textarea id="descricaoAgendamento" rows="3" required class="input-inline" style="max-width: 100%; width: 100%;" placeholder="Descreva os detalhes do agendamento..."></textarea>
                 </div>
 
-                <div class="modal-actions">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="toleranciaPixels">Tolerância de Pixels (px) *</label>
+                        <input type="number" id="toleranciaPixels" min="0" step="1" placeholder="Ex: 5" required class="input-inline">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="toleranciaMs">Tolerância de Tempo (ms) *</label>
+                        <input type="number" id="toleranciaMs" min="0" step="50" placeholder="Ex: 500" required class="input-inline">
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 15px;">
                     <button type="button" class="btn btn-secondary" onclick="fecharModalAgendamento()">Cancelar</button>
                     <button type="submit" class="btn">Salvar Agendamento</button>
                 </div>
@@ -217,7 +280,11 @@
             document.getElementById('modalTitulo').innerText = 'Novo Agendamento';
             document.getElementById('agendamentoId').value = '';
             document.getElementById('origemAgendamento').value = 'API';
+            document.getElementById('diaSemanaAgendamento').value = 'Segunda-feira';
+            document.getElementById('horarioAgendamento').value = '08:00';
             document.getElementById('descricaoAgendamento').value = '';
+            document.getElementById('toleranciaPixels').value = '0';
+            document.getElementById('toleranciaMs').value = '200';
             document.getElementById('modalAgendamento').style.display = 'flex';
         }
 
@@ -241,14 +308,45 @@
             document.getElementById('agendamentoId').value = origem;
             document.getElementById('origemAgendamento').value = origem;
 
-            const descricoes = {
-                'API': 'Execução agendada diária para testes de carga e validação dos endpoints da API REST.',
-                'Web': 'Agendamento de regressão de interface visual nos navegadores para o portal Web.',
-                'Mobile': 'Rotina semanal de testes automatizados de usabilidade e compatibilidade para dispositivos Mobile.',
-                'Desktop': 'Verificação periódica de desempenho e uso de recursos para o aplicativo Desktop.'
+            const dadosExemplo = {
+                'API': {
+                    descricao: 'Execução agendada diária para testes de carga e validação dos endpoints da API REST.',
+                    dia: 'Segunda-feira',
+                    horario: '03:00',
+                    pixels: 0,
+                    ms: 150
+                },
+                'Web': {
+                    descricao: 'Agendamento de regressão de interface visual nos navegadores para o portal Web.',
+                    dia: 'Quarta-feira',
+                    horario: '22:00',
+                    pixels: 10,
+                    ms: 500
+                },
+                'Mobile': {
+                    descricao: 'Rotina semanal de testes automatizados de usabilidade e compatibilidade para dispositivos Mobile.',
+                    dia: 'Sexta-feira',
+                    horario: '23:30',
+                    pixels: 5,
+                    ms: 300
+                },
+                'Desktop': {
+                    descricao: 'Verificação periódica de desempenho e uso de recursos para o aplicativo Desktop.',
+                    dia: 'Domingo',
+                    horario: '01:00',
+                    pixels: 2,
+                    ms: 250
+                }
             };
 
-            document.getElementById('descricaoAgendamento').value = descricoes[origem] || '';
+            const item = dadosExemplo[origem] || { descricao: '', dia: 'Segunda-feira', horario: '08:00', pixels: 0, ms: 200 };
+
+            document.getElementById('descricaoAgendamento').value = item.descricao;
+            document.getElementById('diaSemanaAgendamento').value = item.dia;
+            document.getElementById('horarioAgendamento').value = item.horario;
+            document.getElementById('toleranciaPixels').value = item.pixels;
+            document.getElementById('toleranciaMs').value = item.ms;
+
             document.getElementById('modalAgendamento').style.display = 'flex';
         }
 

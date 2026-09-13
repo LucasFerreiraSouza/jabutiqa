@@ -6,6 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganho Sistema de Gestão MENU</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .radio-integracao-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #eef2f7;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -54,7 +73,6 @@
     </aside>
 
     <main class="main-content">
-        <!-- Novo Container em Destaque: Resultado da Simulação -->
         <!-- Container: Resultado de Custo -->
         <section class="card container-destaque margin-bottom-20">
             <div class="destaque-header">
@@ -117,6 +135,21 @@
             <h1>Premissas e Dados Reais</h1>
             <p>Variáveis e parâmetros reais configurados para o cálculo de ganho e simulação de custos operacionais.</p>
 
+            <!-- Barra de Ferramentas com o Botão Gerar Relatório ao lado dos Filtros -->
+            <div class="toolbar margin-bottom-20">
+                <div class="toolbar-group">
+                    <button class="btn onclick" onclick="abrirModalRelatorio()">Gerar Relatório</button>
+
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterVariavel" placeholder="Filtrar por Variável..." class="min-width-220" oninput="filtrarPremissas()">
+                    </div>
+
+                    <div class="form-group margin-none">
+                        <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220" oninput="filtrarPremissas()">
+                    </div>
+                </div>
+            </div>
+
             <!-- Custo sem Jabuti QA -->
             <div class="card card-bordered margin-bottom-20">
                 <h3>Custo sem Jabuti QA</h3>
@@ -129,7 +162,7 @@
                                 <th>ORIGEM</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="premissas-body">
                             <tr>
                                 <td><strong>Quantidade de comparações realizadas</strong></td>
                                 <td>100</td>
@@ -166,7 +199,7 @@
                                 <th>ORIGEM</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="premissas-body">
                             <tr>
                                 <td><strong>Quantidade de comparações realizadas</strong></td>
                                 <td>100</td>
@@ -177,7 +210,6 @@
                                 <td>5 min</td>
                                 <td><span class="badge">Automático</span></td>
                             </tr>
-
 
                             <tr>
                                 <td><strong>Tempo médio de preenchimento manual do núcleo</strong></td>
@@ -203,6 +235,60 @@
             </div>
         </section>
     </main>
+
+    <!-- Modal Gerar Relatório -->
+    <div class="modal" id="modalRelatorio" style="display: none;">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2>+ Gerar Relatório de Ganhos e ROI</h2>
+            
+            <div class="margin-top-15">
+                <button type="button" class="btn" style="width: 100%; padding: 10px; font-weight: bold;" onclick="baixarPDF()">Baixar PDF com base em todos registros abaixo</button>
+            </div>
+
+            <form onsubmit="salvarRelatorio(event)" class="margin-top-15">
+                <!-- Radio Button: Usar integração configurada? -->
+                <div class="form-group margin-top-15">
+                    <label><strong>Usar integração configurada?</strong></label>
+                    <div class="radio-integracao-group margin-top-5">
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="nao" checked onchange="toggleModoIntegracao()">
+                            Não (Copiar prompt e colar resposta manualmente)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="sim" onchange="toggleModoIntegracao()">
+                            Sim (Gerar automaticamente via API de IA)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- MODO COM INTEGRACAO: Botão Gerar com IA -->
+                <div id="containerModoIntegrado" class="margin-top-15" style="display: none;">
+                    <button type="button" class="btn btn-auth" style="width: 100%; padding: 12px; font-size: 15px;" onclick="gerarComIA()">Gerar com IA</button>
+                </div>
+
+                <!-- MODO MANUAL: Exibido apenas quando "Usar integração configurada?" for NÃO -->
+                <div id="containerModoManual">
+                    <!-- Prompt da Análise -->
+                    <div class="form-group margin-top-15">
+                        <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão (Copie e envie para a IA):</strong></label>
+                        <textarea id="formPromptGerado" readonly style="height: 120px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
+                        <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
+                    </div>
+
+                    <!-- Campo para Colar a Resposta da IA -->
+                    <div class="form-group margin-top-15">
+                        <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
+                        <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA após a execução do prompt..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modalRelatorio')">Fechar</button>
+                    <button type="submit" class="btn">Salvar Relatório</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <style>
         /* Estilos do Container em Destaque */
@@ -312,6 +398,85 @@
     <script>
         function salvarPremissas() {
             alert('Premissas salvas com sucesso!');
+        }
+
+        function filtrarPremissas() {
+            const fVar = document.getElementById('filterVariavel').value.toLowerCase();
+            const fOrig = document.getElementById('filterOrigem').value.toLowerCase();
+
+            document.querySelectorAll('.premissas-body tr').forEach(row => {
+                const varText = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
+                const origText = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+
+                if (varText.includes(fVar) && origText.includes(fOrig)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function abrirModalRelatorio() {
+            document.querySelector('input[name="usarIntegracao"][value="nao"]').checked = true;
+            toggleModoIntegracao();
+            gerarPromptGanho();
+            document.getElementById('modalRelatorio').style.display = 'flex';
+        }
+
+        function toggleModoIntegracao() {
+            const valor = document.querySelector('input[name="usarIntegracao"]:checked').value;
+            const containerManual = document.getElementById('containerModoManual');
+            const containerIntegrado = document.getElementById('containerModoIntegrado');
+
+            if (valor === 'sim') {
+                containerManual.style.display = 'none';
+                containerIntegrado.style.display = 'block';
+            } else {
+                containerManual.style.display = 'block';
+                containerIntegrado.style.display = 'none';
+            }
+        }
+
+        function gerarPromptGanho() {
+            const prompt = `PROMPT DE ANÁLISE DE GANHO E RETORNO SOBRE INVESTIMENTO (ROI)
+
+Atue como Analista Financeiro de Operações de QA. Avalie os indicadores de eficiência técnica abaixo:
+
+RESULTADOS DE CUSTO E TEMPO:
+- Economia de Custo: R$ 661,50 (Redução de 98,00%)
+- Tempo Evitado: 1.000 min (Redução de 66,67%)
+
+INSTRUÇÕES DE RESPOSTA:
+1. Resumo executivo do impacto financeiro e operacional obtido com a automação.
+2. Análise da relação custo x benefício comparando o método tradicional vs Jabuti QA.
+3. Parecer conclusivo de aptidão sobre a escalabilidade operacional.`;
+
+            document.getElementById('formPromptGerado').value = prompt;
+        }
+
+        function copiarPromptModal() {
+            const promptText = document.getElementById('formPromptGerado').value;
+            navigator.clipboard.writeText(promptText).then(() => {
+                alert('Prompt de Análise copiado com sucesso!');
+            });
+        }
+
+        function gerarComIA() {
+            alert('Conectando à API de IA cadastrada...\nRelatório de Ganhos gerado com sucesso!');
+        }
+
+        function baixarPDF() {
+            alert('Gerando e baixando PDF consolidado dos relatórios de ganho...');
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function salvarRelatorio(e) {
+            e.preventDefault();
+            alert('Relatório de ganhos salvo com sucesso!');
+            fecharModal('modalRelatorio');
         }
 
         function encerrarSessao(e) {
