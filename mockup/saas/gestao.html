@@ -144,10 +144,11 @@
                     <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
                 </div>
 
-                <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
+                <div class="org-name" id="displayOrgSidebar">Jabuti QA Soluções</div>
             </div>
             <ul class="saas-nav">
-                <li><a href="painel.html">Painel Geral</a></li>
+                <li><a href="inicio.html">Início</a></li>
+                <li><a href="ganho.html">Ganho</a></li>
                 <li><a href="loja.html">Planos & Assinatura</a></li>
                 <li><a href="gestao.html" class="active">Gestão de Usuários</a></li>
                 <li><a href="download.html">Downloads (.EXE)</a></li>
@@ -191,13 +192,14 @@
                         </div>
                         <div class="user-info-item">
                             <label for="minhaEmpresa">Empresa</label>
-                            <input type="text" id="minhaEmpresa" value="JabutiQA Soluções" required>
+                            <input type="text" id="minhaEmpresa" value="Jabuti QA Soluções
+" required>
                         </div>
                         <div class="user-info-item">
                             <label for="minhaCredencial">Sua Credencial (.EXE)</label>
                             <div class="input-copy-group">
                                 <input type="text" id="minhaCredencial" value="KEY-LUCAS-88F9-2026" readonly disabled>
-                                <button type="button" class="btn-action" style="padding: 0 15px; font-size: 0.8rem; background-color: #475569;" onclick="copiarMinhaCredencial()">Copiar</button>
+                                <button type="button" class="btn-action" style="padding: 0 15px; font-size: 0.8rem; background-color: #000000;" onclick="copiarMinhaCredencial()">Copiar</button>
                             </div>
                         </div>
                     </div>
@@ -234,7 +236,8 @@
                             </div>
                             <div class="user-info-item">
                                 <label for="novaEmpresa">Empresa *</label>
-                                <input type="text" id="novaEmpresa" placeholder="Ex: JabutiQA Soluções" required>
+                                <input type="text" id="novaEmpresa" placeholder="Ex: Jabuti QA Soluções
+" required>
                             </div>
                             <div class="user-info-item">
                                 <label for="novoPerfil">Perfil *</label>
@@ -384,7 +387,7 @@
         function carregarDadosSessao() {
             const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
             const email = localStorage.getItem('saas_usuario_email') || 'lucasferreirasouza22@gmail.com';
-            const org = localStorage.getItem('saas_organizacao_nome') || 'JabutiQA Soluções';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'Jabuti QA Soluções';
 
             if (sessaoAtiva !== 'true') {
                 window.location.href = 'login.html';

@@ -62,10 +62,11 @@
                     <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
                 </div>
 
-                <div class="org-name" id="displayOrgSidebar">Carregando organização...</div>
+                <div class="org-name" id="displayOrgSidebar">Jabuti QA Soluções</div>
             </div>
             <ul class="saas-nav">
-                <li><a href="painel.html">Painel Geral</a></li>
+                <li><a href="inicio.html">Início</a></li>
+                <li><a href="ganho.html">Ganho</a></li>
                 <li><a href="loja.html">Planos & Assinatura</a></li>
                 <li><a href="gestao.html">Gestão de Usuários</a></li>
                 <li><a href="download.html" class="active">Downloads (.EXE)</a></li>
@@ -157,7 +158,7 @@
         function carregarDadosSessao() {
             const sessaoAtiva = localStorage.getItem('saas_sessao_ativa');
             const email = localStorage.getItem('saas_usuario_email') || 'usuario@empresa.com.br';
-            const org = localStorage.getItem('saas_organizacao_nome') || 'JabutiQA Soluções';
+            const org = localStorage.getItem('saas_organizacao_nome') || 'Jabuti QA Soluções';
 
             if (sessaoAtiva !== 'true') {
                 window.location.href = 'login.html';

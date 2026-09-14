@@ -14,10 +14,9 @@
             <div class="login-brand">
                 <span class="badge-exe">SaaS Cloud Platform</span>
                 <h1>LOGIN</h1>
-                        <!-- ADICIONE A IMAGEM AQUI (Abaixo do <h2>MENU</h2>) -->
-        <div class="banner-painel">
-            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
-        </div>
+                <div class="banner-painel">
+                    <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+                </div>
                 <p>Gestão Comercial, Licenciamento e Consumo</p>
             </div>
 
@@ -116,6 +115,11 @@
 
     <!-- LÓGICA DE NAVEGAÇÃO E AUTENTICAÇÃO SAAS -->
     <script>
+        // Limpa qualquer sessão corrompida ao abrir a tela de login
+        window.addEventListener('DOMContentLoaded', () => {
+            localStorage.removeItem('MENU_sessao_ativa');
+        });
+
         // Alternar entre abas Entrar e Criar Conta
         function alternarAba(aba) {
             const tabs = document.querySelectorAll('.tab-btn');
@@ -158,17 +162,18 @@
 
             setTimeout(() => {
                 if (email && senha) {
+                    // Chave padrão utilizada nas checagens do sistema
+                    localStorage.setItem('MENU_sessao_ativa', 'true');
                     localStorage.setItem('saas_usuario_email', email);
-                    localStorage.setItem('saas_sessao_ativa', 'true');
                     
-                    // Redireciona para a página principal do SaaS
-                    window.location.href = 'painel.html';
+                    // Redireciona corretamente para o início.html
+                    window.location.href = 'inicio.html';
                 } else {
                     exibirAlerta('E-mail ou senha inválidos.', 'erro');
                     btn.disabled = false;
                     btn.innerText = 'Acessar Painel SaaS';
                 }
-            }, 1000);
+            }, 800);
         }
 
         // Cadastro de Conta + Organização
@@ -183,14 +188,14 @@
             btn.innerText = 'Criando Conta & Organização...';
 
             setTimeout(() => {
+                localStorage.setItem('MENU_sessao_ativa', 'true');
                 localStorage.setItem('saas_usuario_nome', nome);
                 localStorage.setItem('saas_usuario_email', email);
                 localStorage.setItem('saas_organizacao_nome', org);
-                localStorage.setItem('saas_sessao_ativa', 'true');
                 
-                // Redireciona para a loja do SaaS
-                window.location.href = 'loja.html';
-            }, 1200);
+                // Redireciona para o início.html
+                window.location.href = 'inicio.html';
+            }, 1000);
         }
 
         // Envio de senha

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganho Sistema de Gestão MENU</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .radio-integracao-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #eef2f7;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Estilos do Container Destaque / KPIs */
+        .container-destaque {
+            background: #ffffff;
+            border-left: 5px solid #2e7d32;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .destaque-header h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: #1b5e20;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .kpi-grid-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .kpi-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 1200px) {
+            .kpi-grid-5, .kpi-grid-4 {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+
+        .kpi-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .kpi-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #212529;
+        }
+
+        .kpi-value.text-muted { color: #868e96; text-decoration: line-through; }
+        .kpi-value.text-primary { color: #0d6efd; }
+        .kpi-value.text-warning { color: #d97706; }
+        .kpi-card.highlight-success { background-color: #e8f5e9; border-color: #c8e6c9; }
+        .kpi-card.highlight-success .kpi-value { color: #2e7d32; }
+        .kpi-card.highlight-badge { background-color: #2e7d32; color: #ffffff; border-color: #2e7d32; }
+        .kpi-card.highlight-badge .kpi-label { color: #e8f5e9; }
+        .kpi-card.highlight-badge .kpi-value { color: #ffffff; }
+
+        /* Estilos de Badges e Tabela */
+        .input-mini {
+            width: 65px;
+            padding: 4px 6px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .badge-auto {
+            background-color: #e2e8f0;
+            color: #475569;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .table-membros td, .table-membros th {
+            vertical-align: middle;
+            font-size: 12px;
+            padding: 8px 10px;
+        }
+
+        .rank-tag {
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        .rank-top { background-color: #dcfce7; color: #15803d; }
+        .rank-mid { background-color: #fef9c3; color: #a16207; }
+        .rank-low { background-color: #fee2e2; color: #b91c1c; }
+
+        .metric-cell {
+            line-height: 1.3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="saas-container">
+        <!-- Sidebar de Navegação SaaS -->
+        <aside class="saas-sidebar">
+            <div class="brand">
+                <h2>MENU</h2>
+                <div class="banner-painel">
+                    <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+                </div>
+                <div class="org-name" id="displayOrgSidebar">Jabuti QA Soluções</div>
+            </div>
+            <ul class="saas-nav">
+                <li><a href="inicio.html">Início</a></li>
+                <li><a href="ganho.html" class="active">Ganho</a></li>
+                <li><a href="loja.html">Planos & Assinatura</a></li>
+                <li><a href="gestao.html">Gestão de Usuários</a></li>
+                <li><a href="download.html">Downloads (.EXE)</a></li>
+                <li><a href="suporte.html">Suporte & FAQ</a></li>
+                <li><a href="#" style="margin-top: 25px;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Cabeçalho Global: Resultado de Custo Consolidado com Custo da Licença (+ R$10 por usuário) -->
+            <section class="card container-destaque margin-bottom-20">
+                <div class="destaque-header">
+                    <h2>Resultado Global de Custo (Consolidado)</h2>
+                </div>
+                <div class="kpi-grid-5 margin-bottom-20">
+                    <div class="kpi-card">
+                        <span class="kpi-label">Custo sem Jabuti QA</span>
+                        <span class="kpi-value text-muted" id="globalCustoSem">R$ 0,00</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-label">Custo com Jabuti QA</span>
+                        <span class="kpi-value text-primary" id="globalCustoCom">R$ 0,00</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-label">Licenças Jabuti QA</span>
+                        <span class="kpi-value text-warning" id="globalCustoLicenca">R$ 0,00</span>
+                    </div>
+                    <div class="kpi-card highlight-success">
+                        <span class="kpi-label">Economia Líquida</span>
+                        <span class="kpi-value" id="globalEconomia">R$ 0,00</span>
+                    </div>
+                    <div class="kpi-card highlight-badge">
+                        <span class="kpi-label">Redução de Custo</span>
+                        <span class="kpi-value" id="globalReducaoCusto">0,00%</span>
+                    </div>
+                </div>
+
+                <div class="destaque-header">
+                    <h2>Resultado Global de Tempo (Consolidado)</h2>
+                </div>
+                <div class="kpi-grid-4">
+                    <div class="kpi-card">
+                        <span class="kpi-label">Tempo sem Jabuti QA</span>
+                        <span class="kpi-value text-muted" id="globalTempoSem">0 min</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-label">Tempo com Jabuti QA</span>
+                        <span class="kpi-value text-primary" id="globalTempoCom">0 min</span>
+                    </div>
+                    <div class="kpi-card highlight-success">
+                        <span class="kpi-label">Tempo Evitado</span>
+                        <span class="kpi-value" id="globalTempoEvitado">0 min</span>
+                    </div>
+                    <div class="kpi-card highlight-badge">
+                        <span class="kpi-label">Redução de Tempo</span>
+                        <span class="kpi-value" id="globalReducaoTempo">0,00%</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabela Ordenável com Premissas e Variáveis Automáticas Jabuti QA -->
+            <section class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;" class="margin-bottom-15">
+                    <div>
+                        <h1>Premissas por Membro & Simulações</h1>
+                        <p>Variáveis automáticas capturadas pelo Jabuti QA e premissas manuais configuráveis pelo Admin (Débito fixo de R$ 10,00 de licença por usuário incluso no cálculo).</p>
+                    </div>
+                    <button class="btn" onclick="abrirModalRelatorio()">Gerar Relatório Geral</button>
+                </div>
+
+                <!-- Barra de Ferramentas: Filtro e Ordenação -->
+                <div class="toolbar margin-bottom-20" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <div class="form-group margin-none">
+                        <input type="text" id="searchMembro" placeholder="Buscar membro ou cargo..." class="min-width-220" oninput="filtrarEOrdenarMembros()">
+                    </div>
+
+                    <div class="form-group margin-none" style="display: flex; align-items: center; gap: 8px;">
+                        <label for="orderMembros" style="font-size: 13px; font-weight: bold;">Ordenar por:</label>
+                        <select id="orderMembros" onchange="filtrarEOrdenarMembros()" style="padding: 6px; border-radius: 4px; border: 1px solid #cbd5e1;">
+                            <option value="melhor">Maior Economia</option>
+                            <option value="pior">Menor Economia</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table table-membros">
+                        <thead>
+                            <tr>
+                                <th>Ranking</th>
+                                <th>Membro / Cargo</th>
+                                <th>Qtd. Comp. (Sem) <br><small class="text-muted">Automático</small></th>
+                                <th>Tempo Médio Comp. <br><small class="text-muted">Usuário</small></th>
+                                <th>Custo/Min <br><small class="text-muted">Usuário</small></th>
+                                <th>Qtd. Comp. (Com) <br><small class="text-muted">Automático</small></th>
+                                <th>Tempo Médio Jabuti <br><small class="text-muted">Automático</small></th>
+                                <th>Tempo Preench. Núcleo <br><small class="text-muted">Usuário</small></th>
+                                <th>Custo Preench. Núcleo <br><small class="text-muted">Usuário</small></th>
+                                <th>Resultado Custo</th>
+                                <th>Resultado Tempo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="membrosBody">
+                            <!-- Preenchido dinamicamente pelo JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-right margin-top-20">
+                    <button class="btn" onclick="salvarPremissasMembros()">Salvar Alterações das Premissas</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Gerar Relatório -->
+    <div class="modal" id="modalRelatorio" style="display: none;">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2>+ Gerar Relatório de Ganhos e ROI</h2>
+
+            <div class="margin-top-15">
+                <button type="button" class="btn" style="width: 100%; padding: 10px; font-weight: bold;" onclick="baixarPDF()">Baixar PDF com base em todos registros abaixo</button>
+            </div>
+
+            <form onsubmit="salvarRelatorio(event)" class="margin-top-15">
+                <div class="form-group margin-top-15">
+                    <label><strong>Usar integração configurada?</strong></label>
+                    <div class="radio-integracao-group margin-top-5">
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="nao" checked onchange="toggleModoIntegracao()">
+                            Não (Copiar prompt e colar resposta manualmente)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="usarIntegracao" value="sim" onchange="toggleModoIntegracao()">
+                            Sim (Gerar automaticamente via API de IA)
+                        </label>
+                    </div>
+                </div>
+
+                <div id="containerModoIntegrado" class="margin-top-15" style="display: none;">
+                    <button type="button" class="btn btn-auth" style="width: 100%; padding: 12px; font-size: 15px;" onclick="gerarComIA()">Gerar com IA</button>
+                </div>
+
+                <div id="containerModoManual">
+                    <div class="form-group margin-top-15">
+                        <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão:</strong></label>
+                        <textarea id="formPromptGerado" readonly style="height: 120px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
+                        <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
+                    </div>
+
+                    <div class="form-group margin-top-15">
+                        <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
+                        <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modalRelatorio')">Fechar</button>
+                    <button type="submit" class="btn">Salvar Relatório</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const CUSTO_LICENCA_POR_USUARIO = 10.00; // Débito por usuário
+
+        let listaMembros = [
+            { 
+                id: 1, 
+                nome: "Ana Souza", 
+                cargo: "Coordenadora de QA", 
+                qtdCompSem: 100, 
+                tempoComp: 15,   
+                custoComp: 0.45, 
+                qtdCompCom: 100, 
+                tempoCompJabuti: 5, 
+                tempoNucleo: 30, 
+                custoNucleo: 0.45 
+            },
+            { 
+                id: 2, 
+                nome: "Carlos Oliveira", 
+                cargo: "Analista de Testes Sr.", 
+                qtdCompSem: 150, 
+                tempoComp: 20, 
+                custoComp: 0.60, 
+                qtdCompCom: 150, 
+                tempoCompJabuti: 5, 
+                tempoNucleo: 40, 
+                custoNucleo: 0.60 
+            },
+            { 
+                id: 3, 
+                nome: "Mariana Lima", 
+                cargo: "Desenvolvedora Fullstack", 
+                qtdCompSem: 80, 
+                tempoComp: 12, 
+                custoComp: 0.50, 
+                qtdCompCom: 80, 
+                tempoCompJabuti: 5, 
+                tempoNucleo: 25, 
+                custoNucleo: 0.50 
+            },
+            { 
+                id: 4, 
+                nome: "Roberto Alves", 
+                cargo: "DevOps Engineer", 
+                qtdCompSem: 60, 
+                tempoComp: 10, 
+                custoComp: 0.40, 
+                qtdCompCom: 60, 
+                tempoCompJabuti: 5, 
+                tempoNucleo: 20, 
+                custoNucleo: 0.40 
+            }
+        ];
+
+        // Cálculo das métricas considerando o débito de R$ 10,00 da licença por usuário
+        function calcularMetricasMembro(membro) {
+            const custoSem = (membro.qtdCompSem * membro.tempoComp * membro.custoComp) + (membro.tempoNucleo * membro.custoNucleo);
+            // Custo com Jabuti QA = Custo da Operação + R$ 10,00 da licença
+            const custoOperacionalCom = (membro.qtdCompCom * membro.tempoCompJabuti * membro.custoComp);
+            const custoComTotal = custoOperacionalCom + CUSTO_LICENCA_POR_USUARIO;
+
+            const economiaCusto = custoSem - custoComTotal;
+            const reducaoCustoPct = custoSem > 0 ? (economiaCusto / custoSem) * 100 : 0;
+
+            const tempoSem = (membro.qtdCompSem * membro.tempoComp) + membro.tempoNucleo;
+            const tempoCom = (membro.qtdCompCom * membro.tempoCompJabuti);
+            const tempoEvitado = tempoSem - tempoCom;
+            const reducaoTempoPct = tempoSem > 0 ? (tempoEvitado / tempoSem) * 100 : 0;
+
+            return {
+                custoSem, 
+                custoComTotal, 
+                custoLicenca: CUSTO_LICENCA_POR_USUARIO,
+                economiaCusto, 
+                reducaoCustoPct,
+                tempoSem, 
+                tempoCom, 
+                tempoEvitado, 
+                reducaoTempoPct
+            };
+        }
+
+        // Atualizar Indicadores Globais no Cabeçalho
+        function atualizarKPIsGlobais() {
+            let totalCustoSem = 0, totalCustoCom = 0, totalLicenca = 0, totalEconomia = 0;
+            let totalTempoSem = 0, totalTempoCom = 0, totalTempoEvitado = 0;
+
+            listaMembros.forEach(m => {
+                const res = calcularMetricasMembro(m);
+                totalCustoSem += res.custoSem;
+                totalCustoCom += res.custoComTotal;
+                totalLicenca += res.custoLicenca;
+                totalEconomia += res.economiaCusto;
+
+                totalTempoSem += res.tempoSem;
+                totalTempoCom += res.tempoCom;
+                totalTempoEvitado += res.tempoEvitado;
+            });
+
+            const reducaoCustoGlobal = totalCustoSem > 0 ? (totalEconomia / totalCustoSem) * 100 : 0;
+            const reducaoTempoGlobal = totalTempoSem > 0 ? (totalTempoEvitado / totalTempoSem) * 100 : 0;
+
+            document.getElementById('globalCustoSem').innerText = `R$ ${totalCustoSem.toFixed(2)}`;
+            document.getElementById('globalCustoCom').innerText = `R$ ${totalCustoCom.toFixed(2)}`;
+            document.getElementById('globalCustoLicenca').innerText = `R$ ${totalLicenca.toFixed(2)}`;
+            document.getElementById('globalEconomia').innerText = `R$ ${totalEconomia.toFixed(2)}`;
+            document.getElementById('globalReducaoCusto').innerText = `${reducaoCustoGlobal.toFixed(2)}%`;
+
+            document.getElementById('globalTempoSem').innerText = `${totalTempoSem.toLocaleString()} min`;
+            document.getElementById('globalTempoCom').innerText = `${totalTempoCom.toLocaleString()} min`;
+            document.getElementById('globalTempoEvitado').innerText = `${totalTempoEvitado.toLocaleString()} min`;
+            document.getElementById('globalReducaoTempo').innerText = `${reducaoTempoGlobal.toFixed(2)}%`;
+        }
+
+        // Renderizar Tabela de Membros
+        function renderizarTabela(membros) {
+            const tbody = document.getElementById('membrosBody');
+            tbody.innerHTML = '';
+
+            membros.forEach((m, idx) => {
+                const res = calcularMetricasMembro(m);
+                let rankClass = 'rank-low';
+                if (idx === 0) rankClass = 'rank-top';
+                else if (idx < Math.ceil(membros.length / 2)) rankClass = 'rank-mid';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="rank-tag ${rankClass}">#${idx + 1}</span></td>
+                    <td>
+                        <strong>${m.nome}</strong><br>
+                        <small class="text-muted">${m.cargo}</small>
+                    </td>
+                    <td><span class="badge-auto">${m.qtdCompSem}</span></td>
+                    <td>
+                        <input type="number" class="input-mini" value="${m.tempoComp}" onchange="atualizarCampo(${m.id}, 'tempoComp', this.value)"> min
+                    </td>
+                    <td>
+                        R$ <input type="number" step="0.01" class="input-mini" value="${m.custoComp}" onchange="atualizarCampo(${m.id}, 'custoComp', this.value)">
+                    </td>
+                    <td><span class="badge-auto">${m.qtdCompCom}</span></td>
+                    <td><span class="badge-auto">${m.tempoCompJabuti} min</span></td>
+                    <td>
+                        <input type="number" class="input-mini" value="${m.tempoNucleo}" onchange="atualizarCampo(${m.id}, 'tempoNucleo', this.value)"> min
+                    </td>
+                    <td>
+                        R$ <input type="number" step="0.01" class="input-mini" value="${m.custoNucleo}" onchange="atualizarCampo(${m.id}, 'custoNucleo', this.value)">
+                    </td>
+                    <td class="metric-cell">
+                        <strong style="color: #2e7d32;">R$ ${res.economiaCusto.toFixed(2)}</strong><br>
+                        <small class="text-muted">(${res.reducaoCustoPct.toFixed(1)}%)</small>
+                    </td>
+                    <td class="metric-cell">
+                        <strong style="color: #0d6efd;">${res.tempoEvitado} min</strong><br>
+                        <small class="text-muted">(${res.reducaoTempoPct.toFixed(1)}%)</small>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            atualizarKPIsGlobais();
+        }
+
+        function atualizarCampo(id, campo, valor) {
+            const m = listaMembros.find(item => item.id === id);
+            if (m) {
+                m[campo] = parseFloat(valor) || 0;
+                filtrarEOrdenarMembros();
+            }
+        }
+
+        function filtrarEOrdenarMembros() {
+            const busca = document.getElementById('searchMembro').value.toLowerCase();
+            const ordem = document.getElementById('orderMembros').value;
+
+            let filtrados = listaMembros.filter(m => 
+                m.nome.toLowerCase().includes(busca) || m.cargo.toLowerCase().includes(busca)
+            );
+
+            if (ordem === 'melhor') {
+                filtrados.sort((a, b) => calcularMetricasMembro(b).economiaCusto - calcularMetricasMembro(a).economiaCusto);
+            } else if (ordem === 'pior') {
+                filtrados.sort((a, b) => calcularMetricasMembro(a).economiaCusto - calcularMetricasMembro(b).economiaCusto);
+            } else if (ordem === 'nome') {
+                filtrados.sort((a, b) => a.nome.localeCompare(b.nome));
+            }
+
+            renderizarTabela(filtrados);
+        }
+
+        function salvarPremissasMembros() {
+            alert('Premissas dos membros salvas com sucesso!');
+        }
+
+        function abrirModalRelatorio() {
+            document.querySelector('input[name="usarIntegracao"][value="nao"]').checked = true;
+            toggleModoIntegracao();
+            gerarPromptGanho();
+            document.getElementById('modalRelatorio').style.display = 'flex';
+        }
+
+        function toggleModoIntegracao() {
+            const valor = document.querySelector('input[name="usarIntegracao"]:checked').value;
+            document.getElementById('containerModoManual').style.display = valor === 'sim' ? 'none' : 'block';
+            document.getElementById('containerModoIntegrado').style.display = valor === 'sim' ? 'block' : 'none';
+        }
+
+        function gerarPromptGanho() {
+            document.getElementById('formPromptGerado').value = `PROMPT DE ANÁLISE DE GANHO E ROI DA EQUIPE\n...`;
+        }
+
+        function copiarPromptModal() {
+            navigator.clipboard.writeText(document.getElementById('formPromptGerado').value).then(() => {
+                alert('Prompt de Análise copiado com sucesso!');
+            });
+        }
+
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function gerarComIA() { alert('Gerando com IA...'); }
+        function baixarPDF() { alert('Baixando PDF...'); }
+        function salvarRelatorio(e) { e.preventDefault(); fecharModal('modalRelatorio'); }
+        function encerrarSessaoSaaS(e) { e.preventDefault(); window.location.href = 'login.html'; }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            filtrarEOrdenarMembros();
+        });
+    </script>
+</body>
+
+</html>

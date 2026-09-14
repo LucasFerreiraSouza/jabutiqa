@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - SaaS Sistema de Gestão MENU</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .entity-category-title {
+            font-size: 16px;
+            color: #1e293b;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 5px;
+            font-weight: bold;
+        }
+        .entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 15px 0;
+        }
+        .entity-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #475569;
+        }
+        .entity-list strong {
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+    <aside class="saas-sidebar">
+            <div class="brand">
+                <h2>MENU</h2>
+                <div class="banner-painel">
+                    <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+                </div>
+                <div class="org-name" id="displayOrgSidebar">Jabuti QA Soluções</div>
+            </div>
+            <ul class="saas-nav">
+                <li><a href="inicio.html"class="active">Início</a></li>
+                <li><a href="ganho.html" >Ganho</a></li>
+                <li><a href="loja.html">Planos & Assinatura</a></li>
+                <li><a href="gestao.html">Gestão de Usuários</a></li>
+                <li><a href="download.html">Downloads (.EXE)</a></li>
+                <li><a href="suporte.html">Suporte & FAQ</a></li>
+                <li><a href="#" style="margin-top: 25px;" onclick="encerrarSessaoSaaS(event)">✕ Encerrar Sessão</a></li>
+            </ul>
+        </aside>
+
+    <main class="main-content">
+        <!-- Resumo das Entidades do SaaS -->
+        <section class="card" style="margin-bottom: 20px;">
+            <h2>Resumo das Funcionalidades do SaaS</h2>
+            <p>Visão geral detalhada de cada módulo disponível no painel de controle:</p>
+
+            <ul class="entity-list" style="margin-top: 15px;">
+                <li><strong>Início:</strong> Tela principal e painel de controle geral do SaaS.</li>
+                <li><strong>Ganho:</strong> Métricas consolidadas de otimização, eficiência, custo e retorno financeiro ou temporal.</li>
+                <li><strong>Planos & Assinatura:</strong> Gerenciamento de planos contratados, licenças e renovações de assinatura.</li>
+                <li><strong>Gestão de Usuários:</strong> Controle de cadastros, permissões, cargos e membros associados à organização.</li>
+                <li><strong>Downloads (.EXE):</strong> Área para obtenção de instaladores e executáveis desktop do sistema.</li>
+                <li><strong>Suporte & FAQ:</strong> Central de ajuda, dúvidas frequentes e suporte técnico aos usuários.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarSessao();
+        });
+
+        function verificarSessao() {
+            const sessaoAtiva = localStorage.getItem('MENU_sessao_ativa');
+            if (sessaoAtiva !== 'true') {
+                window.location.href = 'login.html';
+            }
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            localStorage.removeItem('MENU_sessao_ativa');
+            localStorage.removeItem('MENU_usuario');
+            window.location.href = 'login.html';
+        }
+
+        /* Funções para Exportar e Importar Banco de Dados SQLite */
+        function exportarDB() {
+            const blob = new Blob(["SQLite format 3\0"], { type: "application/x-sqlite3" });
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.href = URL.createObjectURL(blob);
+            downloadAnchor.download = `JabutiQA_database_${Date.now()}.db`;
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importarDB(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const extensao = file.name.split('.').pop().toLowerCase();
+                if (['db', 'sqlite', 'sqlite3'].includes(extensao)) {
+                    alert(`Banco de dados SQLite "${file.name}" carregado com sucesso!`);
+                } else {
+                    alert("Por favor, selecione um arquivo de banco de dados SQLite válido (.db ou .sqlite).");
+                }
+            }
+        }
+    </script>
+</body>
+</html>

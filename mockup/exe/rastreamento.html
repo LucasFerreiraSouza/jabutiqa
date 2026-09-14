@@ -51,6 +51,16 @@
             white-space: pre-wrap;
             word-break: break-all;
         }
+        .path-badge {
+            background-color: #f1f5f9;
+            color: #334155;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid #e2e8f0;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -85,7 +95,7 @@
             <li><a href="agendamento.html">Agendamento</a></li>
 
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
-                <a href="#" onclick="encerrarSessao(event)">Encerrar Sessão</a>
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
         </ul>
     </aside>
@@ -106,6 +116,9 @@
                         <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search" oninput="filtrarTabela()">
                     </div>
                     <div class="form-group margin-none">
+                        <input type="text" id="filterCaminho" placeholder="Filtrar por Caminho..." class="input-search" oninput="filtrarTabela()">
+                    </div>
+                    <div class="form-group margin-none">
                         <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search" oninput="filtrarTabela()">
                     </div>
                 </div>
@@ -119,51 +132,56 @@
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
                             </th>
                             <th>Origem</th>
+                            <th>Caminho</th>
                             <th>Descrição</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="rastreamentoTableBody">
-                        <tr data-origem="api" data-desc="rastreamento de artefatos de backend controllers routes e models">
+                        <tr data-origem="api" data-caminho="C:\Users\Lucas Ferreira\Desktop\portfolio\back">
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="1"></td>
                             <td><strong>API</strong></td>
+                            <td><span class="path-badge">C:\Users\Lucas Ferreira\Desktop\portfolio\back</span></td>
                             <td>Rastreamento de artefatos de Backend (Controllers, Routes e Models).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('API')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('API', 'C:\\Users\\Lucas Ferreira\\Desktop\\portfolio\\back')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
                                 </div>
                             </td>
                         </tr>
-                        <tr data-origem="web" data-desc="rastreamento de artefatos de frontend web pages hooks e services">
+                        <tr data-origem="web" data-caminho="C:\Users\Lucas Ferreira\Desktop\portfolio\front">
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
                             <td><strong>Web</strong></td>
+                            <td><span class="path-badge">C:\Users\Lucas Ferreira\Desktop\portfolio\front</span></td>
                             <td>Rastreamento de artefatos de Frontend Web (Pages, Hooks e Services).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Web')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Web', 'C:\\Users\\Lucas Ferreira\\Desktop\\portfolio\\front')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
                                 </div>
                             </td>
                         </tr>
-                        <tr data-origem="mobile" data-desc="rastreamento de artefatos de frontend mobile screens hooks e api services">
+                        <tr data-origem="mobile" data-caminho="C:\Users\Lucas Ferreira\Desktop\portfolio\mobile">
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="3"></td>
                             <td><strong>Mobile</strong></td>
+                            <td><span class="path-badge">C:\Users\Lucas Ferreira\Desktop\portfolio\mobile</span></td>
                             <td>Rastreamento de artefatos de Frontend Mobile (Screens, Hooks e API Services).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Mobile')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Mobile', 'C:\\Users\\Lucas Ferreira\\Desktop\\portfolio\\mobile')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
                                 </div>
                             </td>
                         </tr>
-                        <tr data-origem="desktop" data-desc="rastreamento de artefatos de cliente desktop views handlers e local services">
+                        <tr data-origem="desktop" data-caminho="C:\Users\Lucas Ferreira\Desktop\portfolio\desktop">
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="4"></td>
                             <td><strong>Desktop</strong></td>
+                            <td><span class="path-badge">C:\Users\Lucas Ferreira\Desktop\portfolio\desktop</span></td>
                             <td>Rastreamento de artefatos de Cliente Desktop (Views, Handlers e Local Services).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Desktop')">Visualizar</button>
+                                    <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('Desktop', 'C:\\Users\\Lucas Ferreira\\Desktop\\portfolio\\desktop')">Visualizar</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
                                 </div>
                             </td>
@@ -203,11 +221,15 @@
                     <label for="novaOrigem">Origem</label>
                     <input type="text" id="novaOrigem" required placeholder="Digite a origem (ex: API, Web, Mobile, Desktop)...">
                 </div>
-                <div class="form-group">
+                <div class="form-group margin-top-10">
+                    <label for="novoCaminho">Caminho</label>
+                    <input type="text" id="novoCaminho" required placeholder="Ex: C:\Users\Lucas Ferreira\Desktop\portfolio\back">
+                </div>
+                <div class="form-group margin-top-10">
                     <label for="novaDescricao">Descrição</label>
                     <input type="text" id="novaDescricao" required placeholder="Descreva o rastreamento...">
                 </div>
-                <div class="modal-actions">
+                <div class="modal-actions style-margin-top-15">
                     <button type="button" class="btn btn-secondary" onclick="fecharModal('modalNovoRastreamento')">Cancelar</button>
                     <button type="submit" class="btn">Salvar Rastreamento</button>
                 </div>
@@ -223,14 +245,16 @@
 
         function filtrarTabela() {
             const fOrigem = document.getElementById('filterOrigem').value.toLowerCase();
+            const fCaminho = document.getElementById('filterCaminho').value.toLowerCase();
             const fDesc = document.getElementById('filterDescricao').value.toLowerCase();
             const linhas = document.querySelectorAll('#rastreamentoTableBody tr');
 
             linhas.forEach(linha => {
                 const origem = linha.querySelector('td:nth-child(2)').innerText.toLowerCase();
-                const desc = linha.querySelector('td:nth-child(3)').innerText.toLowerCase();
+                const caminho = linha.querySelector('td:nth-child(3)').innerText.toLowerCase();
+                const desc = linha.querySelector('td:nth-child(4)').innerText.toLowerCase();
 
-                if (origem.includes(fOrigem) && desc.includes(fDesc)) {
+                if (origem.includes(fOrigem) && caminho.includes(fCaminho) && desc.includes(fDesc)) {
                     linha.style.display = '';
                 } else {
                     linha.style.display = 'none';
@@ -238,14 +262,21 @@
             });
         }
 
-        function abrirModalRastreamento(origem) {
+        function abrirModalRastreamento(origem, caminho) {
             const titulo = document.getElementById('rastreamentoModalTitle');
             const conteudo = document.getElementById('rastreamentoModalContent');
             
             titulo.innerText = `Rastreamento Técnico - ${origem}`;
 
+            let detalheConteudo = `
+                <div style="margin-bottom: 12px; background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <strong style="font-size: 13px; color: #475569;">Caminho Local do Projeto:</strong><br>
+                    <span class="path-badge" style="display: inline-block; margin-top: 4px;">${caminho}</span>
+                </div>
+            `;
+
             if (origem === 'API') {
-                conteudo.innerHTML = `
+                detalheConteudo += `
                     <p style="font-size: 13px; color: #555; margin-bottom: 6px;">Mapeamento de Artefatos de Back-end:</p>
                     
                     <div class="section-box-modal">
@@ -270,7 +301,7 @@
                     </div>
                 `;
             } else {
-                conteudo.innerHTML = `
+                detalheConteudo += `
                     <p style="font-size: 13px; color: #555; margin-bottom: 6px;">Mapeamento de Artefatos de Front-end (${origem}):</p>
                     
                     <div class="section-box-modal">
@@ -296,11 +327,13 @@
                 `;
             }
 
+            conteudo.innerHTML = detalheConteudo;
             document.getElementById('modalRastreamento').style.display = 'flex';
         }
 
         function abrirModalNovoRastreamento() {
             document.getElementById('novaOrigem').value = '';
+            document.getElementById('novoCaminho').value = '';
             document.getElementById('novaDescricao').value = '';
             document.getElementById('modalNovoRastreamento').style.display = 'flex';
         }
@@ -312,6 +345,28 @@
         function salvarNovoRastreamento(e) {
             e.preventDefault();
             const origem = document.getElementById('novaOrigem').value;
+            const caminho = document.getElementById('novoCaminho').value;
+            const descricao = document.getElementById('novaDescricao').value;
+
+            const tbody = document.getElementById('rastreamentoTableBody');
+            const novaLinha = document.createElement('tr');
+            novaLinha.setAttribute('data-origem', origem.toLowerCase());
+            novaLinha.setAttribute('data-caminho', caminho);
+
+            novaLinha.innerHTML = `
+                <td class="text-center"><input type="checkbox" class="item-checkbox" value="${Date.now()}"></td>
+                <td><strong>${origem}</strong></td>
+                <td><span class="path-badge">${caminho}</span></td>
+                <td>${descricao}</td>
+                <td class="text-center">
+                    <div class="action-buttons-group">
+                        <button class="btn btn-sm btn-auth" onclick="abrirModalRastreamento('${origem}', '${caminho.replace(/\\/g, '\\\\')}')">Visualizar</button>
+                        <button class="btn btn-sm btn-danger" onclick="excluirLinha(this)">Excluir</button>
+                    </div>
+                </td>
+            `;
+
+            tbody.appendChild(novaLinha);
             alert(`Novo rastreamento de "${origem}" criado com sucesso!`);
             fecharModal('modalNovoRastreamento');
         }

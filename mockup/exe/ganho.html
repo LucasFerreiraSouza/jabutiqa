@@ -24,6 +24,27 @@
             font-weight: 500;
             font-size: 14px;
         }
+        
+        /* Badges de Origem */
+        .badge {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge-user {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        .badge-saas {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+        }
     </style>
 </head>
 
@@ -170,17 +191,13 @@
                             </tr>
                             <tr>
                                 <td><strong>Tempo médio por quantidade de comparações realizadas</strong></td>
-                                <td>
-                                    <input type="text" class="input-inline" value="15 min">
-                                </td>
-                                <td><span class="badge badge-user">Usuário</span></td>
+                                <td>15 min</td>
+                                <td><span class="badge badge-saas">SaaS</span></td>
                             </tr>
                             <tr>
                                 <td><strong>Custo médio por minuto</strong></td>
-                                <td>
-                                    <input type="text" class="input-inline" value="R$ 0,45">
-                                </td>
-                                <td><span class="badge badge-user">Usuário</span></td>
+                                <td>R$ 0,45</td>
+                                <td><span class="badge badge-saas">SaaS</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -210,20 +227,15 @@
                                 <td>5 min</td>
                                 <td><span class="badge">Automático</span></td>
                             </tr>
-
                             <tr>
                                 <td><strong>Tempo médio de preenchimento manual do núcleo</strong></td>
-                                <td>
-                                    <input type="text" class="input-inline" value="30 min">
-                                </td>
-                                <td><span class="badge badge-user">Usuário</span></td>
+                                <td>30 min</td>
+                                <td><span class="badge badge-saas">SaaS</span></td>
                             </tr>
                             <tr>
                                 <td><strong>Custo médio de preenchimento manual do núcleo</strong></td>
-                                <td>
-                                    <input type="text" class="input-inline" value="R$ 0,45">
-                                </td>
-                                <td><span class="badge badge-user">Usuário</span></td>
+                                <td>R$ 0,45</td>
+                                <td><span class="badge badge-saas">SaaS</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -368,30 +380,6 @@
 
         .kpi-card.highlight-badge .kpi-value {
             color: #ffffff;
-        }
-
-        /* Estilos Existentes */
-        .input-inline {
-            width: 100%;
-            max-width: 220px;
-            padding: 6px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .badge {
-            background-color: #e9ecef;
-            color: #495057;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .badge-user {
-            background-color: #e3f2fd;
-            color: #0d47a1;
         }
     </style>
 

@@ -23,6 +23,44 @@
             font-weight: 500;
             font-size: 14px;
         }
+        .vuln-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .bg-critical { background-color: #ef4444; }
+        .bg-warning { background-color: #f59e0b; }
+        .bg-info { background-color: #3b82f6; }
+        
+        .vuln-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #0ea5e9;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .vuln-card.critical { border-left-color: #ef4444; }
+        .vuln-card.warning { border-left-color: #f59e0b; }
+
+        .vuln-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        .vuln-card p {
+            margin: 0 0 6px 0;
+            font-size: 13px;
+            color: #334155;
+        }
+        .vuln-card small {
+            color: #64748b;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -65,12 +103,13 @@
     <main class="main-content">
         <section class="card">
             <h1>Segurança e Vulnerabilidades</h1>
-            <p>Verificações de segurança executadas Início os cenários cadastrados, com rastreabilidade da versão de referência utilizada (ex: OWASP Top 10 2021).</p>
+            <p>Verificações de segurança executadas sobre os cenários cadastrados, com rastreabilidade da versão de referência utilizada (ex: OWASP Top 10 2021).</p>
 
-            <!-- 1. Barra de Ferramentas com o Botão Gerar Relatório no Lado Esquerdo dos Filtros -->
+            <!-- 1. Barra de Ferramentas com o Botão Vasculhar no Lado Esquerdo -->
             <div class="toolbar">
                 <div class="toolbar-group">
-                    <button class="btn btn onclick" onclick="abrirModalRelatorio()">+ Gerar Relatório</button>
+                    <button class="btn"  onclick="executarVarreduraOWASP()"> Vasculhar</button>
+                    <button class="btn" onclick="abrirModalRelatorio()">+ Gerar Relatório</button>
 
                     <div class="form-group margin-none">
                         <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220" oninput="filtrarTabela()">
@@ -102,7 +141,7 @@
                             <td>Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
-                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('1')">VISUALIZAR</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarVulnerabilidade('API', 'Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -112,7 +151,7 @@
                             <td>Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
-                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('2')">VISUALIZAR</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarVulnerabilidade('Web', 'Proposta Comercial em PDF gerada via painel Web (Proposta_Comercial_Cliente_Alpha_2026.pdf).')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -122,7 +161,7 @@
                             <td>Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
-                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('3')">VISUALIZAR</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarVulnerabilidade('Mobile', 'Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -132,7 +171,7 @@
                             <td>Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
-                                    <button class="btn btn-sm btn-secondary" onclick="visualizarItem('4')">VISUALIZAR</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="visualizarVulnerabilidade('Desktop', 'Extrato de Faturamento Anual em CSV gerado via Win32 (Extrato_Faturamento_Anual_2025_Consolidado.csv).')">VISUALIZAR</button>
                                 </div>
                             </td>
                         </tr>
@@ -152,6 +191,22 @@
         </section>
     </main>
 
+    <!-- Modal Exibir Exemplos de Vulnerabilidade (OWASP) -->
+    <div class="modal" id="modalVulnerabilidade" style="display: none;">
+        <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
+            <h2 id="modalVulnTitulo">Análise de Segurança OWASP</h2>
+            <p id="modalVulnSubtitulo" style="color: #475569; font-size: 0.95rem; margin-bottom: 15px;"></p>
+            
+            <div id="modalVulnConteudo">
+                <!-- Conteúdo Dinâmico inserido via JS -->
+            </div>
+
+            <div class="modal-actions" style="margin-top: 20px;">
+                <button type="button" class="btn btn-secondary" onclick="fecharModal('modalVulnerabilidade')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Gerar Relatório -->
     <div class="modal" id="modalRelatorio" style="display: none;">
         <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
@@ -162,7 +217,6 @@
             </div>
 
             <form onsubmit="salvarRelatorio(event)" class="margin-top-15">
-                <!-- Radio Button: Usar integração configurada? -->
                 <div class="form-group margin-top-15">
                     <label><strong>Usar integração configurada?</strong></label>
                     <div class="radio-integracao-group margin-top-5">
@@ -177,21 +231,17 @@
                     </div>
                 </div>
 
-                <!-- MODO COM INTEGRACAO: Botão Gerar com IA -->
                 <div id="containerModoIntegrado" class="margin-top-15" style="display: none;">
                     <button type="button" class="btn btn-auth" style="width: 100%; padding: 12px; font-size: 15px;" onclick="gerarComIA()">Gerar com IA</button>
                 </div>
 
-                <!-- MODO MANUAL: Exibido apenas quando "Usar integração configurada?" for NÃO -->
                 <div id="containerModoManual">
-                    <!-- Prompt da Análise -->
                     <div class="form-group margin-top-15">
                         <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão (Copie e envie para a IA):</strong></label>
                         <textarea id="formPromptGerado" readonly style="height: 120px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
                         <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
                     </div>
 
-                    <!-- Campo para Colar a Resposta da IA -->
                     <div class="form-group margin-top-15">
                         <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
                         <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA após a execução do prompt..."></textarea>
@@ -206,15 +256,86 @@
         </div>
     </div>
 
-    <!-- Script de Interatividade -->
     <script>
         function toggleSelectAll(master) {
             const checkboxes = document.querySelectorAll('.item-checkbox');
             checkboxes.forEach(cb => cb.checked = master.checked);
         }
 
-        function visualizarItem(id) {
-            window.location.href = `comparacao.html?openModal=edit&id=${id}`;
+        function executarVarreduraOWASP() {
+            alert("Iniciando Varredura de Segurança...\n\nAplicando diretrizes OWASP Top 10 (2021), OWASP API Security e MASVS sobre todos os 4 cenários cadastrados.\n\nStatus: 4 cenários auditados com sucesso!");
+        }
+
+        function visualizarVulnerabilidade(origem, descricao) {
+            document.getElementById('modalVulnTitulo').innerText = `Análise OWASP - Origem: ${origem}`;
+            document.getElementById('modalVulnSubtitulo').innerText = `Cenário: ${descricao}`;
+            
+            const container = document.getElementById('modalVulnConteudo');
+            container.innerHTML = '';
+
+            if (origem === 'API') {
+                container.innerHTML = `
+                    <div class="vuln-card critical">
+                        <span class="vuln-badge bg-critical">API3:2023 - Broken Object Property Level Disclosure</span>
+                        <h4>Exposição Indevida de Dados em Payload JSON</h4>
+                        <p>O endpoint de autenticação retornado expõe campos sensíveis do objeto de usuário (como hash de senha, perfil interno ou tokens legados) sem sanitização prévia no payload HTTP 200.</p>
+                        <small><strong>Recomendação:</strong> Aplicar DTOs (Data Transfer Objects) restritos e filtrar headers e propriedades antes da serialização.</small>
+                    </div>
+                    <div class="vuln-card warning">
+                        <span class="vuln-badge bg-warning">API2:2023 - Broken Authentication</span>
+                        <h4>Validação de Headers / Tokens Fracos</h4>
+                        <p>Falta de validação estrita do cabeçalho <code>Authorization</code> ou ausência de mecanismo de revogação imediata no retorno de autenticação.</p>
+                        <small><strong>Recomendação:</strong> Validar rigorosamente assinatura de JWT e impor HTTPS mandatory.</small>
+                    </div>
+                `;
+            } else if (origem === 'Web') {
+                container.innerHTML = `
+                    <div class="vuln-card warning">
+                        <span class="vuln-badge bg-warning">A01:2021 - Broken Access Control</span>
+                        <h4>Controle de Acesso Quebrado na Gerativa de PDF</h4>
+                        <p>Permite que usuários logados solicitem downloads de propostas comerciais de terceiros alterando parâmetros de URL (IDOR).</p>
+                        <small><strong>Recomendação:</strong> Aplicar verificação de posse do recurso na camada de autorização web do backend.</small>
+                    </div>
+                    <div class="vuln-card warning">
+                        <span class="vuln-badge bg-warning">A03:2021 - Injection / XSS</span>
+                        <h4>Vulnerabilidade Cross-Site Scripting (XSS) Refletido</h4>
+                        <p>Campos de entrada web geram o arquivo PDF sem sanitizar código scripts HTML/JS injetados no nome da empresa.</p>
+                        <small><strong>Recomendação:</strong> Sanitizar HTML e codificar dados dinâmicos antes da renderização no PDF.</small>
+                    </div>
+                `;
+            } else if (origem === 'Mobile') {
+                container.innerHTML = `
+                    <div class="vuln-card critical">
+                        <span class="vuln-badge bg-critical">MASVS-STORAGE-1</span>
+                        <h4>Armazenamento Inseguro de Dados Exportados</h4>
+                        <p>O arquivo XLS gerado pelo aplicativo móvel fica armazenado em diretório público do dispositivo sem criptografia em repouso.</p>
+                        <small><strong>Recomendação:</strong> Utilizar Armazenamento Criptografado Isolado (EncryptedSharedPreferences / Android KeyStore / iOS Keychain).</small>
+                    </div>
+                    <div class="vuln-card warning">
+                        <span class="vuln-badge bg-warning">MASVS-CRYPTO-1</span>
+                        <h4>Comunicação e Criptografia de Dados Exportados</h4>
+                        <p>Falha no envio seguro do relatório exportado por redes não confiáveis.</p>
+                        <small><strong>Recomendação:</strong> Enforçar TLS 1.3 com Certificate Pinning no envio móvel.</small>
+                    </div>
+                `;
+            } else if (origem === 'Desktop') {
+                container.innerHTML = `
+                    <div class="vuln-card warning">
+                        <span class="vuln-badge bg-warning">DESKTOP-SEC-01</span>
+                        <h4>Armazenamento Local e Permissões de Leitura Win32</h4>
+                        <p>Não há um padrão OWASP Top 10 exclusivo para Desktop, porém são aplicados princípios de software seguro: o extrato CSV é gerado com permissões padrão de leitura para qualquer utilizador do SO.</p>
+                        <small><strong>Recomendação:</strong> Restringir ACLs de arquivos locais e validar a integridade de DLLs em tempo de execução (evitar DLL Hijacking).</small>
+                    </div>
+                    <div class="vuln-card warning">
+                        <span class="vuln-badge bg-warning">DESKTOP-SEC-02</span>
+                        <h4>Comunicação IPC e Execução Restrita</h4>
+                        <p>Falta de validação e sanitização dos caminhos de exportação ao salvar relatórios em diretórios do Windows.</p>
+                        <small><strong>Recomendação:</strong> Validar sanitização de Path Traversal e assinar digitalmente binaries e atualizações.</small>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalVulnerabilidade').style.display = 'flex';
         }
 
         function filtrarTabela() {
@@ -268,7 +389,7 @@
 
             const prompt = `PROMPT DE ANÁLISE DE SEGURANÇA E VULNERABILIDADES
 
-Atue como Especialista em Segurança da Informação e Auditor de QA. Avalie os registros abaixo sob as diretrizes do OWASP Top 10:
+Atue como Especialista em Segurança da Informação e Auditor de QA. Avalie os registros abaixo sob as diretrizes do OWASP Top 10 (2021), OWASP API Security e MASVS:
 
 REGISTROS AUDITADOS:
 ${registrosTexto}
