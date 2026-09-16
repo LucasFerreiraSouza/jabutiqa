@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inteligência - Sistema de Gestão MENU</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* =====================================================================
+           ESTILOS BASEADOS NO PADRÃO DE SEGURANCA.HTML
+           ===================================================================== */
+        .radio-integracao-group { display: flex; align-items: center; gap: 20px; background-color: #eef2f7; padding: 10px 14px; border-radius: 6px; border: 1px solid #cbd5e1; }
+        .radio-option { display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500; font-size: 14px; }
+        
+        .vuln-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; color: #fff; margin-bottom: 8px; }
+        .bg-critical { background-color: #ef4444; }
+        .bg-warning { background-color: #f59e0b; }
+        .bg-info { background-color: #3b82f6; }
+        .bg-success { background-color: #10b981; }
+        .bg-neutral { background-color: #64748b; }
+        
+        .vuln-card { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0ea5e9; padding: 12px 15px; border-radius: 4px; margin-bottom: 12px; }
+        .vuln-card.critical { border-left-color: #ef4444; }
+        .vuln-card.warning { border-left-color: #f59e0b; }
+        .vuln-card.success { border-left-color: #10b981; }
+        .vuln-card h4 { margin: 0 0 6px 0; font-size: 14px; color: #0f172a; }
+        .vuln-card p { margin: 0 0 6px 0; font-size: 13px; color: #334155; }
+        .vuln-card small { color: #64748b; font-size: 12px; }
+
+        /* =====================================================================
+           ESTILOS ESPECÍFICOS PARA A ENTIDADE INTELIGÊNCIA
+           ===================================================================== */
+        /* Painel de Status / Cabeçalho */
+        .intel-header-stats { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; }
+        .stat-item { display: flex; flex-direction: column; font-size: 13px; border-right: 1px solid #e2e8f0; padding-right: 15px; }
+        .stat-item:last-child { border-right: none; }
+        .stat-value { font-size: 18px; font-weight: bold; color: #0f172a; }
+        .stat-label { color: #64748b; text-transform: uppercase; font-size: 11px; font-weight: bold; }
+        
+        /* Barra de Progresso Contexto */
+        .progress-bar-container { width: 100%; max-width: 300px; background-color: #e2e8f0; border-radius: 4px; height: 8px; margin-top: 5px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background-color: #0f172a; width: 96%; }
+
+        /* Navegação Interna (Abas) */
+        .tabs-nav { display: flex; border-bottom: 1px solid #cbd5e1; margin: 20px 0; gap: 10px; }
+        .tab-btn { background: transparent; border: none; padding: 10px 15px; font-size: 14px; font-weight: 600; color: #64748b; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s; }
+        .tab-btn:hover { color: #0f172a; }
+        .tab-btn.active { color: #0f172a; border-bottom-color: #0f172a; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Componentes Wiki */
+        .wiki-layout { display: grid; grid-template-columns: 250px 1fr; gap: 20px; align-items: start; }
+        .wiki-tree { list-style: none; padding: 0; margin: 0; font-size: 13px; color: #334155; }
+        .wiki-tree li { margin-bottom: 8px; cursor: pointer; }
+        .wiki-tree ul { list-style: none; padding-left: 15px; margin-top: 5px; border-left: 1px dashed #cbd5e1; }
+        .tag-list { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+        .tag { background: #eef2f7; border: 1px solid #cbd5e1; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-family: monospace; color: #475569; }
+
+        /* Componentes Chatbot */
+        .chat-box { border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc; height: 400px; display: flex; flex-direction: column; }
+        .chat-history { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.5; }
+        .chat-user { align-self: flex-end; background-color: #0f172a; color: #fff; }
+        .chat-ai { align-self: flex-start; background-color: #fff; border: 1px solid #e2e8f0; color: #334155; }
+        .chat-input-area { padding: 10px; border-top: 1px solid #cbd5e1; background: #fff; display: flex; gap: 10px; border-radius: 0 0 6px 6px; }
+
+        /* Componentes Sugestões & Revisão */
+        .textarea-dev { width: 100%; height: 100px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; font-size: 13px; resize: vertical; background: #f8fafc; }
+        .impact-panel { background: #eef2f7; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px; margin: 20px 0; }
+        
+        .review-panel { border: 1px solid #cbd5e1; border-radius: 6px; padding: 20px; background: #fff; margin-top: 15px; display: none; }
+        
+        /* Utilitários Extras */
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .margin-bottom-15 { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>MENU</h2>
+        <div class="banner-painel">
+            <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
+        </div>
+        <ul class="nav-links">
+            <li class="nav-category"><h2>SISTEMA</h2></li>
+            <li><a href="inicio.html">Início</a></li>
+            <li><a href="lixeira.html">Lixeira</a></li>
+
+            <li class="nav-category"><h2>NÚCLEO</h2></li>
+            <li><a href="antecipacao.html">0. Antecipação</a></li>
+            <li><a href="grupo.html">1. Grupo</a></li>
+            <li><a href="autenticacao.html">2. Autenticação</a></li>
+            <li><a href="cenario.html">3. Cenário</a></li>
+            <li><a href="esperado.html">4. Esperado</a></li>
+            <li><a href="recebido.html">5. Recebido</a></li>
+            <li><a href="comparacao.html">6. Comparação</a></li>
+            <li><a href="rastreamento.html">7. Rastreamento</a></li>
+
+            <li class="nav-category"><h2>MÉTRICA</h2></li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
+            <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="ganho.html">Ganho</a></li>
+
+            <li class="nav-category"><h2>EXTENSÃO</h2></li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cartao.html">Cartão</a></li>
+            <li><a href="agendamento.html">Agendamento</a></li>
+            <li><a href="inteligencia.html" class="active">Inteligência</a></li>
+
+            <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section class="card">
+            <div class="flex-between">
+                <div>
+                    <h1 style="margin-bottom: 4px;">Inteligência</h1>
+                    <p style="margin: 0; font-size: 13px; color: #475569;">Camada assistiva baseada em IA para análise, proposição e evolução do conhecimento estruturado do JabutiQA.</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="document.getElementById('modalConfig').style.display='flex'">Configurar Inteligência</button>
+                </div>
+            </div>
+
+            <!-- CABEÇALHO STATUS INTELIGÊNCIA -->
+            <div class="intel-header-stats flex-between">
+                <div style="display: flex; gap: 20px;">
+                    <div class="stat-item">
+                        <span class="stat-label">Base de Conhecimento</span>
+                        <span class="stat-value">4,7 GB</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Cenários</span>
+                        <span class="stat-value">1.284</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Esperados</span>
+                        <span class="stat-value">1.176</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Fila de Revisão</span>
+                        <span class="stat-value" style="color: #f59e0b;">12</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Status</span>
+                        <span class="stat-value" style="color: #10b981; font-size: 14px; margin-top: 4px;">● Conectado (GPT-4o mini)</span>
+                    </div>
+                </div>
+                
+                <!-- PAINEL DE EVOLUÇÃO -->
+                <div style="background: #f8fafc; padding: 10px 15px; border: 1px solid #e2e8f0; border-radius: 4px; width: 320px;">
+                    <div class="flex-between" style="font-size: 11px; font-weight: bold; color: #475569; text-transform: uppercase;">
+                        <span>Contexto da Empresa</span>
+                        <span>96%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                    <p style="font-size: 10px; color: #64748b; margin: 5px 0 0 0; line-height: 1.3;">
+                        Correções e aprovações humanas (342 revisões / 918 aprovações) são utilizadas como contexto validado para futuras sugestões.
+                    </p>
+                </div>
+            </div>
+
+            <!-- NAVEGAÇÃO INTERNA (ABAS) -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-wiki')">Wiki</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-chatbot')">Chatbot</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-sugestoes')">Sugestões</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-revisao')">Revisão Humana</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-executar')">Executar</button>
+            </div>
+
+            <!-- ==========================================
+                 ABA 1: WIKI
+                 ========================================== -->
+            <div id="tab-wiki" class="tab-content active">
+                <h3 style="margin-bottom: 5px; color: #0f172a;">Wiki de Conhecimento</h3>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">Conhecimento estruturado do produto utilizado pela Inteligência.</p>
+                
+                <div class="form-group margin-bottom-15">
+                    <input type="text" placeholder="Pesquisar no conhecimento... (Ex: Autenticação, Permissões, Regras)" style="width: 100%; max-width: 600px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                </div>
+
+                <div class="wiki-layout">
+                    <!-- Árvore lateral -->
+                    <div class="vuln-card" style="border-left: none; padding: 10px;">
+                        <ul class="wiki-tree">
+                            <li>▼ Grupo
+                                <ul>
+                                    <li>▼ Autenticação
+                                        <ul>
+                                            <li style="font-weight: bold; color: #0f172a;">↳ Regras de Negócio</li>
+                                            <li>↳ Cenários</li>
+                                            <li>↳ Esperados</li>
+                                        </ul>
+                                    </li>
+                                    <li>► Permissões</li>
+                                    <li>► Integrações</li>
+                                </ul>
+                            </li>
+                            <li style="margin-top: 10px;">► Bugs Históricos</li>
+                            <li>► Rastreamento</li>
+                            <li>► Evidências</li>
+                            <li>► Procedimentos</li>
+                        </ul>
+                    </div>
+
+                    <!-- Conteúdo Principal Wiki -->
+                    <div>
+                        <div class="vuln-card success" style="background: #fff;">
+                            <div class="flex-between" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px;">
+                                <h4 style="font-size: 15px;">AUTENTICAÇÃO — SUPERVISOR</h4>
+                                <small>Última atualização: 15/09/2026 — QA</small>
+                            </div>
+                            <p style="font-size: 13px; margin-bottom: 15px;"><strong>Regra:</strong> Supervisores podem aprovar determinadas operações mediante autenticação adicional (MFA).</p>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div>
+                                    <small style="text-transform: uppercase; font-weight: bold;">Cenários Relacionados</small>
+                                    <div class="tag-list">
+                                        <span class="tag">#103</span> <span class="tag">#287</span> <span class="tag">#417</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <small style="text-transform: uppercase; font-weight: bold;">Esperados Relacionados</small>
+                                    <div class="tag-list">
+                                        <span class="tag">#91</span> <span class="tag">#142</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <small style="text-transform: uppercase; font-weight: bold;">Bugs Históricos</small>
+                                    <div class="tag-list">
+                                        <span class="tag">#38</span> <span class="tag">#91</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-secondary" style="width: 100%;">Ver relacionamento completo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 ABA 2: CHATBOT
+                 ========================================== -->
+            <div id="tab-chatbot" class="tab-content">
+                <h3 style="margin-bottom: 5px; color: #0f172a;">Assistente de Conhecimento</h3>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">Consulte o conhecimento estruturado do JabutiQA.</p>
+                
+                <div class="chat-box">
+                    <div class="chat-history" id="chatContainer">
+                        <div class="chat-msg chat-user">
+                            Quais cenários cobrem a aprovação de transações acima de R$ 10.000?
+                        </div>
+                        <div class="chat-msg chat-ai">
+                            <p style="margin: 0 0 8px 0;">Foram encontrados 8 cenários relacionados à aprovação de transações acima de R$ 10.000.</p>
+                            <ul style="margin: 0 0 10px 20px; padding: 0;">
+                                <li>3 cobrem o perfil Supervisor.</li>
+                                <li>2 cobrem autenticação adicional.</li>
+                                <li>2 cobrem rejeição.</li>
+                                <li>1 cobre limite de valor.</li>
+                            </ul>
+                            <p style="margin: 0 0 10px 0; color: #d97706; font-weight: bold;">Existem 2 lacunas identificadas relacionadas ao fluxo de autenticação.</p>
+                            
+                            <div style="border-top: 1px dashed #cbd5e1; padding-top: 10px; margin-top: 10px;">
+                                <small style="display: block; margin-bottom: 5px; font-weight: bold;">Fontes utilizadas:</small>
+                                <div class="tag-list">
+                                    <span class="tag">Cenário #103</span> <span class="tag">Cenário #287</span> 
+                                    <span class="tag">Esperado #91</span> <span class="tag">Regra #32</span> 
+                                    <span class="tag">Bug #184</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-secondary" style="margin-top: 10px;">Abrir no JabutiQA</button>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Pergunte sobre o produto..." style="flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                        <button class="btn" onclick="enviarMensagem()">Consultar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 ABA 3: SUGESTÕES
+                 ========================================== -->
+            <div id="tab-sugestoes" class="tab-content">
+                <h3 style="margin-bottom: 5px; color: #0f172a;">Sugestão de Cenários & Esperados</h3>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">Utilize uma nova demanda para gerar propostas com base no conhecimento existente.</p>
+                
+                <div class="form-group">
+                    <label style="font-size: 12px; font-weight: bold; color: #334155;">CARD DE DESENVOLVIMENTO (Cole a User Story ou Requisito)</label>
+                    <textarea class="textarea-dev" id="devCardInput" placeholder="Ex: [DEV-2847] Permitir que supervisores aprovem transações acima de R$ 10.000 mediante MFA."></textarea>
+                </div>
+                
+                <button class="btn" onclick="analisarDemanda()" id="btnAnalisar" style="width: 200px; justify-content: center;">Analisar Demanda</button>
+
+                <!-- Resultado da Análise (Oculto inicialmente) -->
+                <div id="painelSugestoes" style="display: none;">
+                    
+                    <div class="impact-panel">
+                        <h4 style="margin: 0 0 10px 0; font-size: 13px;">ANÁLISE DE IMPACTO</h4>
+                        <div style="display: flex; gap: 40px; font-size: 13px;">
+                            <div>
+                                <strong>Conhecimentos relacionados:</strong>
+                                <div class="tag-list" style="margin-top: 5px;">
+                                    <span class="tag">Autenticação</span> <span class="tag">Perfil Supervisor</span>
+                                    <span class="tag">Aprovação de transações</span> <span class="tag">MFA</span>
+                                    <span class="tag">Limite financeiro</span>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 30px; row-gap: 5px;">
+                                <span>Cenários impactados: <strong>14</strong></span>
+                                <span>Esperados potencialmente impactados: <strong>9</strong></span>
+                                <span>Bugs históricos relacionados: <strong>3</strong></span>
+                                <span style="color: #d97706; font-weight: bold;">Possíveis lacunas: 4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin: 20px 0 10px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">CENÁRIOS SUGERIDOS</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                        <!-- Card Sugestão 1 -->
+                        <div class="vuln-card success" style="background: #fff; display: flex; flex-direction: column;">
+                            <div class="flex-between">
+                                <span class="vuln-badge bg-success">Positivo</span>
+                                <span style="font-size: 11px; font-weight: bold; color: #10b981; background: #d1fae5; padding: 2px 6px; border-radius: 4px;">Confiança: 91%</span>
+                            </div>
+                            <h4 style="margin-top: 8px;">Supervisor aprova transação de R$ 12.000 utilizando MFA válido.</h4>
+                            <p><strong>Esperado:</strong> Transação aprovada e evento de autenticação registrado.</p>
+                            <div style="margin-top: auto; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+                                <small>Base utilizada: <span class="tag">Cenário #103</span> <span class="tag">Autenticação #32</span></small>
+                            </div>
+                        </div>
+
+                        <!-- Card Sugestão 2 -->
+                        <div class="vuln-card critical" style="background: #fff; display: flex; flex-direction: column;">
+                            <div class="flex-between">
+                                <span class="vuln-badge bg-critical">Negativo</span>
+                                <span style="font-size: 11px; font-weight: bold; color: #10b981; background: #d1fae5; padding: 2px 6px; border-radius: 4px;">Confiança: 94%</span>
+                            </div>
+                            <h4 style="margin-top: 8px;">Supervisor tenta aprovar transação de R$ 12.000 sem MFA.</h4>
+                            <p><strong>Esperado:</strong> Operação bloqueada e autenticação adicional solicitada.</p>
+                        </div>
+
+                        <!-- Card Sugestão 3 -->
+                        <div class="vuln-card warning" style="background: #fff; display: flex; flex-direction: column;">
+                            <div class="flex-between">
+                                <span class="vuln-badge bg-warning">Limite</span>
+                                <span style="font-size: 11px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 2px 6px; border-radius: 4px;">Confiança: 82%</span>
+                            </div>
+                            <h4 style="margin-top: 8px;">Supervisor tenta aprovar transação exatamente no limite permitido.</h4>
+                            <p><strong>Esperado:</strong> Comportamento conforme regra de limite financeiro.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+                        <button class="btn btn-secondary">Descartar</button>
+                        <button class="btn btn-secondary">Regenerar sugestões</button>
+                        <button class="btn" style="background: #10b981;" onclick="enviarRevisao()">Enviar para revisão</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 ABA 4: REVISÃO HUMANA
+                 ========================================== -->
+            <div id="tab-revisao" class="tab-content">
+                <div class="flex-between" style="margin-bottom: 15px;">
+                    <div>
+                        <h3 style="margin-bottom: 5px; color: #0f172a;">Revisão Humana</h3>
+                        <p style="font-size: 13px; color: #64748b; margin: 0;">Valide as sugestões produzidas pela Inteligência antes que façam parte do conhecimento oficial.</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="vuln-badge bg-warning" style="margin: 0;">12 sugestões aguardando revisão</span>
+                        <div style="margin-top: 5px; font-size: 12px; display: flex; align-items: center; justify-content: flex-end; gap: 5px;">
+                            <label style="color: #475569; font-weight: bold;">Aprovação automática:</label>
+                            <input type="checkbox" id="toggleAuto" style="margin: 0;"> <span style="color: #64748b;">OFF (Assistido)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>TIPO</th>
+                                <th>ORIGEM</th>
+                                <th>CONFIANÇA</th>
+                                <th>STATUS</th>
+                                <th>AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#IA-001</strong></td>
+                                <td>Cenário</td>
+                                <td>DEV-2847</td>
+                                <td><span style="color: #10b981; font-weight: bold;">91%</span></td>
+                                <td><span class="vuln-badge bg-warning" style="margin:0;">Pendente</span></td>
+                                <td><button class="btn btn-sm btn-secondary" onclick="abrirPainelRevisao('#IA-001')">Analisar</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#IA-002</strong></td>
+                                <td>Esperado</td>
+                                <td>DEV-2847</td>
+                                <td><span style="color: #10b981; font-weight: bold;">94%</span></td>
+                                <td><span class="vuln-badge bg-warning" style="margin:0;">Pendente</span></td>
+                                <td><button class="btn btn-sm btn-secondary" onclick="abrirPainelRevisao('#IA-002')">Analisar</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>#IA-003</strong></td>
+                                <td>Cenário</td>
+                                <td>DEV-2851</td>
+                                <td><span style="color: #d97706; font-weight: bold;">87%</span></td>
+                                <td><span class="vuln-badge bg-warning" style="margin:0;">Pendente</span></td>
+                                <td><button class="btn btn-sm btn-secondary" onclick="abrirPainelRevisao('#IA-003')">Analisar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Painel Interno de Revisão (Abre ao clicar em Analisar) -->
+                <div id="painelRevisaoDetalhe" class="review-panel">
+                    <div class="flex-between" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 15px;">
+                        <h4 style="margin: 0; font-size: 15px;">SUGESTÃO DA IA - <span id="revIdLabel">#IA-001</span></h4>
+                        <span style="font-size: 11px; font-weight: bold; color: #10b981; background: #d1fae5; padding: 2px 6px; border-radius: 4px;">Confiança: 91%</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-size: 12px; font-weight: bold; color: #475569;">Cenário Sugerido:</label>
+                        <textarea class="textarea-dev" style="height: 60px;">Supervisor tenta aprovar transação acima de R$10.000 sem MFA.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size: 12px; font-weight: bold; color: #475569;">Esperado Sugerido:</label>
+                        <textarea class="textarea-dev" style="height: 60px;">Operação bloqueada e autenticação adicional solicitada.</textarea>
+                    </div>
+
+                    <div style="background: #f8fafc; padding: 10px; border-radius: 4px; font-size: 12px; color: #475569; margin-bottom: 15px; border: 1px solid #e2e8f0;">
+                        <strong>JUSTIFICATIVA:</strong> A sugestão foi criada com base em regras de segurança estritas identificadas para limites financeiros altos.<br>
+                        <div class="tag-list" style="margin-top: 5px;">
+                            Referências: <span class="tag">Cenário #103</span> <span class="tag">Cenário #287</span> <span class="tag">Autenticação #32</span> <span class="tag">Bug #91</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button class="btn btn-secondary" onclick="fecharPainelRevisao()">Cancelar</button>
+                        <button class="btn" style="background: #ef4444;" onclick="acaoRevisao('Rejeitada')">× Rejeitar</button>
+                        <button class="btn btn-secondary" onclick="acaoRevisao('Corrigida')">✎ Corrigir & Salvar</button>
+                        <button class="btn" style="background: #10b981;" onclick="acaoRevisao('Aprovada')">✓ Aprovar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 ABA 5: EXECUTAR
+                 ========================================== -->
+            <div id="tab-executar" class="tab-content">
+                <h3 style="margin-bottom: 5px; color: #0f172a;">Execução Inteligente</h3>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">Execute cenários aprovados e incorpore os resultados ao conhecimento do JabutiQA.</p>
+                
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="th-checkbox"><input type="checkbox" checked></th>
+                                <th>CENÁRIO</th>
+                                <th>ESPERADO</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" checked></td>
+                                <td><strong>#IA-001</strong> — Aprovação com MFA</td>
+                                <td>HTTP 200 + aprovação</td>
+                                <td><span class="vuln-badge bg-warning" id="st-exec-1" style="margin:0;">Pendente</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" checked></td>
+                                <td><strong>#IA-002</strong> — Aprovação sem MFA</td>
+                                <td>HTTP 403 + bloqueio</td>
+                                <td><span class="vuln-badge bg-warning" id="st-exec-2" style="margin:0;">Pendente</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" checked></td>
+                                <td><strong>#IA-003</strong> — Limite financeiro</td>
+                                <td>Regra de limite aplicada</td>
+                                <td><span class="vuln-badge bg-warning" id="st-exec-3" style="margin:0;">Pendente</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 15px; display: flex; justify-content: flex-end;">
+                    <button class="btn" onclick="executarCenarios()">Executar selecionados</button>
+                </div>
+
+                <!-- Painel de Comparação Pós-Execução -->
+                <div id="painelComparacao" class="impact-panel" style="display: none; background: #fff; border-left: 4px solid #ef4444;">
+                    <h4 style="margin: 0 0 10px 0; color: #ef4444;">DIVERGÊNCIA IDENTIFICADA: #IA-002</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; font-size: 13px; background: #f8fafc; padding: 10px; border: 1px solid #e2e8f0; border-radius: 4px;">
+                        <div>
+                            <strong style="color: #64748b;">Cenário executado:</strong><br>
+                            Aprovação sem MFA
+                        </div>
+                        <div>
+                            <strong style="color: #64748b;">Esperado (IA + Revisão):</strong><br>
+                            <span style="color: #10b981; font-family: monospace;">HTTP 403 + bloqueio</span>
+                        </div>
+                        <div>
+                            <strong style="color: #64748b;">Recebido (Realidade):</strong><br>
+                            <span style="color: #ef4444; font-family: monospace;">HTTP 200 + MFA bypass</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+                        <small style="color: #64748b;">* A IA irá registrar este resultado como um novo Bug e retroalimentar a base de conhecimento.</small>
+                        <button class="btn btn-secondary btn-sm">Abrir módulo de Comparação</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- ==========================================
+         MODAL DE CONFIGURAÇÃO (Baseado no padrão)
+         ========================================== -->
+    <div class="modal" id="modalConfig" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <h2 style="margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid #cbd5e1; padding-bottom: 10px;">Configurar Inteligência</h2>
+            
+            <form onsubmit="event.preventDefault(); document.getElementById('modalConfig').style.display='none'; alert('Configurações salvas!');">
+                
+                <div class="form-group margin-bottom-15">
+                    <label style="font-weight: bold; font-size: 13px;">Provedor de IA</label>
+                    <div class="radio-integracao-group" style="flex-wrap: wrap; margin-top: 5px;">
+                        <label class="radio-option"><input type="radio" name="prov" checked> OpenAI</label>
+                        <label class="radio-option"><input type="radio" name="prov"> Anthropic Claude</label>
+                        <label class="radio-option"><input type="radio" name="prov"> Google Gemini</label>
+                        <label class="radio-option"><input type="radio" name="prov"> Azure OpenAI</label>
+                        <label class="radio-option"><input type="radio" name="prov"> Endpoint Próprio</label>
+                    </div>
+                </div>
+
+                <div class="form-group margin-bottom-15">
+                    <label style="font-weight: bold; font-size: 13px;">Nível de Autonomia</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; margin-top: 5px;">
+                        <option>Conservador (Somente sugestão)</option>
+                        <option selected>Assistido (Sugestão + revisão humana)</option>
+                        <option>Automático (Aprovação automática baseada em regras)</option>
+                    </select>
+                </div>
+
+                <div class="form-group margin-bottom-15">
+                    <label style="font-weight: bold; font-size: 13px;">Contexto Permitido (Base de Conhecimento)</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; font-size: 13px;">
+                        <label><input type="checkbox" checked> Cenários</label>
+                        <label><input type="checkbox" checked> Autenticação</label>
+                        <label><input type="checkbox" checked> Esperados</label>
+                        <label><input type="checkbox" checked> Grupos</label>
+                        <label><input type="checkbox" checked> Bugs</label>
+                        <label><input type="checkbox"> Segurança</label>
+                        <label><input type="checkbox" checked> Rastreamento</label>
+                        <label><input type="checkbox"> Observabilidade</label>
+                    </div>
+                </div>
+
+                <div class="flex-between" style="margin-top: 25px;">
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('modalConfig').style.display='none'">Cancelar</button>
+                        <button type="submit" class="btn">Salvar configuração</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE INTERATIVIDADE -->
+    <script>
+        // Função para alternar abas
+        function switchTab(evt, tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Função de simulação do Chatbot
+        function enviarMensagem() {
+            const input = document.getElementById('chatInput');
+            if(!input.value.trim()) return;
+
+            const container = document.getElementById('chatContainer');
+            
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg chat-user';
+            userMsg.innerText = input.value;
+            container.appendChild(userMsg);
+            
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'chat-msg chat-ai';
+                aiMsg.innerHTML = 'Analisando a base de conhecimento estruturada... Encontrei referências nas <strong>Regras de Permissão</strong> associadas a este fluxo. Deseja que eu gere sugestões de cenários com base nisso?';
+                container.appendChild(aiMsg);
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+
+        // Função para simular Análise de Demanda
+        function analisarDemanda() {
+            const btn = document.getElementById('btnAnalisar');
+            btn.innerText = 'Processando IA...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                document.getElementById('painelSugestoes').style.display = 'block';
+                btn.style.display = 'none';
+            }, 1500);
+        }
+
+        function enviarRevisao() {
+            alert("Sugestões enviadas para a fila de Revisão Humana.");
+            document.querySelectorAll('.tab-btn')[3].click(); // Vai para a aba de revisão
+        }
+
+        // Funções da aba Revisão Humana
+        function abrirPainelRevisao(id) {
+            document.getElementById('painelRevisaoDetalhe').style.display = 'block';
+            document.getElementById('revIdLabel').innerText = id;
+        }
+
+        function fecharPainelRevisao() {
+            document.getElementById('painelRevisaoDetalhe').style.display = 'none';
+        }
+
+        function acaoRevisao(acao) {
+            alert(`A sugestão foi ${acao}. O painel de Evolução do Conhecimento utilizará essa decisão como contexto futuro.`);
+            fecharPainelRevisao();
+        }
+
+        // Função da aba Executar
+        function executarCenarios() {
+            const btn = event.currentTarget;
+            btn.innerText = 'Executando...';
+            btn.disabled = true;
+
+            const st1 = document.getElementById('st-exec-1');
+            const st2 = document.getElementById('st-exec-2');
+            const st3 = document.getElementById('st-exec-3');
+
+            st1.className = 'vuln-badge bg-info'; st1.innerText = 'Executando';
+            st2.className = 'vuln-badge bg-info'; st2.innerText = 'Executando';
+            st3.className = 'vuln-badge bg-info'; st3.innerText = 'Executando';
+
+            setTimeout(() => {
+                st1.className = 'vuln-badge bg-success'; st1.innerText = 'Aprovado';
+                st3.className = 'vuln-badge bg-success'; st3.innerText = 'Aprovado';
+                
+                st2.className = 'vuln-badge bg-critical'; st2.innerText = 'Divergência';
+                
+                document.getElementById('painelComparacao').style.display = 'block';
+                btn.innerText = 'Execução Finalizada';
+            }, 2500);
+        }
+
+        function encerrarSessao(e) {
+            e.preventDefault();
+            alert('Encerrando sessão...');
+        }
+    </script>
+</body>
+</html>
