@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             margin-top: 15px;
             position: relative;
         }
+
         .video-simulator-box img {
             max-width: 100%;
             height: 120px;
@@ -22,6 +24,7 @@
             border-radius: 4px;
             filter: brightness(0.9);
         }
+
         .video-play-overlay {
             position: absolute;
             top: 50%;
@@ -37,9 +40,9 @@
             align-items: center;
             gap: 6px;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        
+
         /* ESTILOS DO PAINEL DE ÁUDIO, TRANSCRIÇÃO E PASSO A PASSO */
         .audio-section-container {
             background-color: #f7fafc;
@@ -51,15 +54,18 @@
             gap: 16px;
             margin-top: 15px;
         }
+
         .audio-card-title {
             font-size: 14px;
             font-weight: 700;
             color: #2d3748;
             margin-bottom: 8px;
         }
+
         .audio-imported-card {
             width: 100%;
         }
+
         .audio-player-wrapper {
             background-color: #ebf0f7;
             border-radius: 6px;
@@ -68,6 +74,7 @@
             align-items: center;
             gap: 14px;
         }
+
         .btn-ouvir-audio {
             background-color: #000;
             color: #fff;
@@ -82,30 +89,36 @@
             letter-spacing: 0.5px;
             flex-shrink: 0;
         }
+
         .btn-ouvir-audio:hover {
             background-color: #222;
         }
+
         .audio-player-info {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
+
         .audio-track-details {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 12px;
         }
+
         .audio-filename {
             color: #4a5568;
             font-family: monospace;
             font-weight: 600;
         }
+
         .audio-time {
             color: #a0aec0;
             font-size: 11px;
         }
+
         .audio-progress-bar {
             width: 100%;
             height: 4px;
@@ -113,13 +126,16 @@
             border-radius: 2px;
             overflow: hidden;
         }
+
         .audio-progress-fill {
             height: 100%;
             background-color: #3182ce;
         }
+
         .audio-transcript-card {
             width: 100%;
         }
+
         .transcript-quote-box {
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
@@ -127,6 +143,7 @@
             border-radius: 4px;
             padding: 12px 14px;
         }
+
         .transcript-quote-box p {
             margin: 0;
             font-size: 13px;
@@ -139,12 +156,14 @@
         .steps-card-container {
             width: 100%;
         }
+
         .steps-box {
             background-color: #ffffff;
             border: 1px solid #cbd5e0;
             border-radius: 8px;
             padding: 14px 18px;
         }
+
         .steps-list {
             margin: 0;
             padding-left: 20px;
@@ -152,14 +171,17 @@
             font-size: 13.5px;
             line-height: 1.5;
         }
+
         .steps-list li {
             margin-bottom: 6px;
         }
+
         .steps-list li:last-child {
             margin-bottom: 0;
         }
     </style>
 </head>
+
 <body>
     <aside class="sidebar">
         <h2>MENU</h2>
@@ -168,12 +190,16 @@
         </div>
         <ul class="nav-links">
             <!-- Categoria: SISTEMA -->
-            <li class="nav-category"><h2>SISTEMA</h2></li>
+            <li class="nav-category">
+                <h2>SISTEMA</h2>
+            </li>
             <li><a href="inicio.html">Início</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
             <!-- Categoria: NÚCLEO -->
-            <li class="nav-category"><h2>NÚCLEO</h2></li>
+            <li class="nav-category">
+                <h2>NÚCLEO</h2>
+            </li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
             <li><a href="autenticacao.html">2. Autenticação</a></li>
@@ -184,13 +210,17 @@
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
             <!-- Categoria: MÉTRICA -->
-            <li class="nav-category"><h2>MÉTRICA</h2></li>
+            <li class="nav-category">
+                <h2>MÉTRICA</h2>
+            </li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
             <!-- Categoria: EXTENSÃO -->
-            <li class="nav-category"><h2>EXTENSÃO</h2></li>
+            <li class="nav-category">
+                <h2>EXTENSÃO</h2>
+            </li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
@@ -220,10 +250,12 @@
                         <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="input-search">
                     </div>
                     <div class="form-group margin-none">
-                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..." class="input-search">
+                        <input type="text" id="filterDescricao" placeholder="Filtrar por Descrição..."
+                            class="input-search">
                     </div>
                     <div class="form-group margin-none">
-                        <input type="text" id="filterAutenticacao" placeholder="Filtrar por Autenticação..." class="input-search">
+                        <input type="text" id="filterAutenticacao" placeholder="Filtrar por Autenticação..."
+                            class="input-search">
                     </div>
                 </div>
             </div>
@@ -254,7 +286,8 @@
                             <td>Bearer Token</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '1')">EDITAR</button>
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalCenario('editar', '1')">EDITAR</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirCenario('1')">EXCLUIR</button>
                                 </div>
                             </td>
@@ -262,7 +295,7 @@
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
                             <td>
-                                Antecipação:  Web<br>
+                                Antecipação: Web<br>
                                 Grupo: Web<br>
                                 Autenticação: Web
                             </td>
@@ -270,8 +303,10 @@
                             <td>gravar web</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-dark" onclick="gravarCenario('2', 'Web')">GRAVAR</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '2')">EDITAR</button>
+                                    <button class="btn btn-sm btn-dark"
+                                        onclick="gravarCenario('2', 'Web')">GRAVAR</button>
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalCenario('editar', '2')">EDITAR</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirCenario('2')">EXCLUIR</button>
                                 </div>
                             </td>
@@ -287,8 +322,10 @@
                             <td>gravar mobile</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-dark" onclick="gravarCenario('3', 'Mobile')">GRAVAR</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '3')">EDITAR</button>
+                                    <button class="btn btn-sm btn-dark"
+                                        onclick="gravarCenario('3', 'Mobile')">GRAVAR</button>
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalCenario('editar', '3')">EDITAR</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirCenario('3')">EXCLUIR</button>
                                 </div>
                             </td>
@@ -304,8 +341,10 @@
                             <td>gravar desktop</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
-                                    <button class="btn btn-sm btn-dark" onclick="gravarCenario('4', 'Desktop')">GRAVAR</button>
-                                    <button class="btn btn-sm btn-warning" onclick="abrirModalCenario('editar', '4')">EDITAR</button>
+                                    <button class="btn btn-sm btn-dark"
+                                        onclick="gravarCenario('4', 'Desktop')">GRAVAR</button>
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalCenario('editar', '4')">EDITAR</button>
                                     <button class="btn btn-sm btn-danger" onclick="excluirCenario('4')">EXCLUIR</button>
                                 </div>
                             </td>
@@ -358,35 +397,48 @@
 
                 <div class="form-group">
                     <label for="cenarioDescricao">Descrição</label>
-                    <textarea id="cenarioDescricao" rows="3" required placeholder="Exemplo: Validação do fluxo de login e checkout com pagamento via PIX no e-commerce."></textarea>
+                    <textarea id="cenarioDescricao" rows="3" required
+                        placeholder="Exemplo: Validação do fluxo de login e checkout com pagamento via PIX no e-commerce."></textarea>
                 </div>
 
                 <!-- CAMPO DINÂMICO 1: API -->
                 <div class="form-group campo-dinamico" id="campoCurlAPI" style="display: none;">
                     <label for="curlMassaNovo">Importar cURLs em Massa (API) - Exemplo:</label>
-                    <textarea id="curlMassaNovo" rows="3" class="input-search" style="width: 100%; font-family: monospace; font-size: 0.85rem;" placeholder="curl -X GET 'https://api.exemplo.com/v1/saldo' -H 'Authorization: Bearer token...'&#10;curl -X POST 'https://api.exemplo.com/v1/pix' -d '{...}'"></textarea>
-                    <small style="color: #666; display: block; margin-top: 4px;">* Importação em massa. Linhas ou comandos cURL duplicados serão ignorados automaticamente.</small>
+                    <textarea id="curlMassaNovo" rows="3" class="input-search"
+                        style="width: 100%; font-family: monospace; font-size: 0.85rem;"
+                        placeholder="curl -X GET 'https://api.exemplo.com/v1/saldo' -H 'Authorization: Bearer token...'&#10;curl -X POST 'https://api.exemplo.com/v1/pix' -d '{...}'"></textarea>
+                    <small style="color: #666; display: block; margin-top: 4px;">* Importação em massa. Linhas ou
+                        comandos cURL duplicados serão ignorados automaticamente.</small>
                 </div>
 
                 <!-- CAMPO DINÂMICO 2: Web -->
                 <div class="form-group campo-dinamico" id="campoUrlWeb" style="display: none;">
                     <label for="urlMassaNovo">Importar URLs em Massa (Web) - Exemplo:</label>
-                    <textarea id="urlMassaNovo" rows="3" class="input-search" style="width: 100%; font-family: monospace; font-size: 0.85rem;" placeholder="https://exemplo.com.br/login&#10;https://exemplo.com.br/checkout&#10;https://exemplo.com.br/painel"></textarea>
-                    <small style="color: #666; display: block; margin-top: 4px;">* Uma URL por linha. URLs duplicadas serão ignoradas automaticamente.</small>
+                    <textarea id="urlMassaNovo" rows="3" class="input-search"
+                        style="width: 100%; font-family: monospace; font-size: 0.85rem;"
+                        placeholder="https://exemplo.com.br/login&#10;https://exemplo.com.br/checkout&#10;https://exemplo.com.br/painel"></textarea>
+                    <small style="color: #666; display: block; margin-top: 4px;">* Uma URL por linha. URLs duplicadas
+                        serão ignoradas automaticamente.</small>
 
                     <div style="margin-top: 10px; display: flex; align-items: flex-start; gap: 10px;">
-                        <input type="checkbox" id="chkCapturarApiNovo" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
-                        <label for="chkCapturarApiNovo" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                        <input type="checkbox" id="chkCapturarApiNovo"
+                            style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkCapturarApiNovo"
+                            style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
                             <strong>Capturar requisições da API</strong>
-                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(monitorar e salvar tráfego HTTP/REST durante a navegação)</span>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(monitorar e
+                                salvar tráfego HTTP/REST durante a navegação)</span>
                         </label>
                     </div>
 
                     <div style="margin-top: 8px; display: flex; align-items: flex-start; gap: 10px;">
-                        <input type="checkbox" id="chkModoMobileNovo" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
-                        <label for="chkModoMobileNovo" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                        <input type="checkbox" id="chkModoMobileNovo"
+                            style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkModoMobileNovo"
+                            style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
                             <strong>Capturar no modo mobile</strong>
-                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(simular viewport e User-Agent de dispositivo móvel durante a navegação)</span>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(simular
+                                viewport e User-Agent de dispositivo móvel durante a navegação)</span>
                         </label>
                     </div>
                 </div>
@@ -394,12 +446,14 @@
                 <!-- CAMPO DINÂMICO 3: Desktop / Mobile -->
                 <div class="form-group campo-dinamico" id="campoAppCaminho" style="display: none;">
                     <label id="lblCaminhoApp" for="caminhoAppNovo">Caminho da Instalação/App:</label>
-                    <input type="text" id="caminhoAppNovo" class="input-search" style="width: 100%;" placeholder="Exemplo: C:\Arquivos de Programas\Sistema\app.exe">
+                    <input type="text" id="caminhoAppNovo" class="input-search" style="width: 100%;"
+                        placeholder="Exemplo: C:\Arquivos de Programas\Sistema\app.exe">
                 </div>
 
                 <!-- SIMULADOR DE VÍDEO -->
                 <div class="video-simulator-box" id="blocoVideoSimulado" style="display: none;">
-                    <span style="font-size: 11px; color: #aaa; display: block; margin-bottom: 6px;">Visualização da Gravação do Cenário (Vídeo Reproduzível)</span>
+                    <span style="font-size: 11px; color: #aaa; display: block; margin-bottom: 6px;">Visualização da
+                        Gravação do Cenário (Vídeo Reproduzível)</span>
                     <div style="position: relative; display: inline-block; width: 100%;">
                         <img src="../jabutiqa.jpg" alt="Simulação de Vídeo do Cenário">
                         <div class="video-play-overlay" onclick="reproduzirVideoSimulado()">
@@ -413,13 +467,15 @@
                     <!-- Box Áudio Importado -->
                     <div class="audio-imported-card">
                         <h3 class="audio-card-title">Áudio Importado da Execução</h3>
-                        
+
                         <div class="audio-player-wrapper">
-                            <button type="button" class="btn-ouvir-audio" onclick="document.getElementById('inputImportarAudioRef').click()">
+                            <button type="button" class="btn-ouvir-audio"
+                                onclick="document.getElementById('inputImportarAudioRef').click()">
                                 OUVIR<br>ÁUDIO
                             </button>
-                            <input type="file" id="inputImportarAudioRef" accept="audio/*" style="display: none;" onchange="atualizarNomeAudio(this)">
-                            
+                            <input type="file" id="inputImportarAudioRef" accept="audio/*" style="display: none;"
+                                onchange="atualizarNomeAudio(this)">
+
                             <div class="audio-player-info">
                                 <div class="audio-track-details">
                                     <span id="audioFileName" class="audio-filename">Gravacao_Comando_Voz_Web.wav</span>
@@ -437,26 +493,85 @@
                         <h3 class="audio-card-title">Transcrição do Áudio:</h3>
                         <div class="transcript-quote-box">
                             <p id="transcricaoTextoRef">
-                                "Confirmar a transação do usuário no painel principal e verificar a emissão do comprovante de validação."
+                                "Confirmar a transação do usuário no painel principal e verificar a emissão do
+                                comprovante de validação."
                             </p>
                         </div>
                     </div>
 
                     <!-- NOVO COMPONENTE: Passo a Passo Percorrido -->
+                    <!-- NOVO COMPONENTE: Passo a Passo Percorrido -->
                     <div class="steps-card-container">
-                        <h3 class="audio-card-title">Passo a Passo Percorrido:</h3>
+                        <h3 class="audio-card-title">Passo a Passo Percorrido</h3>
                         <div class="steps-box">
-                            <ol class="steps-list" id="listaPassoAPasso">
-                                <li>Acessar a página inicial do sistema Web.</li>
-                                <li>Navegar até o componente principal do Dashboard.</li>
-                                <li>Acionar a captura de tela para validação visual.</li>
+                            <ol class="steps-list" id="listaPassoAPasso"
+                                style="display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0;">
+
+                                <!-- Passo 1 -->
+                                <li
+                                    style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 10px 14px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-weight: bold; color: #6b7280; font-size: 13px;">1.</span>
+                                        <span style="font-size: 13px; color: #111827; font-weight: 500;">Botão Abrir
+                                            (Tela Cliente - DOM Base)</span>
+                                    </div>
+                                    <div>
+                                        <button onclick="abrirModalCoordenadas('passo1')"
+                                            style="display: flex; align-items: center; gap: 6px; background-color: #1f2937; color: #ffffff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">
+                                            <i class="fas fa-crosshairs"></i>
+                                            <span>Elementos:</span>
+                                            <span
+                                                style="background: #3b82f6; color: white; padding: 1px 6px; border-radius: 10px; font-size: 11px;">5</span>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <!-- Passo 2 -->
+                                <li
+                                    style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 10px 14px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-weight: bold; color: #6b7280; font-size: 13px;">2.</span>
+                                        <span style="font-size: 13px; color: #111827; font-weight: 500;">Seleção Cliente
+                                            (Modal Aberto - DOM Estrutural)</span>
+                                    </div>
+                                    <div>
+                                        <button onclick="abrirModalCoordenadas('passo2')"
+                                            style="display: flex; align-items: center; gap: 6px; background-color: #1f2937; color: #ffffff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">
+                                            <i class="fas fa-crosshairs"></i>
+                                            <span>Elementos:</span>
+                                            <span
+                                                style="background: #3b82f6; color: white; padding: 1px 6px; border-radius: 10px; font-size: 11px;">12</span>
+                                        </button>
+                                    </div>
+                                </li>
+
+                                <!-- Passo 3 -->
+                                <li
+                                    style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 10px 14px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-weight: bold; color: #6b7280; font-size: 13px;">3.</span>
+                                        <span style="font-size: 13px; color: #111827; font-weight: 500;">Campo Nome
+                                            (Editando no Modal - DOM Dinâmico)</span>
+                                    </div>
+                                    <div>
+                                        <button onclick="abrirModalCoordenadas('passo3')"
+                                            style="display: flex; align-items: center; gap: 6px; background-color: #1f2937; color: #ffffff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">
+                                            <i class="fas fa-crosshairs"></i>
+                                            <span>Elementos:</span>
+                                            <span
+                                                style="background: #3b82f6; color: white; padding: 1px 6px; border-radius: 10px; font-size: 11px;">15</span>
+                                        </button>
+                                    </div>
+                                </li>
+
                             </ol>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-actions" style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="fecharModal('cenarioModal')">Cancelar</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="fecharModal('cenarioModal')">Cancelar</button>
                     <button type="submit" class="btn">Salvar Cenário</button>
                 </div>
             </form>
@@ -478,34 +593,45 @@
 
                 <div id="opcoesGravarWeb" style="display: none; margin-top: 15px; text-align: left;">
                     <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
-                        <input type="checkbox" id="chkGravarCapturarApi" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
-                        <label for="chkGravarCapturarApi" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                        <input type="checkbox" id="chkGravarCapturarApi"
+                            style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkGravarCapturarApi"
+                            style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
                             <strong>Capturar requisições da API</strong>
-                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(monitorar e salvar tráfego HTTP/REST durante a navegação)</span>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(monitorar e
+                                salvar tráfego HTTP/REST durante a navegação)</span>
                         </label>
                     </div>
 
                     <div style="display: flex; align-items: flex-start; gap: 10px;">
-                        <input type="checkbox" id="chkGravarModoMobile" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
-                        <label for="chkGravarModoMobile" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                        <input type="checkbox" id="chkGravarModoMobile"
+                            style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="chkGravarModoMobile"
+                            style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
                             <strong>Capturar no modo mobile</strong>
-                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(simular viewport e User-Agent de dispositivo móvel)</span>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(simular
+                                viewport e User-Agent de dispositivo móvel)</span>
                         </label>
                     </div>
                 </div>
 
                 <div style="margin-top: 12px; text-align: left;">
                     <div style="display: flex; align-items: flex-start; gap: 10px;">
-                        <input type="checkbox" id="chkGravarAudioMicrofone" style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;" checked>
-                        <label for="chkGravarAudioMicrofone" style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
+                        <input type="checkbox" id="chkGravarAudioMicrofone"
+                            style="width: 18px; height: 18px; min-width: 18px; margin-top: 2px; cursor: pointer;"
+                            checked>
+                        <label for="chkGravarAudioMicrofone"
+                            style="cursor: pointer; font-weight: normal; font-size: 0.85rem; line-height: 1.35; margin: 0;">
                             <strong>Capturar áudio do microfone durante a gravação</strong>
-                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(gravar a entrada de áudio do microfone junto com o vídeo)</span>
+                            <span style="display: block; color: #666; font-size: 0.8rem; margin-top: 2px;">(gravar a
+                                entrada de áudio do microfone junto com o vídeo)</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="modal-actions" style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="fecharModal('gravarModal')">Cancelar</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="fecharModal('gravarModal')">Cancelar</button>
                     <button type="submit" class="btn btn-dark">Iniciar Gravação & Gerar Vídeo</button>
                 </div>
             </form>
@@ -605,7 +731,7 @@
             if (origem === 'API') {
                 const rawCurls = document.getElementById('curlMassaNovo').value;
                 const linhasCurl = rawCurls.split('\n').map(c => c.trim()).filter(c => c.length > 0);
-                
+
                 let adic = 0, dup = 0;
                 linhasCurl.forEach(curl => {
                     if (curlsCadastrados.has(curl)) dup++;
@@ -708,6 +834,80 @@
             localStorage.removeItem('MENU_usuario');
             window.location.href = 'login.html';
         }
+
+        // Função para abrir o modal de coordenadas de cada passo
+        function abrirModalCoordenadas(passoId) {
+            // Dados simulados baseados no passo clicado (como se fosse o DOM da tela e suas coordenadas)
+            let elementosDoPasso = [];
+
+            if (passoId === 'passo1') {
+                elementosDoPasso = [
+                    { elemento: "Botão Abrir / Novo Cadastro", seletor: "#btn-abrir-modal", coordenadas: { x: 120, y: 85, largura: 140, altura: 40 } },
+                    { elemento: "Campo Pesquisa de Cliente", seletor: "#input-pesquisa", coordenadas: { x: 120, y: 140, largura: 300, altura: 35 } },
+                    { elemento: "Menu Lateral", seletor: "#sidebar", coordenadas: { x: 0, y: 0, largura: 80, altura: 600 } }
+                ];
+            } else if (passoId === 'passo2') {
+                elementosDoPasso = [
+                    { elemento: "Overlay do Modal", seletor: ".sim-modal-overlay", coordenadas: { x: 0, y: 0, largura: 1280, altura: 720 } },
+                    { elemento: "Título Modal: Cadastro de Cliente", seletor: "#modal-title", coordenadas: { x: 340, y: 180, largura: 250, altura: 30 } },
+                    { elemento: "Campo Nome Completo", seletor: "#input-nome", coordenadas: { x: 360, y: 250, largura: 400, altura: 38 } },
+                    { elemento: "Select Tipo de Pessoa", seletor: "#select-tipo", coordenadas: { x: 360, y: 320, largura: 400, altura: 38 } },
+                    { elemento: "Botão Cancelar", seletor: "#btn-cancelar", coordenadas: { x: 550, y: 400, largura: 90, altura: 35 } },
+                    { elemento: "Botão Salvar", seletor: "#btn-salvar", coordenadas: { x: 650, y: 400, largura: 90, altura: 35 } }
+                ];
+            } else if (passoId === 'passo3') {
+                elementosDoPasso = [
+                    { elemento: "Campo Nome Completo (Em Edição)", seletor: "#input-nome", coordenadas: { x: 360, y: 250, largura: 400, altura: 38 }, estadoAtual: "Editando (Valor: 'João Silva')" },
+                    { elemento: "Cursor de Texto ativo", seletor: "#input-nome:focus", coordenadas: { x: 480, y: 260, largura: 2, altura: 20 } },
+                    { elemento: "Botão Salvar", seletor: "#btn-salvar", coordenadas: { x: 650, y: 400, largura: 90, altura: 35 } }
+                ];
+            }
+
+            // Cria ou reutiliza um modal dinâmico na tela para exibir os dados
+            let modalEl = document.getElementById('modalCoordenadasDinamico');
+            if (!modalEl) {
+                modalEl = document.createElement('div');
+                modalEl.id = 'modalCoordenadasDinamico';
+                modalEl.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999;';
+                document.body.appendChild(modalEl);
+            }
+
+            // Monta o HTML interno do modal com os campos e coordenadas
+            let htmlItens = elementosDoPasso.map((el, index) => `
+        <div style="background: #f8f9fa; border: 1px solid #e5e7eb; padding: 12px; border-radius: 6px; margin-bottom: 8px;">
+            <div style="font-weight: 600; color: #111827; font-size: 14px;">#${index + 1} - ${el.elemento}</div>
+            <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">Seletor DOM: <code>${el.seletor}</code></div>
+            <div style="font-size: 12px; color: #2563eb; margin-top: 2px;">Coordenadas: X: ${el.coordenadas.x}px | Y: ${el.coordenadas.y}px | Largura: ${el.coordenadas.largura}px | Altura: ${el.coordenadas.altura}px</div>
+            ${el.estadoAtual ? `<div style="font-size: 12px; color: #16a34a; margin-top: 2px; font-weight: 500;">Status: ${el.estadoAtual}</div>` : ''}
+        </div>
+    `).join('');
+
+            modalEl.innerHTML = `
+        <div style="background: #ffffff; width: 90%; max-width: 600px; border-radius: 8px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-height: 80vh; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="margin: 0; font-size: 18px; color: #111827;">Elementos e Coordenadas (${passoId.toUpperCase()})</h3>
+                <button onclick="fecharModalCoordenadas()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #6b7280;">&times;</button>
+            </div>
+            <div style="overflow-y: auto; flex: 1; padding-right: 4px;">
+                ${htmlItens}
+            </div>
+            <div style="margin-top: 16px; text-align: right;">
+                <button onclick="fecharModalCoordenadas()" style="background: #1f2937; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Fechar</button>
+            </div>
+        </div>
+    `;
+
+            modalEl.style.display = 'flex';
+        }
+
+        // Função para fechar o modal
+        function fecharModalCoordenadas() {
+            const modalEl = document.getElementById('modalCoordenadasDinamico');
+            if (modalEl) {
+                modalEl.style.display = 'none';
+            }
+        }
     </script>
 </body>
+
 </html>

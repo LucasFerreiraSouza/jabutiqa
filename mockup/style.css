@@ -9,11 +9,11 @@
     --bg-page: #fcfcfc;            /* Branco Papel/Técnico */
     --bg-card: #ffffff;            /* Branco Puro */
     --bg-sidebar: #f1f1f1;         /* CinzaBlueprint Muito Suave */
-    --bg-subtle: #f1f3f5;          /* Cinza de Destaque */
+    --bg-subtle: #d7d8da;          /* Cinza de Destaque */
     
     /* Precision Borders & Lines (1px) */
     --border-color: #1a1a1a;       /* Linha Técnica Fina */
-    --border-subtle: #f1f1f1;      /* Linha Secundária Guia */
+    --border-subtle: #d7d8da;      /* Linha Secundária Guia */
     --border-hover: #000000;
     --border-width: 1px;
     --border-width-thick: 1px;

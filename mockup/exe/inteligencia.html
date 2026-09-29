@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,99 +10,478 @@
         /* =====================================================================
            ESTILOS BASEADOS NO PADRÃO DE SEGURANCA.HTML
            ===================================================================== */
-        .radio-integracao-group { display: flex; align-items: center; gap: 20px; background-color: #eef2f7; padding: 10px 14px; border-radius: 6px; border: 1px solid #cbd5e1; }
-        .radio-option { display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500; font-size: 14px; }
-        
-        .vuln-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; color: #fff; margin-bottom: 8px; }
-        .bg-critical { background-color: #ef4444; }
-        .bg-warning { background-color: #f59e0b; }
-        .bg-info { background-color: #3b82f6; }
-        .bg-success { background-color: #10b981; }
-        .bg-neutral { background-color: #64748b; }
-        
-        .vuln-card { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0ea5e9; padding: 12px 15px; border-radius: 4px; margin-bottom: 12px; }
-        .vuln-card h4 { margin: 0 0 6px 0; font-size: 14px; color: #0f172a; }
-        .vuln-card p { margin: 0 0 6px 0; font-size: 13px; color: #334155; }
-        .vuln-card small { color: #64748b; font-size: 12px; }
+        .radio-integracao-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #eef2f7;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .vuln-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .bg-critical {
+            background-color: #ef4444;
+        }
+
+        .bg-warning {
+            background-color: #f59e0b;
+        }
+
+        .bg-info {
+            background-color: #3b82f6;
+        }
+
+        .bg-success {
+            background-color: #10b981;
+        }
+
+        .bg-neutral {
+            background-color: #64748b;
+        }
+
+        .vuln-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #0ea5e9;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .vuln-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 14px;
+            color: #0f172a;
+        }
+
+        .vuln-card p {
+            margin: 0 0 6px 0;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .vuln-card small {
+            color: #64748b;
+            font-size: 12px;
+        }
 
         /* =====================================================================
            ESTILOS ESPECÍFICOS PARA A ENTIDADE INTELIGÊNCIA
            ===================================================================== */
-        .intel-header-stats { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; }
-        .stat-item { display: flex; flex-direction: column; font-size: 13px; border-right: 1px solid #e2e8f0; padding-right: 15px; }
-        .stat-item:last-child { border-right: none; }
-        .stat-value { font-size: 18px; font-weight: bold; color: #0f172a; }
-        .stat-label { color: #64748b; text-transform: uppercase; font-size: 11px; font-weight: bold; }
-        
+        .intel-header-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+            border-right: 1px solid #e2e8f0;
+            padding-right: 15px;
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        .stat-label {
+            color: #64748b;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
         /* Toggle Switch para Aprovação Automática */
-        .toggle-container { display: flex; flex-direction: column; gap: 4px; }
-        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #10b981; }
-        input:checked + .slider:before { transform: translateX(16px); }
+        .toggle-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #10b981;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(16px);
+        }
 
         /* Botão Estilo Obsidian (RAG) */
-        .btn-rag { display: flex; align-items: center; gap: 6px; background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-size: 12px; font-weight: bold; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all 0.2s; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
-        .btn-rag:hover { background: #e2e8f0; color: #0f172a; }
+        .btn-rag {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
 
-        .progress-bar-container { width: 100%; max-width: 300px; background-color: #e2e8f0; border-radius: 4px; height: 8px; margin-top: 5px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; background-color: #0f172a; width: 96%; }
+        .btn-rag:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
 
-        .tabs-nav { display: flex; border-bottom: 1px solid #cbd5e1; margin: 20px 0; gap: 10px; }
-        .tab-btn { background: transparent; border: none; padding: 10px 20px; font-size: 15px; font-weight: 600; color: #64748b; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s; }
-        .tab-btn:hover { color: #0f172a; }
-        .tab-btn.active { color: #0f172a; border-bottom-color: #0f172a; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .progress-bar-container {
+            width: 100%;
+            max-width: 300px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            height: 8px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
 
-        .wiki-chatbot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
-        .wiki-tree { list-style: none; padding: 0; margin: 0; font-size: 13px; color: #334155; }
-        .wiki-tree li { margin-bottom: 12px; }
-        .wiki-tree ul { list-style: none; padding-left: 15px; margin-top: 6px; border-left: 1px dashed #cbd5e1; }
-        .wiki-tree a { color: #0ea5e9; text-decoration: none; font-weight: 600; }
-        .wiki-tree a:hover { text-decoration: underline; }
-        
-        .tag-list { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
-        .tag { background: #eef2f7; border: 1px solid #cbd5e1; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-family: monospace; color: #475569; }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #0f172a;
+            width: 96%;
+        }
 
-        .chat-box { border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc; height: 380px; display: flex; flex-direction: column; }
-        .chat-history { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .chat-msg { max-width: 85%; padding: 8px 12px; border-radius: 6px; font-size: 13px; line-height: 1.4; }
-        .chat-user { align-self: flex-end; background-color: #0f172a; color: #fff; }
-        .chat-ai { align-self: flex-start; background-color: #fff; border: 1px solid #e2e8f0; color: #334155; }
-        .chat-input-area { padding: 8px; border-top: 1px solid #cbd5e1; background: #fff; display: flex; gap: 8px; border-radius: 0 0 6px 6px; }
+        .tabs-nav {
+            display: flex;
+            border-bottom: 1px solid #cbd5e1;
+            margin: 20px 0;
+            gap: 10px;
+        }
 
-        .impact-panel { background: #eef2f7; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px; margin: 15px 0; }
-        .review-panel { border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; background: #fff; margin-top: 15px; display: none; }
-        .sub-section-title { font-size: 14px; font-weight: bold; color: #0f172a; margin: 20px 0 10px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
+        }
 
-        .editable-field { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; font-family: inherit; background: #fff; }
-        .flex-between { display: flex; justify-content: space-between; align-items: center; }
-        .margin-bottom-15 { margin-bottom: 15px; }
+        .tab-btn:hover {
+            color: #0f172a;
+        }
+
+        .tab-btn.active {
+            color: #0f172a;
+            border-bottom-color: #0f172a;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .wiki-tree {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .wiki-tree li {
+            margin-bottom: 12px;
+        }
+
+        .wiki-tree ul {
+            list-style: none;
+            padding-left: 15px;
+            margin-top: 6px;
+            border-left: 1px dashed #cbd5e1;
+        }
+
+        .wiki-tree a {
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .wiki-tree a:hover {
+            text-decoration: underline;
+        }
+
+        .tag-list {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .tag {
+            background: #eef2f7;
+            border: 1px solid #cbd5e1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-family: monospace;
+            color: #475569;
+        }
+
+        .chat-box {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #f8fafc;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-history {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .chat-user {
+            align-self: flex-end;
+            background-color: #0f172a;
+            color: #fff;
+        }
+
+        .chat-ai {
+            align-self: flex-start;
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        .chat-input-area {
+            padding: 8px;
+            border-top: 1px solid #cbd5e1;
+            background: #fff;
+            display: flex;
+            gap: 8px;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .impact-panel {
+            background: #eef2f7;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .review-panel {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 15px;
+            background: #fff;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .sub-section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 20px 0 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .editable-field {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #fff;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .margin-bottom-15 {
+            margin-bottom: 15px;
+        }
 
         /* Modal Estilos */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 20px; border-radius: 8px; width: 450px; max-width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .modal-content h3 { margin-top: 0; color: #0f172a; font-size: 16px; margin-bottom: 5px; }
-        .modal-content p { font-size: 12px; color: #64748b; margin-top: 0; margin-bottom: 15px; }
-        .modal-content textarea { width: 100%; height: 100px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; resize: vertical; font-family: inherit; font-size: 13px; }
-        .modal-content textarea:focus { outline: none; border-color: #0ea5e9; }
-        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 450px;
+            max-width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            color: #0f172a;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .modal-content p {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .modal-content textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .modal-content textarea:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
 
         /* Estilo para a coluna Origem */
-        .origem-col { font-size: 11px; line-height: 1.4; color: #475569; min-width: 140px; }
-        .origem-col strong { color: #0f172a; }
-        
+        .origem-col {
+            font-size: 11px;
+            line-height: 1.4;
+            color: #475569;
+            min-width: 140px;
+        }
+
+        .origem-col strong {
+            color: #0f172a;
+        }
+
         /* Ajustes Tabela */
-        table.data-table th, table.data-table td {
+        table.data-table th,
+        table.data-table td {
             vertical-align: top;
             padding: 12px;
         }
     </style>
 </head>
+
 <body>
     <aside class="sidebar">
         <h2>MENU</h2>
@@ -109,11 +489,15 @@
             <img src="../jabutiqa.jpg" alt="Logo JabutiQA">
         </div>
         <ul class="nav-links">
-            <li class="nav-category"><h2>SISTEMA</h2></li>
+            <li class="nav-category">
+                <h2>SISTEMA</h2>
+            </li>
             <li><a href="inicio.html">Início</a></li>
             <li><a href="lixeira.html">Lixeira</a></li>
 
-            <li class="nav-category"><h2>NÚCLEO</h2></li>
+            <li class="nav-category">
+                <h2>NÚCLEO</h2>
+            </li>
             <li><a href="antecipacao.html">0. Antecipação</a></li>
             <li><a href="grupo.html">1. Grupo</a></li>
             <li><a href="autenticacao.html">2. Autenticação</a></li>
@@ -123,12 +507,16 @@
             <li><a href="comparacao.html">6. Comparação</a></li>
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
-            <li class="nav-category"><h2>MÉTRICA</h2></li>
+            <li class="nav-category">
+                <h2>MÉTRICA</h2>
+            </li>
             <li><a href="seguranca.html">Segurança</a></li>
             <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
-            <li class="nav-category"><h2>EXTENSÃO</h2></li>
+            <li class="nav-category">
+                <h2>EXTENSÃO</h2>
+            </li>
             <li><a href="integracao.html">Integração</a></li>
             <li><a href="cartao.html">Cartão</a></li>
             <li><a href="agendamento.html">Agendamento</a></li>
@@ -145,7 +533,8 @@
             <div class="flex-between">
                 <div>
                     <h1 style="margin-bottom: 4px;">Inteligência</h1>
-                    <p style="margin: 0; font-size: 13px; color: #475569;">Camada assistiva unificada baseada em IA para consulta, proposição e execução no JabutiQA.</p>
+                    <p style="margin: 0; font-size: 13px; color: #475569;">Camada assistiva unificada baseada em IA para
+                        consulta, proposição e execução no JabutiQA.</p>
                 </div>
             </div>
 
@@ -162,12 +551,14 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Fila Revisão</span>
-                        <span class="stat-value" style="color: #f59e0b;">12</span>
+                        <span class="stat-value" style="color: #f59e0b;">2</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Reprovações</span>
                         <span class="stat-value" style="color: #ef4444;" id="rejeicoes-count">
-                            3 <span style="font-size: 10px; font-weight: normal; color: #64748b; cursor: pointer; text-decoration: underline;">(Ver Detalhes)</span>
+                            3 <span
+                                style="font-size: 10px; font-weight: normal; color: #64748b; cursor: pointer; text-decoration: underline;">(Ver
+                                Detalhes)</span>
                         </span>
                     </div>
                     <div class="stat-item" style="border-right: none;">
@@ -180,11 +571,12 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <!-- BOTÃO VER RAG -->
                 <div>
                     <button class="btn-rag" onclick="alert('Abrindo visualizador de grafos (RAG)...')">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="18" cy="5" r="3"></circle>
                             <circle cx="6" cy="12" r="3"></circle>
                             <circle cx="18" cy="19" r="3"></circle>
@@ -196,63 +588,48 @@
                 </div>
             </div>
 
-            <!-- NAVEGAÇÃO INTERNA (2 ABAS) -->
+            <!-- NAVEGAÇÃO INTERNA (3 ABAS) -->
             <div class="tabs-nav">
-                <button class="tab-btn" onclick="switchTab(event, 'tab-wiki-chatbot')">Wiki & Chatbot</button>
-                <button class="tab-btn active" onclick="switchTab(event, 'tab-ciclo-ia')">Sugestões, Revisão & Execução</button>
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-wiki')">Wiki</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-chatbot')">Chatbot</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-ciclo-ia')">Sugestões</button>
             </div>
 
             <!-- ==========================================
-                 ABA 1: WIKI, CHATBOT
+                 ABA 1: WIKI
                  ========================================== -->
-            <div id="tab-wiki-chatbot" class="tab-content">
+            <div id="tab-wiki" class="tab-content active">
                 <div class="form-group margin-bottom-15">
-                    <input type="text" placeholder="Pesquisar frentes (API, Web, Mobile, Desktop) ou entidades no JabutiQA..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <input type="text"
+                        placeholder="Pesquisar frentes (API, Web, Mobile, Desktop) ou entidades no JabutiQA..."
+                        style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
                 </div>
 
-                <div class="wiki-chatbot-grid">
-                    <div>
-                        <div class="flex-between" style="margin-bottom: 5px;">
-                            <h3 style="margin: 0; color: #0f172a; font-size: 15px;">Wiki: Esboço de Ação + Resultado (Editável)</h3>
-                            <button class="btn btn-sm btn-secondary" onclick="salvarAlteracoesTela1()">Salvar Alterações</button>
-                        </div>
-                        <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">A IA gerou automaticamente o esboço baseado na Observabilidade. O utilizador pode editar diretamente abaixo:</p>
-                        
-                        <div class="vuln-card" style="border-left: none; padding: 12px; background: #fff; max-height: 480px; overflow-y: auto;">
-                            <ul class="wiki-tree">
-                                <!-- 1. API -->
-                                <li>
-                                    <strong>Observabilidade: API</strong><br>
-                                    <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 4px;">
-                                        <label style="font-size: 11px; font-weight: bold; color: #475569;">Ação Gerada pela IA:</label>
-                                        <input type="text" class="editable-field" value="Enviar parâmetros de projeção no body da requisição HTTP POST.">
-                                        <label style="font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;">Resultado Gerado pela IA:</label>
-                                        <input type="text" class="editable-field" value="Retornar JSON com o fluxo projetado e status code 200.">
-                                    </div>
-                                    <ul style="margin-top: 8px;">
-                                        <li>↳ <a href="antecipacao.html">Antecipação</a></li>
-                                        <li>↳ <a href="grupo.html">Grupo</a></li>
-                                        <li>↳ <a href="autenticacao.html">Autenticação</a></li>
-                                        <li>↳ <a href="cenario.html">Cenário</a></li>
-                                        <li>↳ <a href="esperado.html">Esperado</a></li>
-                                        <li>↳ <a href="recebido.html">Recebido</a></li>
-                                        <li>↳ <a href="comparacao.html">Comparação</a></li>
-                                        <li>↳ <a href="rastreamento.html">Rastreamento</a></li>
-                                        <li>↳ <a href="seguranca.html">Segurança</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="vuln-card" style="border-left: none; padding: 12px; background: #fff; max-height: 480px; overflow-y: auto;">
+                <div class="flex-between" style="margin-bottom: 5px;">
+                    <h3 style="margin: 0; color: #0f172a; font-size: 15px;">Wiki: Esboço de Ação + Resultado (Editável)
+                    </h3>
+                    <button class="btn btn-sm btn-secondary" onclick="salvarAlteracoesTela1()">Salvar
+                        Alterações</button>
+                </div>
+                <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">A IA gerou automaticamente o esboço
+                    baseado na Observabilidade. O utilizador pode editar diretamente abaixo:</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="vuln-card" style="border-left: none; padding: 12px; background: #fff;">
                         <ul class="wiki-tree">
-                            <!-- 2. Web -->
+                            <!-- 1. API -->
                             <li>
-                                <strong>Observabilidade: Web</strong><br>
+                                <strong>Observabilidade: API</strong><br>
                                 <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 4px;">
-                                    <label style="font-size: 11px; font-weight: bold; color: #475569;">Ação Gerada pela IA:</label>
-                                    <input type="text" class="editable-field" value="Inserir valor promocional 'DESC10' no campo input de orçamento via DOM.">
-                                    <label style="font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;">Resultado Gerado pela IA:</label>
-                                    <input type="text" class="editable-field" value="Valor total recalculado e atualizado corretamente na UI.">
+                                    <label style="font-size: 11px; font-weight: bold; color: #475569;">Ação Gerada pela
+                                        IA:</label>
+                                    <input type="text" class="editable-field"
+                                        value="Enviar parâmetros de projeção no body da requisição HTTP POST.">
+                                    <label
+                                        style="font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;">Resultado
+                                        Gerado pela IA:</label>
+                                    <input type="text" class="editable-field"
+                                        value="Retornar JSON com o fluxo projetado e status code 200.">
                                 </div>
                                 <ul style="margin-top: 8px;">
                                     <li>↳ <a href="antecipacao.html">Antecipação</a></li>
@@ -268,59 +645,92 @@
                             </li>
                         </ul>
                     </div>
-                    </div>
 
-                    
-
-                    <!-- Coluna Direita: Chatbot -->
-                    <div>
-                        <h3 style="margin-bottom: 5px; color: #0f172a; font-size: 15px;">Assistente Conversacional</h3>
-                        <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Tire dúvidas cruzando os dados das frentes e entidades do JabutiQA.</p>
-                        
-                        <div class="chat-box">
-                            <div class="chat-history" id="chatContainer">
-                                <div class="chat-msg chat-user">
-                                    Quais são as telas que exibem o cadastro de clientes?
+                    <div class="vuln-card" style="border-left: none; padding: 12px; background: #fff;">
+                        <ul class="wiki-tree">
+                            <!-- 2. Web -->
+                            <li>
+                                <strong>Observabilidade: Web</strong><br>
+                                <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 4px;">
+                                    <label style="font-size: 11px; font-weight: bold; color: #475569;">Ação Gerada pela
+                                        IA:</label>
+                                    <input type="text" class="editable-field"
+                                        value="Inserir valor promocional 'DESC10' no campo input de orçamento via DOM.">
+                                    <label
+                                        style="font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;">Resultado
+                                        Gerado pela IA:</label>
+                                    <input type="text" class="editable-field"
+                                        value="Valor total recalculado e atualizado corretamente na UI.">
                                 </div>
-                                <div class="chat-msg chat-ai">
-                                    <p style="margin: 0 0 6px 0;">Encontrados 8 resultados relacionados cruzando a Observabilidade.</p>
-                                    <div class="tag-list" style="margin-top: 5px;">
-                                        <span class="tag">Cenário #103</span> <span class="tag">Autenticação #32</span> <span class="tag">Segurança #12</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chat-input-area">
-                                <input type="text" id="chatInput" placeholder="Faça uma pergunta..." style="flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px;">
-                                <button class="btn btn-sm" onclick="enviarMensagem()">Enviar</button>
-                            </div>
-                        </div>
+                                <ul style="margin-top: 8px;">
+                                    <li>↳ <a href="antecipacao.html">Antecipação</a></li>
+                                    <li>↳ <a href="grupo.html">Grupo</a></li>
+                                    <li>↳ <a href="autenticacao.html">Autenticação</a></li>
+                                    <li>↳ <a href="cenario.html">Cenário</a></li>
+                                    <li>↳ <a href="esperado.html">Esperado</a></li>
+                                    <li>↳ <a href="recebido.html">Recebido</a></li>
+                                    <li>↳ <a href="comparacao.html">Comparação</a></li>
+                                    <li>↳ <a href="rastreamento.html">Rastreamento</a></li>
+                                    <li>↳ <a href="seguranca.html">Segurança</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
             <!-- ==========================================
-                 ABA 2: SUGESTÕES, REVISÃO & EXECUTAR
+                 ABA 2: CHATBOT
                  ========================================== -->
-            <div id="tab-ciclo-ia" class="tab-content active">
-                
-                <h3 style="margin-bottom: 5px; color: #0f172a; font-size: 15px;">Análise USM & Observabilidade por IA</h3>
-                <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">A IA utiliza 100% dos dados da Observabilidade e do DOM/UI atual para varrer lacunas autonomamente e gerar rascunhos de Ação + Resultado, sem necessidade de digitação.</p>
-                
-                <div style="margin-bottom: 15px;">
-                    <button class="btn btn-sm" onclick="analisarDemandaAutonoma()" id="btnAnalisar">Iniciar Varredura Autônoma com Base na Observabilidade</button>
-                </div>
+            <div id="tab-chatbot" class="tab-content">
+                <h3 style="margin-bottom: 5px; color: #0f172a; font-size: 15px;">Assistente Conversacional</h3>
+                <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Tire dúvidas cruzando os dados das
+                    frentes e entidades do JabutiQA.</p>
 
-                <div id="painelSugestoes" style="display: none;">
-                    <div class="impact-panel" style="padding: 10px 15px;">
-                        <span style="font-size: 12px; font-weight: bold;">Varredura Autônoma Concluída! A IA cruzou os relatórios de observabilidade e gerou esboços automáticos de Ação + Resultado para as 9 entidades.</span>
+                <div class="chat-box" style="height: 480px;">
+                    <div class="chat-history" id="chatContainer">
+                        <div class="chat-msg chat-user">
+                            Quais são as telas que exibem o cadastro de clientes?
+                        </div>
+                        <div class="chat-msg chat-ai">
+                            <p style="margin: 0 0 6px 0;">Encontrados 8 resultados relacionados cruzando a
+                                Observabilidade.</p>
+                            <div class="tag-list" style="margin-top: 5px;">
+                                <span class="tag">Cenário #103</span> <span class="tag">Autenticação #32</span> <span
+                                    class="tag">Segurança #12</span>
+                            </div>
+                        </div>
                     </div>
-                    <div style="display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 20px;">
-                        <button class="btn btn-secondary btn-sm" onclick="enviarRevisao()">Enviar esboços para a Fila de Revisão</button>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Faça uma pergunta..."
+                            style="flex: 1; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px;">
+                        <button class="btn btn-sm" onclick="enviarMensagem()">Enviar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 ABA 3: SUGESTÕES
+                 ========================================== -->
+            <div id="tab-ciclo-ia" class="tab-content">
+
+                <h3 style="margin-bottom: 5px; color: #0f172a; font-size: 15px;">Análise USM & Observabilidade por IA
+                </h3>
+                <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">A IA utiliza 100% dos dados da
+                    Observabilidade e do DOM/UI atual para varrer lacunas autonomamente e gerar rascunhos de Ação +
+                    Resultado, sem necessidade de digitação.</p>
+
+                <div id="painelSugestoes">
+                    <div class="impact-panel" style="padding: 10px 15px;">
+                        <span style="font-size: 12px; font-weight: bold;">Varredura Autônoma Concluída! A IA cruzou os
+                            relatórios de observabilidade e gerou esboços automáticos de Ação + Resultado para as 9
+                            entidades.</span>
                     </div>
                 </div>
 
                 <!-- PARTE B: REVISÃO HUMANA (PADRONIZADA) -->
-                <div class="sub-section-title">Fila de Revisão Humana (<span id="contagemFila">12</span> Pendentes)</div>
+                <div class="sub-section-title">Fila de Revisão Humana (<span id="contagemFila">12</span> Pendentes)
+                </div>
                 <div class="table-responsive">
                     <table class="data-table">
                         <thead>
@@ -345,11 +755,13 @@
                                     <strong>Rastreamento:</strong> API<br>
                                     <strong>Segurança:</strong> -
                                 </td>
-                                <td>API Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
+                                <td>API Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de
+                                    usuário.</td>
                                 <td>Enviar parâmetros de projeção no body da requisição HTTP POST.</td>
                                 <td>Retornar JSON com o fluxo projetado e status code 200.</td>
                                 <td style="text-align: center;">
-                                    <button class="btn btn-sm btn-secondary" style="width: 100%; margin-bottom: 5px;" onclick="abrirPainelRevisao('#IA-001')">Analisar</button>
+                                    <button class="btn btn-sm btn-secondary" style="width: 100%; margin-bottom: 5px;"
+                                        onclick="abrirPainelRevisao('#IA-001')">Analisar</button>
                                 </td>
                             </tr>
                             <tr>
@@ -364,11 +776,13 @@
                                     <strong>Rastreamento:</strong> Web<br>
                                     <strong>Segurança:</strong> -
                                 </td>
-                                <td>Validação de desconto aplicado dinamicamente no campo input de orçamento via DOM.</td>
+                                <td>Validação de desconto aplicado dinamicamente no campo input de orçamento via DOM.
+                                </td>
                                 <td>Inserir valor promocional "DESC10" no campo respectivo.</td>
                                 <td>Valor total recalculado na UI.</td>
                                 <td style="text-align: center;">
-                                    <button class="btn btn-sm btn-secondary" style="width: 100%;" onclick="abrirPainelRevisao('#IA-002')">Analisar</button>
+                                    <button class="btn btn-sm btn-secondary" style="width: 100%;"
+                                        onclick="abrirPainelRevisao('#IA-002')">Analisar</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -377,16 +791,41 @@
 
                 <!-- Painel Interno de Revisão Detalhada -->
                 <div id="painelRevisaoDetalhe" class="review-panel">
-                    <div class="flex-between" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px;">
-                        <h4 style="margin: 0; font-size: 14px;">Revisando Esboço: <span id="revIdLabel">#IA-001</span></h4>
+                    <div class="flex-between"
+                        style="border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px;">
+                        <h4 style="margin: 0; font-size: 14px;">Revisando Esboço: <span id="revIdLabel">#IA-001</span>
+                        </h4>
                         <button class="btn btn-secondary btn-sm" onclick="fecharPainelRevisao()">✕ Fechar</button>
                     </div>
                     <div style="font-size: 13px; color: #334155; margin-bottom: 10px;">
-                        <strong>Esboço Automático da IA (Ação + Resultado):</strong> Validação cruzada com logs de observabilidade em tempo de execução. O utilizador pode ajustar na Tela 1 se necessário.
+                        <strong>Esboço Automático da IA (Ação + Resultado):</strong> Validação cruzada com logs de
+                        observabilidade em tempo de execução. O utilizador pode ajustar na Tela 1 se necessário<br><br>
+                        <strong>Vou criar para você:</strong>
+                        <ul style="margin: 6px 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 4px;">
+                            <li><strong>Antecipação:</strong> Mapeado para o card de projeto #1234 contendo o cenário de
+                                teste correspondente.</li>
+                            <li><strong>Grupo:</strong> Associado ao módulo e categoria do produto selecionado no
+                                ecossistema.</li>
+                            <li><strong>Autenticação:</strong> Credenciais validadas via perfil de login padrão (ex:
+                                login X) com token ativo.</li>
+                            <li><strong>Cenário:</strong> Enviar parâmetros de projeção no body da requisição HTTP
+                                POST.</li>
+                            <li><strong>Esperado:</strong> Retornar JSON com o fluxo projetado e status code 200
+                                2].</li>
+                            <li><strong>Recebido:</strong> Captura bem-sucedida do payload HTTP 200 contendo a estrutura
+                                de resposta esperada.</li>
+                            <li><strong>Comparação:</strong> Validação cruzada realizada com sucesso, apontando sem
+                                divergência entre os dados esperados e recebidos.</li>
+                            <li><strong>Rastreamento:</strong> Caminho de execução mapeado diretamente para o controller
+                                Y correspondente na API.</li>
+                            <li><strong>Segurança:</strong> Análise de conformidade executada sem a identificação de
+                                falhas pertencentes ao OWASP Top 10.</li>
+                        </ul>
                     </div>
                     <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                        <button class="btn btn-secondary btn-sm" onclick="abrirModalRejeicao()">Rejeitar</button>
-                        <button class="btn btn-sm" style="background: #10b981;" onclick="acaoRevisao('Aprovada')">Aprovar e Integrar</button>
+                        <button class="btn btn-secondary btn-sm" style="background: #ef4444; color: #ffffff;" onclick="abrirModalRejeicao()">Reprovar</button>
+                        <button class="btn btn-sm" style="background: #10b981;"
+                            onclick="acaoRevisao('Aprovada')">Aprovar</button>
                     </div>
                 </div>
 
@@ -423,11 +862,13 @@
                                     Rastreamento: API<br>
                                     Segurança: API
                                 </td>
-                                <td>API Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de usuário.</td>
+                                <td>API Estrutura de resposta HTTP 200 contendo JSON de autenticação e payload de
+                                    usuário.</td>
                                 <td>Enviar parâmetros de projeção no body da requisição HTTP POST.</td>
                                 <td>Retornar JSON com o fluxo projetado e status code 200.</td>
                                 <td style="text-align: center;">
-                                    <span class="vuln-badge bg-warning" id="st-exec-1" style="margin:0 auto 8px auto; display:block; width: fit-content;">Pendente</span>
+                                    <span class="vuln-badge bg-warning" id="st-exec-1"
+                                        style="margin:0 auto 8px auto; display:block; width: fit-content;">Pendente</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -445,13 +886,16 @@
     <div id="modalRejeicao" class="modal-overlay">
         <div class="modal-content">
             <h3>Motivo da Rejeição</h3>
-            <p>Por favor, detalhe o motivo para que a Inteligência Artificial possa aprender e calibrar a base de conhecimento (RAG).</p>
-            
-            <textarea id="textoRejeicao" placeholder="Ex: O esboço gerado não contempla a validação de erro HTTP 404..."></textarea>
-            
+            <p>Por favor, detalhe o motivo para que a Inteligência Artificial possa aprender e calibrar a base de
+                conhecimento (RAG).</p>
+
+            <textarea id="textoRejeicao"
+                placeholder="Ex: O esboço gerado não contempla a validação de erro HTTP 404..."></textarea>
+
             <div class="modal-actions">
                 <button class="btn btn-secondary btn-sm" onclick="fecharModalRejeicao()">Cancelar</button>
-                <button class="btn btn-sm" style="background: #ef4444;" onclick="confirmarRejeicao()">Confirmar Rejeição</button>
+                <button class="btn btn-sm" style="background: #ef4444;" onclick="confirmarRejeicao()">Confirmar
+                    Rejeição</button>
             </div>
         </div>
     </div>
@@ -463,21 +907,21 @@
         function switchTab(evt, tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
+
             document.getElementById(tabId).classList.add('active');
             evt.currentTarget.classList.add('active');
         }
 
         function enviarMensagem() {
             const input = document.getElementById('chatInput');
-            if(!input.value.trim()) return;
+            if (!input.value.trim()) return;
             const container = document.getElementById('chatContainer');
-            
+
             const userMsg = document.createElement('div');
             userMsg.className = 'chat-msg chat-user';
             userMsg.innerText = input.value;
             container.appendChild(userMsg);
-            
+
             input.value = '';
             container.scrollTop = container.scrollHeight;
 
@@ -490,20 +934,8 @@
             }, 800);
         }
 
-        function analisarDemandaAutonoma() {
-            const btn = document.getElementById('btnAnalisar');
-            btn.innerText = 'Analisando Observabilidade e gerando esboços...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                document.getElementById('painelSugestoes').style.display = 'block';
-                btn.innerText = 'Iniciar Varredura Autônoma com Base na Observabilidade';
-                btn.disabled = false;
-            }, 1500);
-        }
-
         function salvarAlteracoesTela1() {
-            alert("Alterações e esboços de Ação + Resultado salvos com sucesso na Tela 1!");
+            alert("Alterações e esboços de Ação + Resultado salvos com sucesso na Wiki!");
         }
 
         function enviarRevisao() {
@@ -535,13 +967,13 @@
 
         function confirmarRejeicao() {
             const motivo = document.getElementById('textoRejeicao').value;
-            if(!motivo.trim()) {
+            if (!motivo.trim()) {
                 alert("Por favor, preencha o motivo para que a IA possa aprender.");
                 return;
             }
             totalRejeicoes++;
             document.getElementById('rejeicoes-count').innerHTML = `${totalRejeicoes} <span style="font-size: 10px; font-weight: normal; color: #64748b; cursor: pointer; text-decoration: underline;">(Ver Detalhes)</span>`;
-            
+
             alert(`Rejeição registada! O feedback "${motivo}" será integrado ao RAG para evitar futuros erros semelhantes.`);
             fecharModalRejeicao();
             fecharPainelRevisao();
@@ -549,10 +981,10 @@
 
         function executarCenarios() {
             const st1 = document.getElementById('st-exec-1');
-            if(st1) {
+            if (st1) {
                 st1.className = 'vuln-badge bg-info'; st1.innerText = 'Executando';
                 setTimeout(() => {
-                    st1.className = 'vuln-badge bg-success'; st1.innerText = 'Aprovado';
+                    st1.className = 'vuln-badge bg-success'; st1.innerText = 'Executado com Sucesso';
                 }, 1500);
             }
         }
@@ -563,4 +995,5 @@
         }
     </script>
 </body>
+
 </html>
