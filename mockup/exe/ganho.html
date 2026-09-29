@@ -76,8 +76,8 @@
             <li class="nav-category">
                 <h2>MÉTRICA</h2>
             </li>
-            <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="ganho.html" class="active">Ganho</a></li>
 
             <li class="nav-category">
@@ -160,11 +160,7 @@
             <!-- Barra de Ferramentas com o Botão Gerar Relatório ao lado dos Filtros -->
             <div class="toolbar margin-bottom-20">
                 <div class="toolbar-group">
-                    <button class="btn onclick" onclick="abrirModalRelatorio()">Gerar Relatório</button>
-
-                    <div class="form-group margin-none">
-                        <input type="text" id="filterVariavel" placeholder="Filtrar por Variável..." class="min-width-220" oninput="filtrarPremissas()">
-                    </div>
+                    <button class="btn onclick" onclick="abrirModalRelatorio()">+ Gerar Relatório</button>
 
                     <div class="form-group margin-none">
                         <input type="text" id="filterOrigem" placeholder="Filtrar por Origem..." class="min-width-220" oninput="filtrarPremissas()">
@@ -252,7 +248,7 @@
     <!-- Modal Gerar Relatório -->
     <div class="modal" id="modalRelatorio" style="display: none;">
         <div class="modal-content modal-lg" style="max-height: 90vh; overflow-y: auto;">
-            <h2>+ Gerar Relatório de Ganhos e ROI</h2>
+            <h2>Gerar Relatório de Ganhos e ROI</h2>
             
             <div class="margin-top-15">
                 <button type="button" class="btn" style="width: 100%; padding: 10px; font-weight: bold;" onclick="baixarPDF()">Baixar PDF com base em todos registros abaixo</button>

@@ -54,8 +54,8 @@
             <li><a href="rastreamento.html">7. Rastreamento</a></li>
 
             <li class="nav-category"><h2>MÉTRICA</h2></li>
-            <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="seguranca.html">Segurança</a></li>
+            <li><a href="observabilidade.html">Observabilidade</a></li>
             <li><a href="ganho.html">Ganho</a></li>
 
             <li class="nav-category"><h2>EXTENSÃO</h2></li>
@@ -84,25 +84,11 @@
                 <div class="toolbar-group">
                     <!-- Filtro por Origem -->
                     <div class="form-group margin-none">
-                        <select id="selectOrigem" onchange="filtrarTabela()">
-                            <option value="">Todas as Origens</option>
-                            <option value="API">API</option>
-                            <option value="Web">Web</option>
-                            <option value="Mobile">Mobile</option>
-                            <option value="Desktop">Desktop</option>
-                        </select>
+                        <input type="text" id="inputOrigem" placeholder="Filtrar por Origem..." class="input-search" onkeyup="filtrarTabela()">
                     </div>
                     <!-- Filtro por Descrição -->
                     <div class="form-group margin-none">
                         <input type="text" id="inputDescricao" placeholder="Filtrar por Descrição..." class="input-search" onkeyup="filtrarTabela()">
-                    </div>
-                    <!-- Filtro por Ações -->
-                    <div class="form-group margin-none">
-                        <select id="selectAcao" onchange="filtrarTabela()">
-                            <option value="">Todas as Ações</option>
-                            <option value="Editar">Permite Editar</option>
-                            <option value="Excluir">Permite Excluir</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -124,7 +110,17 @@
                         <!-- Linha 1: API -->
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="API"></td>
-                            <td><span class="badge-categoria">API</span></td>
+                            <td>
+                                Antecipação: API<br>
+                                Grupo: API<br>
+                                Autenticação: API<br>
+                                Cenário: API <br>
+                                Esperado: API <br>
+                                Recebido: API <br>
+                                Comparação: API <br>
+                                Rastreamento: API <br>
+                                Segurança: API
+                            </td>
                             <td>Execução agendada diária para testes de carga e validação dos endpoints da API REST.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
@@ -136,7 +132,17 @@
                         <!-- Linha 2: Web -->
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="Web"></td>
-                            <td><span class="badge-categoria">Web</span></td>
+                            <td>
+                                Antecipação: Web<br>
+                                Grupo: Web<br>
+                                Autenticação: Web<br>
+                                Cenário: Web <br>
+                                Esperado: Web <br>
+                                Recebido: Web <br>
+                                Comparação: Web<br>
+                                Rastreamento: Web<br>
+                                Segurança: Web
+                            </td>
                             <td>Agendamento de regressão de interface visual nos navegadores para o portal Web.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
@@ -148,7 +154,17 @@
                         <!-- Linha 3: Mobile -->
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="Mobile"></td>
-                            <td><span class="badge-categoria badge-seguranca">Mobile</span></td>
+                            <td>
+                                Antecipação: Mobile<br>
+                                Grupo: Mobile<br>
+                                Autenticação: Mobile<br>
+                                Cenário: Mobile <br>
+                                Esperado: Mobile <br>
+                                Recebido: Mobile <br>
+                                Comparação: Mobile <br>
+                                Rastreamento: Mobile <br>
+                                Segurança: Mobile
+                            </td>
                             <td>Rotina semanal de testes automatizados de usabilidade e compatibilidade para dispositivos Mobile.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
@@ -160,7 +176,17 @@
                         <!-- Linha 4: Desktop -->
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="Desktop"></td>
-                            <td><span class="badge-categoria">Desktop</span></td>
+                            <td>
+                                Antecipação: Desktop<br>
+                                Grupo: Desktop<br>
+                                Autenticação: Desktop<br>
+                                Cenário: Desktop <br>
+                                Esperado: Desktop <br>
+                                Recebido: Desktop <br>
+                                Comparação: Desktop <br>
+                                Rastreamento: Desktop <br>
+                                Segurança: Desktop
+                            </td>   
                             <td>Verificação periódica de desempenho e uso de recursos para o aplicativo Desktop.</td>
                             <td class="text-center">
                                 <div class="action-buttons-group">
