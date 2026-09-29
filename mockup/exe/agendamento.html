@@ -264,10 +264,6 @@
                         <input type="number" id="toleranciaPixels" min="0" step="1" placeholder="Ex: 5" required class="input-inline">
                     </div>
 
-                    <div class="form-group">
-                        <label for="toleranciaMs">Tolerância de Tempo (ms) *</label>
-                        <input type="number" id="toleranciaMs" min="0" step="50" placeholder="Ex: 500" required class="input-inline">
-                    </div>
                 </div>
 
                 <div class="modal-actions" style="margin-top: 15px;">
@@ -311,7 +307,6 @@
             document.getElementById('horarioAgendamento').value = '08:00';
             document.getElementById('descricaoAgendamento').value = '';
             document.getElementById('toleranciaPixels').value = '0';
-            document.getElementById('toleranciaMs').value = '200';
             document.getElementById('modalAgendamento').style.display = 'flex';
         }
 
@@ -341,38 +336,33 @@
                     dia: 'Segunda-feira',
                     horario: '03:00',
                     pixels: 0,
-                    ms: 150
                 },
                 'Web': {
                     descricao: 'Agendamento de regressão de interface visual nos navegadores para o portal Web.',
                     dia: 'Quarta-feira',
                     horario: '22:00',
                     pixels: 10,
-                    ms: 500
                 },
                 'Mobile': {
                     descricao: 'Rotina semanal de testes automatizados de usabilidade e compatibilidade para dispositivos Mobile.',
                     dia: 'Sexta-feira',
                     horario: '23:30',
                     pixels: 5,
-                    ms: 300
                 },
                 'Desktop': {
                     descricao: 'Verificação periódica de desempenho e uso de recursos para o aplicativo Desktop.',
                     dia: 'Domingo',
                     horario: '01:00',
                     pixels: 2,
-                    ms: 250
                 }
             };
 
-            const item = dadosExemplo[origem] || { descricao: '', dia: 'Segunda-feira', horario: '08:00', pixels: 0, ms: 200 };
+            const item = dadosExemplo[origem] || { descricao: '', dia: 'Segunda-feira', horario: '08:00', pixels: 0 };
 
             document.getElementById('descricaoAgendamento').value = item.descricao;
             document.getElementById('diaSemanaAgendamento').value = item.dia;
             document.getElementById('horarioAgendamento').value = item.horario;
             document.getElementById('toleranciaPixels').value = item.pixels;
-            document.getElementById('toleranciaMs').value = item.ms;
 
             document.getElementById('modalAgendamento').style.display = 'flex';
         }

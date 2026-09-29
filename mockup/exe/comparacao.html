@@ -379,10 +379,6 @@
                     <label for="tolPixel">Tolerância de Pixel</label>
                     <input type="text" id="tolPixel" placeholder="Ex: 2% ou 5px">
                 </div>
-                <div class="form-group">
-                    <label for="duracaoMs">Duração (ms)</label>
-                    <input type="number" id="duracaoMs" min="0" placeholder="Ex: 500">
-                </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="fecharModal('modalNovaComparacao')">Cancelar</button>
                     <button type="submit" class="btn">Salvar Comparação</button>
@@ -569,7 +565,6 @@
             document.getElementById('novaOrigem').value = '';
             document.getElementById('novaDescricao').value = '';
             document.getElementById('tolPixel').value = '';
-            document.getElementById('duracaoMs').value = '';
             document.getElementById('modalNovaComparacao').style.display = 'flex';
         }
 
