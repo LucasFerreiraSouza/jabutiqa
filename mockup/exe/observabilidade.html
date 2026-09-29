@@ -23,6 +23,105 @@
             font-weight: 500;
             font-size: 14px;
         }
+
+        /* Estilos do Cabeçalho de Observabilidade (Blocos 1 e 2) */
+        .header-obs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 992px) {
+            .header-obs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card-bloco {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+        .card-bloco h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Bloco 1: Grid de Entidades */
+        .entidades-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px 12px;
+            font-size: 13px;
+        }
+        .entidade-item {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 6px 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: #334155;
+        }
+        .entidade-item span.count {
+            background-color: #0f766e;
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Bloco 2: Rankings Top 10 */
+        .top10-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .top10-col h4 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            color: #0f766e;
+        }
+        .top10-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 140px;
+            overflow-y: auto;
+            border: 1px solid #f1f5f9;
+            border-radius: 4px;
+        }
+        .top10-list li {
+            padding: 4px 8px;
+            font-size: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #475569;
+        }
+        .top10-list li:last-child {
+            border-bottom: none;
+        }
+        .badge-falha {
+            background-color: #ef4444;
+            color: white;
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -57,7 +156,6 @@
             <li><a href="agendamento.html">Agendamento</a></li>
             <li><a href="inteligencia.html">Inteligência</a></li>
 
-
             <li style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
                 <a href="#" onclick="encerrarSessao(event)">✕ Encerrar Sessão</a>
             </li>
@@ -66,10 +164,62 @@
 
     <main class="main-content">
         <section class="card">
-            <h1>Central de Observabilidade e Telemetria</h1>
-            <p>Diagnóstico técnico detalhado Início o que aconteceu durante a execução: análise de tráfego de rede, console, tempos, mídias e artefatos gerados.</p>
+            <h1>Central de Observabilidade</h1>
+            <p>Diagnóstico de tudo que aconteceu durante fluxo</p>
 
-            <!-- 1. Barra de Ferramentas com o Botão Gerar Relatório no Lado Esquerdo dos Filtros -->
+            <!-- CABEÇALHO DE 2 BLOCOS -->
+            <div class="header-obs-grid">
+                <!-- BLOCO 1: Numeração das 9 entidades das origens -->
+                <div class="card-bloco">
+                    <h3>Total de Registros das Origens</h3>
+                    <div class="entidades-grid">
+                        <div class="entidade-item">Antecipação: <span class="count">4</span></div>
+                        <div class="entidade-item">Grupo: <span class="count">4</span></div>
+                        <div class="entidade-item">Autenticação: <span class="count">4</span></div>
+                        <div class="entidade-item">Cenário: <span class="count">4</span></div>
+                        <div class="entidade-item">Esperado: <span class="count">4</span></div>
+                        <div class="entidade-item">Recebido: <span class="count">4</span></div>
+                        <div class="entidade-item">Comparação: <span class="count">4</span></div>
+                        <div class="entidade-item">Rastreamento: <span class="count">4</span></div>
+                        <div class="entidade-item">Segurança: <span class="count">4</span></div>
+                    </div>
+                </div>
+
+                <!-- BLOCO 2: Top 10 Comparação e Top 10 Segurança que falharam -->
+                <div class="card-bloco">
+                    <h3>Top Falhas (Comparação & Segurança)</h3>
+                    <div class="top10-container">
+                        <!-- Top 10 Comparação -->
+                        <div class="top10-col">
+                            <h4>Top Comparação que Falharam</h4>
+                            <ol class="top10-list">
+                                <li>Divergência de Payload JSON <span class="badge-falha">12</span></li>
+                                <li>Mismatch de Status Code HTTP <span class="badge-falha">8</span></li>
+                                <li>Incompatibilidade de Schema <span class="badge-falha">5</span></li>
+                                <li>Timeout na Comparação <span class="badge-falha">3</span></li>
+                                <li>Divergência de Header <span class="badge-falha">2</span></li>
+                                <li>Tipo de Dado Invalido <span class="badge-falha">1</span></li>
+                                <li>Campo Ausente no Payload <span class="badge-falha">1</span></li>
+                            </ol>
+                        </div>
+
+                        <!-- Top 10 Segurança -->
+                        <div class="top10-col">
+                            <h4>Top Segurança que Falharam</h4>
+                            <ol class="top10-list">
+                                <li>Token JWT Expirado <span class="badge-falha">15</span></li>
+                                <li>Falha de Permissão / Auth <span class="badge-falha">9</span></li>
+                                <li>Tentativa de Injeção SQL <span class="badge-falha">4</span></li>
+                                <li>CORS Bloqueado <span class="badge-falha">3</span></li>
+                                <li>Certificado SSL Inválido <span class="badge-falha">2</span></li>
+                                <li>Cabeçalho CSP Ausente <span class="badge-falha">1</span></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. Barra de Ferramentas -->
             <div class="toolbar">
                 <div class="toolbar-group">
                     <button class="btn onclick" onclick="abrirModalRelatorio()">+ Gerar Relatório</button>
@@ -121,7 +271,7 @@
                         <tr>
                             <td class="text-center"><input type="checkbox" class="item-checkbox" value="2"></td>
                             <td>
-                                Antecipação:  Web<br>
+                                Antecipação: Web<br>
                                 Grupo: Web<br>
                                 Autenticação: Web<br>
                                 Cenário: Web<br>
@@ -151,7 +301,6 @@
                                 Rastreamento: Mobile <br>
                                 Seguranca: Mobile
                             </td>
-
                             <td>Relatório de Fechamento de Caixa em XLS exportado via App (Fechamento_Caixa_Loja_Centro_2026-03-30.xls).</td>
                             <td class="text-center">
                                 <div class="action-buttons-group" style="display: flex; gap: 8px; justify-content: center; align-items: center; white-space: nowrap;">
@@ -205,7 +354,6 @@
             </div>
 
             <form onsubmit="salvarRelatorio(event)" class="margin-top-15">
-                <!-- Radio Button: Usar integração configurada? -->
                 <div class="form-group margin-top-15">
                     <label><strong>Usar integração configurada?</strong></label>
                     <div class="radio-integracao-group margin-top-5">
@@ -220,21 +368,17 @@
                     </div>
                 </div>
 
-                <!-- MODO COM INTEGRACAO: Botão Gerar com IA -->
                 <div id="containerModoIntegrado" class="margin-top-15" style="display: none;">
                     <button type="button" class="btn btn-auth" style="width: 100%; padding: 12px; font-size: 15px;" onclick="gerarComIA()">Gerar com IA</button>
                 </div>
 
-                <!-- MODO MANUAL: Exibido apenas quando "Usar integração configurada?" for NÃO -->
                 <div id="containerModoManual">
-                    <!-- Prompt da Análise -->
                     <div class="form-group margin-top-15">
                         <label for="formPromptGerado"><strong>Prompt da Análise de Aptidão (Copie e envie para a IA):</strong></label>
                         <textarea id="formPromptGerado" readonly style="height: 120px; width: 100%; padding: 10px; background-color: #f8f9fa; color: #333; font-family: monospace;"></textarea>
                         <button type="button" class="btn btn-sm btn-secondary margin-top-5" onclick="copiarPromptModal()">Copiar Prompt de Análise</button>
                     </div>
 
-                    <!-- Campo para Colar a Resposta da IA -->
                     <div class="form-group margin-top-15">
                         <label for="formRespostaIA"><strong>Colar Resposta da IA:</strong></label>
                         <textarea id="formRespostaIA" style="height: 100px; width: 100%; padding: 10px; font-family: monospace;" placeholder="Cole aqui a resposta retornada pela IA após a execução do prompt..."></textarea>
